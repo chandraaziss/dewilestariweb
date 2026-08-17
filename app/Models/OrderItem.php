@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Product;
+use App\Models\SupplierStock;
 
 class OrderItem extends Model
 {
@@ -12,7 +12,9 @@ class OrderItem extends Model
         'product_id',
         'qty',
         'price',
-        'subtotal'
+        'subtotal',
+        'buy_price',
+        'weight'
     ];
 
     public function order()
@@ -24,9 +26,9 @@ class OrderItem extends Model
 
     public function product()
     {
-    return $this->belongsTo(
-        Product::class
-    );
+        return $this->belongsTo(
+            SupplierStock::class, 'product_id'
+        );
     }
     
 }

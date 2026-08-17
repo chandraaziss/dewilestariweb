@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net" modified="2026-08-09T22:52:00.000Z" agent="5.0" version="21.0.0" type="device">
+
+  <!-- ================= SHEET 1: OUTPUT INVOICE ORDER ================= -->
+  <diagram id="OutputInvoiceBW" name="4.3.3.1 Output Invoice Order">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="800" pageHeight="700" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="title1" value="&lt;b&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;Gambar 4.28 Rancangan Output Invoice Pesanan Penjualan (/orders/detail)&lt;/font&gt;&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="50" y="20" width="700" height="30" as="geometry" />
+        </mxCell>
+
+        <mxCell id="frame1" value="&lt;b&gt;INVOICE PESANAN PENJUALAN - TOKO DEWI LESTARI 2&lt;/b&gt;" style="swimlane;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=12;fontColor=#000000;startSize=30;" vertex="1" parent="1">
+          <mxGeometry x="120" y="60" width="560" height="600" as="geometry" />
+        </mxCell>
+
+        <!-- INVOICE HEADER INFO -->
+        <mxCell id="inv_hdr" value="&lt;b&gt;INVOICE: ORD/20260809/0148&lt;/b&gt;&lt;br&gt;Tanggal Transaksi: 09 Agustus 2026&lt;br&gt;Status Pembayaran: &lt;b&gt;LUNAS (PAID VIA MIDTRANS)&lt;/b&gt;&lt;br&gt;Nomor Tiket Resi: &lt;b&gt;TKT-2608-00912&lt;/b&gt;" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;fontColor=#000000;fontSize=11;" vertex="1" parent="frame1">
+          <mxGeometry x="30" y="40" width="500" height="60" as="geometry" />
+        </mxCell>
+
+        <mxCell id="line1" value="" style="endArrow=none;html=1;strokeColor=#000000;strokeWidth=1.5;" edge="1" parent="frame1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="30" y="110" as="sourcePoint" />
+            <mxPoint x="530" y="110" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- CUSTOMER & ALAMAT -->
+        <mxCell id="cust_info" value="&lt;b&gt;DETAIL PENERIMA PENGIRIMAN:&lt;/b&gt;&lt;br&gt;Nama Pelanggan: Dewi Lestari (081299998888)&lt;br&gt;Alamat Tujuan: Jl. Raya Tajur No. 45, RT 02/RW 05, Kota Bogor, Jawa Barat&lt;br&gt;Ekspedisi: JNE REG (Ongkir: Rp 12.000)" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;fontColor=#000000;fontSize=11;" vertex="1" parent="frame1">
+          <mxGeometry x="30" y="120" width="500" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- RINCIAN BARANG TABEL -->
+        <mxCell id="tbl_head" value="&lt;b&gt;NO | NAMA PRODUK &amp; VARIAN | HARGA | QTY | SUBTOTAL&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontStyle=1;fontSize=11;align=center;" vertex="1" parent="frame1">
+          <mxGeometry x="30" y="195" width="500" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_row1" value="1.  Minyak Goreng Sawit 2 Liter (Pouch)   Rp 34.000    2 Pcs    Rp 68.000" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=11;align=left;spacingLeft=10;" vertex="1" parent="frame1">
+          <mxGeometry x="30" y="225" width="500" height="35" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_row2" value="2.  Gula Pasir Kristal Putih 1 Kg            Rp 15.000    2 Pcs    Rp 30.000" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=11;align=left;spacingLeft=10;" vertex="1" parent="frame1">
+          <mxGeometry x="30" y="260" width="500" height="35" as="geometry" />
+        </mxCell>
+
+        <!-- TOTAL SUMMARY -->
+        <mxCell id="summary_box" value="Subtotal Produk: Rp 98.000&lt;br&gt;Biaya Pengiriman Ongkir: Rp 12.000&lt;br&gt;&lt;b&gt;TOTAL KESELURUHAN: Rp 110.000&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=right;spacingRight=15;fontSize=11;strokeColor=#000000;fillColor=#ffffff;" vertex="1" parent="frame1">
+          <mxGeometry x="230" y="310" width="300" height="60" as="geometry" />
+        </mxCell>
+
+        <mxCell id="ftr_note" value="Terima kasih telah berbelanja di Toko Dewi Lestari 2.&lt;br&gt;Simpan invoice ini sebagai bukti transaksi resmi." style="text;html=1;align=center;verticalAlign=middle;fontSize=10;fontColor=#000000;" vertex="1" parent="frame1">
+          <mxGeometry x="30" y="520" width="500" height="30" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+
+
+  <!-- ================= SHEET 2: OUTPUT TRACKING LOGISTICS ================= -->
+  <diagram id="OutputTrackingBW" name="4.3.3.2 Output Tracking Logistics">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="800" pageHeight="600" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="title2" value="&lt;b&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;Gambar 4.29 Rancangan Output Pelacakan Tiket Logistics (/track/detail)&lt;/font&gt;&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="50" y="20" width="700" height="30" as="geometry" />
+        </mxCell>
+
+        <mxCell id="frame2" value="&lt;b&gt;HASIL PELACAKAN PENGIRIMAN PAKET LOGISTICS&lt;/b&gt;" style="swimlane;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=12;fontColor=#000000;startSize=30;" vertex="1" parent="1">
+          <mxGeometry x="140" y="60" width="520" height="500" as="geometry" />
+        </mxCell>
+
+        <mxCell id="tr_hdr" value="&lt;b&gt;NOMOR TIKET RESI: TKT-2608-00912&lt;/b&gt;&lt;br&gt;Invoice Pesanan: ORD/20260809/0148 | Kurir: JNE REG (Ongkir Rp 12.000)&lt;br&gt;Penerima: Dewi Lestari - Kota Bogor" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;fontColor=#000000;fontSize=11;" vertex="1" parent="frame2">
+          <mxGeometry x="30" y="40" width="460" height="55" as="geometry" />
+        </mxCell>
+
+        <!-- TIMELINE STATUS -->
+        <mxCell id="tl_box" value="&lt;b&gt;TIMELINE STATUS PENGIRIMAN LOGISTICS:&lt;/b&gt;&lt;br&gt;&lt;br&gt;[X] 09 Aug 2026 14:00 - Pesanan Dibuat &amp; Pembayaran Midtrans Berhasil&lt;br&gt;[X] 09 Aug 2026 16:30 - Pesanan Diverifikasi &amp; Dikemas Oleh Admin Toko&lt;br&gt;[X] 10 Aug 2026 09:00 - Paket Di-pickup Oleh Kurir JNE (Resi JNE: 88291022)&lt;br&gt;[X] 10 Aug 2026 13:15 - Paket Dalam Perjalanan Ke Alamat Tujuan (In Transit)&lt;br&gt;[X] 11 Aug 2026 10:00 - &lt;b&gt;Paket Berhasil Diterima Oleh Penerima (DELIVERED)&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;spacingLeft=15;fontSize=11;strokeColor=#000000;fillColor=#ffffff;" vertex="1" parent="frame2">
+          <mxGeometry x="30" y="110" width="460" height="170" as="geometry" />
+        </mxCell>
+
+        <!-- BUKTI FOTO SERAH TERIMA -->
+        <mxCell id="proof_box" value="&lt;b&gt;BUKTI FOTO SERAH TERIMA PENGIRIMAN (DELIVERY PROOF):&lt;/b&gt;&lt;br&gt;&lt;br&gt;[ FOTO BUKTI TERIMA PAKET DARI KURIR ]&lt;br&gt;(File: bukti_terima_00912.jpg)" style="rounded=0;whiteSpace=wrap;html=1;align=center;fontSize=11;strokeColor=#000000;fillColor=#ffffff;" vertex="1" parent="frame2">
+          <mxGeometry x="30" y="300" width="460" height="120" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+
+
+  <!-- ================= SHEET 3: OUTPUT KATALOG & EXPIRED ================= -->
+  <diagram id="OutputCatalogBW" name="4.3.3.3 Output Katalog &amp; Expired">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="800" pageHeight="600" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="title3" value="&lt;b&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;Gambar 4.30 Rancangan Output Katalog Produk &amp; Status Expired Batch (/products)&lt;/font&gt;&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="30" y="20" width="740" height="30" as="geometry" />
+        </mxCell>
+
+        <mxCell id="frame3" value="&lt;b&gt;KATALOG PRODUK &amp; MONITORING EXPIRED BATCH - TOKO DEWI LESTARI 2&lt;/b&gt;" style="swimlane;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=12;fontColor=#000000;startSize=30;" vertex="1" parent="1">
+          <mxGeometry x="50" y="60" width="700" height="500" as="geometry" />
+        </mxCell>
+
+        <!-- CARD PRODUK 1 -->
+        <mxCell id="card1" value="&lt;b&gt;Minyak Goreng Sawit&lt;/b&gt;&lt;br&gt;Varian: Pouch 2 Liter&lt;br&gt;Supplier: SUP-001 (PT. Sembako Jaya)&lt;br&gt;Harga HPP: Rp 28.000&lt;br&gt;&lt;b&gt;Harga Jual: Rp 34.000&lt;/b&gt;&lt;br&gt;Sisa Stok: 100 Pcs&lt;br&gt;&lt;b&gt;Tanggal Expired: 31-12-2027&lt;/b&gt;&lt;br&gt;Status Expired: &lt;b&gt;AMAH / VALID&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;spacingLeft=10;fontSize=10;strokeColor=#000000;fillColor=#ffffff;" vertex="1" parent="frame3">
+          <mxGeometry x="30" y="50" width="200" height="190" as="geometry" />
+        </mxCell>
+
+        <!-- CARD PRODUK 2 -->
+        <mxCell id="card2" value="&lt;b&gt;Susu UHT Full Cream&lt;/b&gt;&lt;br&gt;Varian: Karton 1 Liter&lt;br&gt;Supplier: SUP-002 (PT. Frisian Milk)&lt;br&gt;Harga HPP: Rp 14.000&lt;br&gt;&lt;b&gt;Harga Jual: Rp 18.000&lt;/b&gt;&lt;br&gt;Sisa Stok: 25 Pcs&lt;br&gt;&lt;b&gt;Tanggal Expired: 15-09-2026&lt;/b&gt;&lt;br&gt;Status Expired: &lt;b&gt;WARNING EXPIRING SOON&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;spacingLeft=10;fontSize=10;strokeColor=#000000;fillColor=#ffffff;" vertex="1" parent="frame3">
+          <mxGeometry x="250" y="50" width="200" height="190" as="geometry" />
+        </mxCell>
+
+        <!-- CARD PRODUK 3 -->
+        <mxCell id="card3" value="&lt;b&gt;Tepung Terigu Segitiga&lt;/b&gt;&lt;br&gt;Varian: Kemasan 1 Kg&lt;br&gt;Supplier: SUP-003 (PT. Bogasari)&lt;br&gt;Harga HPP: Rp 10.000&lt;br&gt;&lt;b&gt;Harga Jual: Rp 13.000&lt;/b&gt;&lt;br&gt;Sisa Stok: 80 Pcs&lt;br&gt;&lt;b&gt;Tanggal Expired: 20-01-2028&lt;/b&gt;&lt;br&gt;Status Expired: &lt;b&gt;AMAN / VALID&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;spacingLeft=10;fontSize=10;strokeColor=#000000;fillColor=#ffffff;" vertex="1" parent="frame3">
+          <mxGeometry x="470" y="50" width="200" height="190" as="geometry" />
+        </mxCell>
+
+        <!-- TABEL EXPIRED ALERT LOG -->
+        <mxCell id="exp_tbl" value="&lt;b&gt;MONITORING ALERT EXPIRED BATCH PRODUK (SISTEM AUTOMATION LOG):&lt;/b&gt;&lt;br&gt;&lt;br&gt;• PRD-SUP002-0012 | Susu UHT 1L | Exp: 15-09-2026 | Sisa 35 Hari | [REKOMENDASI: DISKON PENJUALAN]&lt;br&gt;• PRD-SUP001-0005 | Mentega Margarin | Exp: 01-09-2026 | Sisa 21 Hari | [REKOMENDASI: RETUR KE SUPPLIER]" style="rounded=0;whiteSpace=wrap;html=1;align=left;spacingLeft=10;fontSize=11;strokeColor=#000000;fillColor=#ffffff;" vertex="1" parent="frame3">
+          <mxGeometry x="30" y="270" width="640" height="150" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+
+
+  <!-- ================= SHEET 4: LAPORAN PENJUALAN PDF ================= -->
+  <diagram id="OutputSalesReportBW" name="4.3.3.4 Laporan Penjualan PDF">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="800" pageHeight="700" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="title4" value="&lt;b&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;Gambar 4.31 Rancangan Output Laporan Penjualan Toko PDF (/admin/reports/sales/pdf)&lt;/font&gt;&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="20" y="20" width="760" height="30" as="geometry" />
+        </mxCell>
+
+        <mxCell id="frame4" value="&lt;b&gt;LAPORAN PENJUALAN TOKO - TOKO DEWI LESTARI 2 (CETAK PDF)&lt;/b&gt;" style="swimlane;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=12;fontColor=#000000;startSize=30;" vertex="1" parent="1">
+          <mxGeometry x="80" y="60" width="640" height="600" as="geometry" />
+        </mxCell>
+
+        <!-- DOKUMEN KOP HEADER -->
+        <mxCell id="doc_kop" value="&lt;b&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;LAPORAN REKAPITULASI PENJUALAN PENJUALAN TOKO&lt;/font&gt;&lt;/b&gt;&lt;br&gt;&lt;b&gt;TOKO DEWI LESTARI 2&lt;/b&gt;&lt;br&gt;Jl. Raya Tajur No. 45, Kota Bogor, Jawa Barat | Telepon: 0812-9999-8888&lt;br&gt;Periode Laporan: 01 Agustus 2026 s/d 09 Agustus 2026" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;fontColor=#000000;fontSize=11;" vertex="1" parent="frame4">
+          <mxGeometry x="30" y="40" width="580" height="65" as="geometry" />
+        </mxCell>
+
+        <mxCell id="line4" value="" style="endArrow=none;html=1;strokeColor=#000000;strokeWidth=2;" edge="1" parent="frame4">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="30" y="115" as="sourcePoint" />
+            <mxPoint x="610" y="115" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- TABEL REKAP SALES -->
+        <mxCell id="s_tbl_h" value="&lt;b&gt;NO | NO. INVOICE | TANGGAL | NAMA PELANGGAN | TOTAL ORDER | STATUS&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontStyle=1;fontSize=11;align=center;" vertex="1" parent="frame4">
+          <mxGeometry x="30" y="130" width="580" height="30" as="geometry" />
+        </mxCell>
+
+        <mxCell id="s_r1" value="1.   ORD/20260801/0101    01-08-2026    Ahmad Subagja         Rp 150.000          PAID" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=10;align=left;spacingLeft=10;" vertex="1" parent="frame4">
+          <mxGeometry x="30" y="160" width="580" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="s_r2" value="2.   ORD/20260805/0125    05-08-2026    Siti Nurhaliza             Rp 220.000          PAID" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=10;align=left;spacingLeft=10;" vertex="1" parent="frame4">
+          <mxGeometry x="30" y="190" width="580" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="s_r3" value="3.   ORD/20260809/0148    09-08-2026    Dewi Lestari              Rp 110.000          PAID" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=10;align=left;spacingLeft=10;" vertex="1" parent="frame4">
+          <mxGeometry x="30" y="220" width="580" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- SUMMARY REVENUE -->
+        <mxCell id="s_summary" value="Total Transaksi Berhasil: 3 Transaksi | &lt;b&gt;TOTAL REVENUE PENJUALAN: Rp 480.000&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=right;spacingRight=15;fontSize=11;strokeColor=#000000;fillColor=#ffffff;" vertex="1" parent="frame4">
+          <mxGeometry x="30" y="265" width="580" height="35" as="geometry" />
+        </mxCell>
+
+        <!-- TANDA TANGAN APPROVAL -->
+        <mxCell id="sign_box" value="Bogor, 09 Agustus 2026&lt;br&gt;Pemilik / Admin Toko Dewi Lestari 2,&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;b&gt;( _________________________ )&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=middle;fontSize=11;fontColor=#000000;" vertex="1" parent="frame4">
+          <mxGeometry x="380" y="420" width="230" height="120" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+
+
+  <!-- ================= SHEET 5: LAPORAN PO SUPPLIER PDF ================= -->
+  <diagram id="OutputSupplierReportBW" name="4.3.3.5 Laporan PO Supplier PDF">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="800" pageHeight="700" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="title5" value="&lt;b&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;Gambar 4.32 Rancangan Output Laporan Pengadaan PO Supplier PDF (/admin/reports/supplier/pdf)&lt;/font&gt;&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="20" y="20" width="760" height="30" as="geometry" />
+        </mxCell>
+
+        <mxCell id="frame5" value="&lt;b&gt;LAPORAN PENGADAAN PO SUPPLIER - TOKO DEWI LESTARI 2 (CETAK PDF)&lt;/b&gt;" style="swimlane;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=12;fontColor=#000000;startSize=30;" vertex="1" parent="1">
+          <mxGeometry x="80" y="60" width="640" height="600" as="geometry" />
+        </mxCell>
+
+        <!-- DOKUMEN KOP HEADER -->
+        <mxCell id="doc_kop5" value="&lt;b&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;LAPORAN REKAPITULASI PENGADAAN BARANG SUPPLIER (PO)&lt;/font&gt;&lt;/b&gt;&lt;br&gt;&lt;b&gt;TOKO DEWI LESTARI 2&lt;/b&gt;&lt;br&gt;Jl. Raya Tajur No. 45, Kota Bogor, Jawa Barat | Telepon: 0812-9999-8888&lt;br&gt;Periode Laporan: 01 Agustus 2026 s/d 09 Agustus 2026" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;fontColor=#000000;fontSize=11;" vertex="1" parent="frame5">
+          <mxGeometry x="30" y="40" width="580" height="65" as="geometry" />
+        </mxCell>
+
+        <mxCell id="line5" value="" style="endArrow=none;html=1;strokeColor=#000000;strokeWidth=2;" edge="1" parent="frame5">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="30" y="115" as="sourcePoint" />
+            <mxPoint x="610" y="115" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- TABEL REKAP PO SUPPLIER -->
+        <mxCell id="po_tbl_h" value="&lt;b&gt;NO | NO. PO | TANGGAL | VENDOR SUPPLIER | VARIAN BARANG | QTY | TOTAL HPP&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontStyle=1;fontSize=10;align=center;" vertex="1" parent="frame5">
+          <mxGeometry x="30" y="130" width="580" height="30" as="geometry" />
+        </mxCell>
+
+        <mxCell id="po_r1" value="1.   PO/SUP-001/202608/0015   02-08-2026   PT. Sembako Jaya   Minyak Goreng 2L   50 Ktn   Rp 1.400.000" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=10;align=left;spacingLeft=10;" vertex="1" parent="frame5">
+          <mxGeometry x="30" y="160" width="580" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="po_r2" value="2.   PO/SUP-002/202608/0016   06-08-2026   PT. Frisian Milk       Susu UHT 1L          30 Ktn   Rp   420.000" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=10;align=left;spacingLeft=10;" vertex="1" parent="frame5">
+          <mxGeometry x="30" y="190" width="580" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- SUMMARY EXPENDITURE -->
+        <mxCell id="po_summary" value="Total Order PO: 2 Surat PO | &lt;b&gt;TOTAL PENGELUARAN PENGADAAN HPP: Rp 1.820.000&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=right;spacingRight=15;fontSize=11;strokeColor=#000000;fillColor=#ffffff;" vertex="1" parent="frame5">
+          <mxGeometry x="30" y="235" width="580" height="35" as="geometry" />
+        </mxCell>
+
+        <!-- TANDA TANGAN APPROVAL -->
+        <mxCell id="sign_box5" value="Bogor, 09 Agustus 2026&lt;br&gt;Pengelola Stok Toko Dewi Lestari 2,&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;b&gt;( _________________________ )&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=middle;fontSize=11;fontColor=#000000;" vertex="1" parent="frame5">
+          <mxGeometry x="380" y="420" width="230" height="120" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+
+
+  <!-- ================= SHEET 6: SURAT ORDER PO WHATSAPP ================= -->
+  <diagram id="OutputSuratPOBW" name="4.3.3.6 Surat Order PO WhatsApp">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="800" pageHeight="650" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="title6" value="&lt;b&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;Gambar 4.33 Rancangan Output Cetak Surat Order Purchase Order (PO) Supplier (/suppliers/invoice)&lt;/font&gt;&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="10" y="20" width="780" height="30" as="geometry" />
+        </mxCell>
+
+        <mxCell id="frame6" value="&lt;b&gt;SURAT PURCHASE ORDER (PO) PENGADAAN BARANG - TOKO DEWI LESTARI 2&lt;/b&gt;" style="swimlane;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=12;fontColor=#000000;startSize=30;" vertex="1" parent="1">
+          <mxGeometry x="120" y="60" width="560" height="560" as="geometry" />
+        </mxCell>
+
+        <mxCell id="po_hdr_txt" value="&lt;b&gt;SURAT PURCHASE ORDER: PO/SUP-001/202608/0015&lt;/b&gt;&lt;br&gt;Tanggal PO: 09 Agustus 2026&lt;br&gt;Kepada Yth Supplier: &lt;b&gt;PT. Sembako Jaya Indonesia (SUP-001)&lt;/b&gt;&lt;br&gt;Kontak Supplier: 0812-3333-4444 (Bpk. Hendra)" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;fontColor=#000000;fontSize=11;" vertex="1" parent="frame6">
+          <mxGeometry x="30" y="40" width="500" height="60" as="geometry" />
+        </mxCell>
+
+        <mxCell id="line6" value="" style="endArrow=none;html=1;strokeColor=#000000;strokeWidth=1.5;" edge="1" parent="frame6">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="30" y="110" as="sourcePoint" />
+            <mxPoint x="530" y="110" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- ITEMS LIST -->
+        <mxCell id="po_item_h" value="&lt;b&gt;NO | KODE PRODUK | VARIAN BARANG | QTY ORDER | HARGA HPP | TOTAL COST&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontStyle=1;fontSize=10;align=center;" vertex="1" parent="frame6">
+          <mxGeometry x="30" y="125" width="500" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="po_item_r1" value="1.   PRD-SUP001-0042   Minyak Goreng 2L Pouch   50 Karton    Rp 28.000     Rp 1.400.000" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=10;align=left;spacingLeft=10;" vertex="1" parent="frame6">
+          <mxGeometry x="30" y="155" width="500" height="35" as="geometry" />
+        </mxCell>
+
+        <mxCell id="po_sum_box" value="Catatan Pengadaan: &lt;b&gt;Mohon dikirim paling lambat 15 Agustus 2026.&lt;/b&gt;&lt;br&gt;&lt;b&gt;TOTAL SEBELUM PAJAK: Rp 1.400.000&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;spacingLeft=10;fontSize=11;strokeColor=#000000;fillColor=#ffffff;" vertex="1" parent="frame6">
+          <mxGeometry x="30" y="205" width="500" height="45" as="geometry" />
+        </mxCell>
+
+        <mxCell id="wa_redirect" value="&lt;b&gt;[ INTEGRASI AUTOMATION DIRECT WHATSAPP MESSAGE API ]&lt;/b&gt;&lt;br&gt;Pesan PO otomatis diformat dan dikirimkan ke nomor WhatsApp Supplier terpilih." style="rounded=0;whiteSpace=wrap;html=1;align=center;fontSize=10;strokeColor=#000000;fillColor=#ffffff;" vertex="1" parent="frame6">
+          <mxGeometry x="30" y="265" width="500" height="45" as="geometry" />
+        </mxCell>
+
+        <mxCell id="sign_po" value="Pemesan (Toko Dewi Lestari 2),&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;b&gt;( _________________________ )&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=middle;fontSize=11;fontColor=#000000;" vertex="1" parent="frame6">
+          <mxGeometry x="300" y="420" width="230" height="90" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+
+
+  <!-- ================= SHEET 7: SURAT RETUR BARANG SUPPLIER ================= -->
+  <diagram id="OutputSuratReturBW" name="4.3.3.7 Surat Retur Barang">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="800" pageHeight="650" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="title7" value="&lt;b&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;Gambar 4.34 Rancangan Output Cetak Surat Retur Barang Supplier (/supplier-returns)&lt;/font&gt;&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="10" y="20" width="780" height="30" as="geometry" />
+        </mxCell>
+
+        <mxCell id="frame7" value="&lt;b&gt;SURAT PENGAJUAN RETUR BARANG SUPPLIER - TOKO DEWI LESTARI 2&lt;/b&gt;" style="swimlane;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=12;fontColor=#000000;startSize=30;" vertex="1" parent="1">
+          <mxGeometry x="120" y="60" width="560" height="560" as="geometry" />
+        </mxCell>
+
+        <mxCell id="ret_hdr_txt" value="&lt;b&gt;KODE RETUR: RET/SUP-001/202608/0003&lt;/b&gt;&lt;br&gt;Tanggal Retur: 09 Agustus 2026&lt;br&gt;Kepada Yth Supplier: &lt;b&gt;PT. Sembako Jaya Indonesia (SUP-001)&lt;/b&gt;&lt;br&gt;Status Retur: &lt;b&gt;PENGAJUAN RETUR PROSES VERIFIKASI&lt;/b&gt;" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;fontColor=#000000;fontSize=11;" vertex="1" parent="frame7">
+          <mxGeometry x="30" y="40" width="500" height="60" as="geometry" />
+        </mxCell>
+
+        <mxCell id="line7" value="" style="endArrow=none;html=1;strokeColor=#000000;strokeWidth=1.5;" edge="1" parent="frame7">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="30" y="110" as="sourcePoint" />
+            <mxPoint x="530" y="110" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="ret_detail" value="&lt;b&gt;DETAIL BARANG YANG DIRETUR:&lt;/b&gt;&lt;br&gt;• Kode Varian Produk : PRD-SUP001-0042 (Minyak Goreng Sawit 2L)&lt;br&gt;• Jumlah Retur        : 5 Pouch Kemasan&lt;br&gt;• Alasan Retur        : Kemasan Bocor / Rusak Fisik (Damaged Item)&lt;br&gt;• Tindakan Solusi     : Ganti Barang Baru / Potong Tagihan Next PO" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;fontColor=#000000;fontSize=11;" vertex="1" parent="frame7">
+          <mxGeometry x="30" y="120" width="500" height="70" as="geometry" />
+        </mxCell>
+
+        <!-- BUKTI FOTO ATTACHMENT -->
+        <mxCell id="ret_img_box" value="&lt;b&gt;LAMPIRAN FOTO BUKTI FISIK DAMAGE BARANG:&lt;/b&gt;&lt;br&gt;&lt;br&gt;[ FOTO BUKTI KEMASAN BOCOR DILAMPIRKAN DAFTAR SURAT RETUR ]&lt;br&gt;(File: bukti_kemasan_bocor.jpg)" style="rounded=0;whiteSpace=wrap;html=1;align=center;fontSize=11;strokeColor=#000000;fillColor=#ffffff;" vertex="1" parent="frame7">
+          <mxGeometry x="30" y="205" width="500" height="130" as="geometry" />
+        </mxCell>
+
+        <mxCell id="sign_ret" value="Pengaju (Toko Dewi Lestari 2),&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;b&gt;( _________________________ )&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=middle;fontSize=11;fontColor=#000000;" vertex="1" parent="frame7">
+          <mxGeometry x="300" y="420" width="230" height="90" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+
+</mxfile>

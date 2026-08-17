@@ -14,7 +14,7 @@
 
         .admin-container{
             max-width:1200px;
-            margin:120px auto 50px;
+            margin:30px auto 50px;
             padding:20px;
         }
 
@@ -108,7 +108,7 @@
         }
     </style>
 </head>
-<body>
+<body class="admin-body">
 
 @include('partials.header')
 

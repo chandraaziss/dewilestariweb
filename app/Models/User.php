@@ -21,7 +21,12 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'phone',
+        'address',
         'password',
+        'plain_password',
+        'google_id',
+        'avatar',
     ];
 
     /**
@@ -45,5 +50,24 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class)->orderBy('id', 'desc');
+    }
+
+    public function addresses()
+    {
+        return $this->hasMany(UserAddress::class)->orderBy('is_primary', 'desc')->orderBy('id', 'asc');
+    }
+
+    public function getPrimaryAddressAttribute()
+    {
+        $primary = $this->addresses()->where('is_primary', true)->first();
+        if ($primary) {
+            return $primary->address;
+        }
+        return $this->address;
     }
 }

@@ -29,7 +29,7 @@ body {
 header {
     background: linear-gradient(135deg, #2e7d32, #4caf50);
     color: #ffeb3b;
-    padding: 1rem 0;
+    padding: 0.45rem 0;
     position: fixed;
     width: 100%;
     top: 0;
@@ -46,21 +46,21 @@ nav {
 .logo {
     display: flex;
     align-items: center;
-    gap: 10px;
-    font-size: 1.8rem;
+    gap: 8px;
+    font-size: 1.2rem;
     font-weight: bold;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .logo-icon {
-    width: 50px;
-    height: 50px;
+    width: 36px;
+    height: 36px;
     background: #ffeb3b;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.5rem;
+    font-size: 1rem;
     font-weight: bold;
     color: #2e7d32;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
@@ -69,7 +69,7 @@ nav {
 .nav-links {
     display: flex;
     list-style: none;
-    gap: 2rem;
+    gap: 0.75rem;
     align-items: center;
 }
 
@@ -78,8 +78,9 @@ nav {
     text-decoration: none;
     font-weight: 500;
     transition: all 0.3s ease;
-    padding: 0.5rem 1rem;
-    border-radius: 20px;
+    padding: 0.25rem 0.6rem;
+    border-radius: 16px;
+    font-size: 0.9rem;
 }
 
 .nav-links a:hover {
@@ -137,116 +138,327 @@ nav {
     background: linear-gradient(45deg, #f1f8e9, #e8f5e8);
 }
 .product-icon {
-    margin-bottom: 1rem;
+    margin-bottom: 0.75rem;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 4rem;
+    font-size: 3rem;
     font-weight: bold;
 }
 
 .product-icon img {
-    width: 150px;
-    height: 150px;
+    width: 130px;
+    height: 130px;
     object-fit: cover;
-    border-radius: 15px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
 }
 
 .section-title {
     text-align: center;
-    font-size: 3rem;
+    font-size: 2.5rem;
     color: #2e7d32;
-    margin-bottom: 3rem;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2.5rem;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+/* Product Search & Filter Toolbar */
+.product-search-wrapper {
+    max-width: 800px;
+    margin: -1rem auto 2.5rem auto;
+    padding: 0 15px;
+}
+
+.search-bar-box {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 8px 14px;
+    border-radius: 50px;
+    box-shadow: 0 6px 20px rgba(46, 125, 50, 0.12);
+    border: 2px solid rgba(46, 125, 50, 0.25);
+    transition: all 0.3s ease;
+}
+
+.search-bar-box:focus-within {
+    border-color: #2e7d32;
+    box-shadow: 0 8px 25px rgba(46, 125, 50, 0.22);
+}
+
+.search-input-group {
+    position: relative;
+    flex: 1;
+    min-width: 250px;
+    display: flex;
+    align-items: center;
+}
+
+.search-icon-inside {
+    position: absolute;
+    left: 16px;
+    font-size: 1.15rem;
+    color: #2e7d32;
+    pointer-events: none;
+}
+
+.product-search-input {
+    width: 100%;
+    padding: 11px 40px 11px 45px;
+    border-radius: 30px;
+    border: 1px solid transparent;
+    font-size: 0.98rem;
+    outline: none;
+    background: transparent;
+    color: #1b5e20;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.product-search-input::placeholder {
+    color: #777;
+    font-weight: 400;
+}
+
+.clear-search-btn {
+    position: absolute;
+    right: 14px;
+    background: #e0e0e0;
+    color: #555;
+    border: none;
+    border-radius: 50%;
+    width: 22px;
+    height: 22px;
+    font-size: 0.75rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.clear-search-btn:hover {
+    background: #d32f2f;
+    color: white;
+}
+
+.product-sort-select {
+    padding: 10px 16px;
+    border-radius: 30px;
+    border: 1px solid #c8e6c9;
+    background: #ffffff;
+    color: #2e7d32;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    outline: none;
+    transition: all 0.2s ease;
+}
+
+.product-sort-select:hover, .product-sort-select:focus {
+    border-color: #2e7d32;
+    background: #f1f8e9;
+}
+
+.search-stats-text {
+    margin-top: 10px;
+    text-align: center;
+    font-size: 0.9rem;
+    color: #2e7d32;
+    font-weight: 600;
+}
+
+.no-products-box {
+    text-align: center;
+    padding: 3.5rem 1.5rem;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.04);
+    max-width: 500px;
+    margin: 2rem auto;
+}
+
+.reset-search-btn {
+    margin-top: 1.2rem;
+    padding: 10px 22px;
+    background: #2e7d32;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+}
+
+.reset-search-btn:hover {
+    background: #1b5e20;
+    transform: translateY(-2px);
 }
 
 .product-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 2rem;
-    margin-top: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-top: 1.5rem;
 }
 
 .product-card {
     background: white;
-    border-radius: 20px;
-    padding: 2rem;
+    border-radius: 14px;
+    padding: 0.85rem;
     text-align: center;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
+    border: 1px solid rgba(46, 125, 50, 0.08);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+    transition: all 0.25s ease-in-out;
     position: relative;
     overflow: hidden;
+    max-width: 220px;
+    margin: 0 auto;
+    width: 100%;
 }
 
 .product-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-}
-
-.product-icon {
-    font-size: 4rem;
-    margin-bottom: 1rem;
-    font-weight: bold;
+    transform: translateY(-4px);
+    box-shadow: 0 10px 24px rgba(46, 125, 50, 0.1);
+    border-color: rgba(46, 125, 50, 0.2);
 }
 
 .product-card h3 {
-    font-size: 1.5rem;
-    color: #2e7d32;
-    margin-bottom: 1rem;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #1b5e20;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
 }
 
 .product-card p {
     color: #666;
-    margin-bottom: 1.5rem;
-    line-height: 1.6;
+    margin-bottom: 0.75rem;
+    line-height: 1.45;
+    font-size: 0.85rem;
+    height: 3.2em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
 }
 
 .price {
-    font-size: 1.8rem;
-    font-weight: bold;
+    font-size: 1.25rem;
+    font-weight: 700;
     color: #2e7d32;
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
 }
 
 .product-quantity {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
-    margin: 1rem 0;
+    gap: 8px;
+    margin: 0.6rem 0;
 }
 
 .product-quantity label {
     color: #2e7d32;
-    font-weight: bold;
+    font-weight: 600;
+    font-size: 0.85rem;
 }
 
 .product-quantity input {
-    width: 60px;
-    padding: 8px;
-    border: 2px solid #2e7d32;
-    border-radius: 8px;
+    width: 50px;
+    padding: 4px;
+    border: 1px solid rgba(46, 125, 50, 0.2);
+    border-radius: 6px;
     text-align: center;
-    font-size: 1rem;
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.product-quantity input:focus {
+    border-color: #2e7d32;
 }
 
 .order-btn {
     background: #2e7d32;
-    color: #ffeb3b;
-    padding: 12px 25px;
+    color: white;
+    padding: 10px 16px;
     border: none;
     border-radius: 25px;
     font-weight: bold;
     cursor: pointer;
-    transition: all 0.3s ease;
-    font-size: 1rem;
+    transition: all 0.2s ease;
+    font-size: 0.9rem;
     width: 100%;
+    box-shadow: 0 2px 6px rgba(46, 125, 50, 0.15);
 }
 
 .order-btn:hover {
+    background: #1b5e20;
+    box-shadow: 0 4px 12px rgba(46, 125, 50, 0.3);
+    transform: translateY(-1px);
+}
     background: #4caf50;
     transform: scale(1.05);
+}
+
+/* ===================================
+   SUPPLIER MODULE
+   =================================== */
+.supplier-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+    margin-top: 20px;
+}
+
+.supplier-card {
+    background: white;
+    padding: 20px;
+    border-radius: 14px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+}
+
+.supplier-card h3 {
+    color: #2e7d32;
+    margin-bottom: 8px;
+}
+
+.supplier-card p {
+    color: #666;
+    margin-bottom: 12px;
+}
+
+.supplier-form {
+    background: white;
+    padding: 20px;
+    border-radius: 14px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+    margin-top: 20px;
+}
+
+.supplier-form .form-row {
+    display: grid;
+    grid-template-columns: 1.5fr 0.5fr;
+    gap: 10px;
+    margin-bottom: 10px;
+    align-items: center;
+}
+
+.supplier-form label {
+    font-weight: bold;
+    color: #2e7d32;
+}
+
+.supplier-form input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
 }
 
 /* ===================================
@@ -699,8 +911,8 @@ footer {
 }
 .admin-container{
     max-width:1200px;
-    margin:40px auto;
-    padding:20px;
+    margin:30px auto;
+    padding:16px;
 }
 
 .admin-title{
@@ -718,12 +930,14 @@ footer {
 .admin-table th{
     background:#2e7d32;
     color:white;
-    padding:15px;
+    padding:10px;
+    font-size: 0.9rem;
 }
 
 .admin-table td{
-    padding:15px;
+    padding:10px;
     border-bottom:1px solid #ddd;
+    font-size: 0.9rem;
 }
 
 .badge-success{
@@ -755,8 +969,8 @@ footer {
 .report-card{
     flex:1;
     background:#fff;
-    padding:20px;
-    border-radius:15px;
+    padding:12px 14px;
+    border-radius:12px;
     box-shadow:0 5px 15px rgba(0,0,0,.1);
     text-align:center;
 }
@@ -808,4 +1022,116 @@ footer {
     padding:10px;
     margin-bottom:15px;
     border-radius:8px;
+}
+
+/* ===================================
+   ADMIN SIDEBAR STYLES (DESKTOP)
+   =================================== */
+@media (min-width: 768px) {
+    body.admin-body {
+        padding-left: 280px !important;
+        background: #f1f8e9;
+    }
+
+    body.admin-body .admin-container {
+        margin-top: 30px !important;
+        padding-top: 0 !important;
+    }
+
+    header.admin-sidebar {
+        width: 280px !important;
+        height: 100vh !important;
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        bottom: 0 !important;
+        box-shadow: 4px 0 15px rgba(0,0,0,0.1) !important;
+        border-right: 4px solid #ffeb3b !important; /* Accent border line separating sidebar and content */
+        background: linear-gradient(180deg, #2e7d32, #1b5e20) !important;
+        overflow-y: auto;
+    }
+
+    header.admin-sidebar nav {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        height: 100%;
+        padding: 30px 20px !important;
+        justify-content: flex-start !important;
+        gap: 30px !important;
+    }
+
+    header.admin-sidebar .logo {
+        width: 100% !important;
+        padding-bottom: 20px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        justify-content: center;
+        flex-direction: column;
+        gap: 12px;
+        text-align: center;
+    }
+
+    header.admin-sidebar .logo-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 1.5rem;
+    }
+
+    header.admin-sidebar .nav-links {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        width: 100% !important;
+        gap: 10px !important;
+        display: flex !important;
+    }
+
+    header.admin-sidebar .nav-links li {
+        width: 100% !important;
+    }
+
+    header.admin-sidebar .nav-links a {
+        display: flex !important;
+        align-items: center;
+        gap: 10px;
+        width: 100% !important;
+        padding: 12px 16px !important;
+        font-size: 0.95rem !important;
+        border-radius: 8px !important;
+        transition: all 0.2s ease-in-out;
+        color: #ffeb3b !important;
+        box-sizing: border-box;
+    }
+
+    header.admin-sidebar .nav-links a:hover {
+        background: rgba(255, 235, 59, 0.15) !important;
+        transform: translateX(5px) !important;
+    }
+}
+
+/* ===================================
+   ADMIN SIDEBAR STYLES (MOBILE)
+   =================================== */
+@media (max-width: 767px) {
+    body.admin-body {
+        padding-top: 140px !important; /* give enough room for wrapped header */
+    }
+    body.admin-body header {
+        position: absolute !important;
+        height: auto !important;
+        border-bottom: 3px solid #ffeb3b;
+    }
+    body.admin-body header nav {
+        flex-direction: column !important;
+        gap: 10px !important;
+        padding: 10px !important;
+    }
+    body.admin-body header .nav-links {
+        display: flex !important;
+        flex-wrap: wrap !important;
+        justify-content: center !important;
+        gap: 5px !important;
+    }
+    body.admin-body header .nav-links a {
+        padding: 5px 8px !important;
+        font-size: 0.8rem !important;
+    }
 }

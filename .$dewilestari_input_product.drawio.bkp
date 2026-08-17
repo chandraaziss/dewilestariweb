@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net" modified="2026-08-09T22:28:00.000Z" agent="5.0" version="21.0.0" type="device">
+  <diagram id="InputProductBW" name="Interface Input Tambah Produk">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="800" pageHeight="650" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- TITLE -->
+        <mxCell id="title" value="&lt;b&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;Gambar 4.24 Rancangan Interface Input Tambah Varian Produk Admin (/admin/supplier-stocks/create)&lt;/font&gt;&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="20" y="20" width="760" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- BROWSER FRAME -->
+        <mxCell id="frame" value="&lt;b&gt;https://dewilestari.com/admin/supplier-stocks/create&lt;/b&gt;" style="swimlane;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=12;fontColor=#000000;startSize=30;" vertex="1" parent="1">
+          <mxGeometry x="130" y="60" width="540" height="560" as="geometry" />
+        </mxCell>
+
+        <!-- HEADER -->
+        <mxCell id="hdr_title" value="&lt;b&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;Form Tambah Varian Produk &amp; Expired Date Baru&lt;/font&gt;&lt;/b&gt;" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;fontColor=#000000;" vertex="1" parent="frame">
+          <mxGeometry x="40" y="40" width="460" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- FIELD 1: SUPPLIER -->
+        <mxCell id="lbl1" value="&lt;b&gt;PEMASOK / SUPPLIER BARANG&lt;/b&gt;" style="text;html=1;fontSize=11;fontColor=#000000;align=left;" vertex="1" parent="frame">
+          <mxGeometry x="40" y="80" width="250" height="18" as="geometry" />
+        </mxCell>
+        <mxCell id="inp1" value="  [v] [SUP-001] PT. Sembako Jaya Indonesia" style="rounded=0;whiteSpace=wrap;html=1;align=left;fontSize=11;strokeColor=#000000;fillColor=#ffffff;" vertex="1" parent="frame">
+          <mxGeometry x="40" y="100" width="460" height="32" as="geometry" />
+        </mxCell>
+
+        <!-- FIELD 2: NAMA PRODUK & VARIAN -->
+        <mxCell id="lbl2" value="&lt;b&gt;NAMA PRODUK UTAMA&lt;/b&gt;" style="text;html=1;fontSize=11;fontColor=#000000;align=left;" vertex="1" parent="frame">
+          <mxGeometry x="40" y="145" width="200" height="18" as="geometry" />
+        </mxCell>
+        <mxCell id="inp2" value="  Minyak Goreng Sawit" style="rounded=0;whiteSpace=wrap;html=1;align=left;fontSize=11;strokeColor=#000000;fillColor=#ffffff;" vertex="1" parent="frame">
+          <mxGeometry x="40" y="165" width="220" height="32" as="geometry" />
+        </mxCell>
+
+        <mxCell id="lbl3" value="&lt;b&gt;NAMA VARIAN &amp; UKURAN&lt;/b&gt;" style="text;html=1;fontSize=11;fontColor=#000000;align=left;" vertex="1" parent="frame">
+          <mxGeometry x="280" y="145" width="200" height="18" as="geometry" />
+        </mxCell>
+        <mxCell id="inp3" value="  Kemasan Pouch | 2 Liter" style="rounded=0;whiteSpace=wrap;html=1;align=left;fontSize=11;strokeColor=#000000;fillColor=#ffffff;" vertex="1" parent="frame">
+          <mxGeometry x="280" y="165" width="220" height="32" as="geometry" />
+        </mxCell>
+
+        <!-- FIELD 3: HARGA HPP & HARGA JUAL -->
+        <mxCell id="lbl4" value="&lt;b&gt;HARGA HPP (RP)&lt;/b&gt;" style="text;html=1;fontSize=11;fontColor=#000000;align=left;" vertex="1" parent="frame">
+          <mxGeometry x="40" y="210" width="200" height="18" as="geometry" />
+        </mxCell>
+        <mxCell id="inp4" value="  Rp 28.000" style="rounded=0;whiteSpace=wrap;html=1;align=left;fontSize=11;strokeColor=#000000;fillColor=#ffffff;" vertex="1" parent="frame">
+          <mxGeometry x="40" y="230" width="220" height="32" as="geometry" />
+        </mxCell>
+
+        <mxCell id="lbl5" value="&lt;b&gt;HARGA JUAL (RP)&lt;/b&gt;" style="text;html=1;fontSize=11;fontColor=#000000;align=left;" vertex="1" parent="frame">
+          <mxGeometry x="280" y="210" width="200" height="18" as="geometry" />
+        </mxCell>
+        <mxCell id="inp5" value="  Rp 34.000" style="rounded=0;whiteSpace=wrap;html=1;align=left;fontSize=11;strokeColor=#000000;fillColor=#ffffff;" vertex="1" parent="frame">
+          <mxGeometry x="280" y="230" width="220" height="32" as="geometry" />
+        </mxCell>
+
+        <!-- FIELD 4: STOK AWAL & TANGGAL EXPIRED -->
+        <mxCell id="lbl6" value="&lt;b&gt;JUMLAH STOK AWAL&lt;/b&gt;" style="text;html=1;fontSize=11;fontColor=#000000;align=left;" vertex="1" parent="frame">
+          <mxGeometry x="40" y="275" width="200" height="18" as="geometry" />
+        </mxCell>
+        <mxCell id="inp6" value="  100" style="rounded=0;whiteSpace=wrap;html=1;align=left;fontSize=11;strokeColor=#000000;fillColor=#ffffff;" vertex="1" parent="frame">
+          <mxGeometry x="40" y="295" width="220" height="32" as="geometry" />
+        </mxCell>
+
+        <mxCell id="lbl7" value="&lt;b&gt;TANGGAL EXPIRED (KEDALUWARSA)&lt;/b&gt;" style="text;html=1;fontSize=11;fontColor=#000000;align=left;" vertex="1" parent="frame">
+          <mxGeometry x="280" y="275" width="220" height="18" as="geometry" />
+        </mxCell>
+        <mxCell id="inp7" value="  2027-12-31 (YYYY-MM-DD)" style="rounded=0;whiteSpace=wrap;html=1;align=left;fontSize=11;strokeColor=#000000;fillColor=#ffffff;" vertex="1" parent="frame">
+          <mxGeometry x="280" y="295" width="220" height="32" as="geometry" />
+        </mxCell>
+
+        <!-- FIELD 5: UPLOAD GAMBAR -->
+        <mxCell id="lbl8" value="&lt;b&gt;FOTO / GAMBAR PRODUK&lt;/b&gt;" style="text;html=1;fontSize=11;fontColor=#000000;align=left;" vertex="1" parent="frame">
+          <mxGeometry x="40" y="340" width="200" height="18" as="geometry" />
+        </mxCell>
+        <mxCell id="inp8" value="  [ Choose File... ] minyak_pouch.jpg (Max 2MB)" style="rounded=0;whiteSpace=wrap;html=1;align=left;fontSize=11;strokeColor=#000000;fillColor=#ffffff;fontColor=#666666;" vertex="1" parent="frame">
+          <mxGeometry x="40" y="360" width="460" height="32" as="geometry" />
+        </mxCell>
+
+        <!-- BUTTON SIMPAN -->
+        <mxCell id="btn_submit" value="&lt;b&gt;SIMPAN VARIAN PRODUK BARU&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontStyle=1;fontSize=13;" vertex="1" parent="frame">
+          <mxGeometry x="40" y="420" width="460" height="45" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

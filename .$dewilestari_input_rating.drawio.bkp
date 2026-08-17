@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net" modified="2026-08-09T22:28:00.000Z" agent="5.0" version="21.0.0" type="device">
+  <diagram id="InputRatingBW" name="Interface Input Rating Produk">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="800" pageHeight="550" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- TITLE -->
+        <mxCell id="title" value="&lt;b&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;Gambar 4.27 Rancangan Interface Input Rating &amp; Ulasan Produk (/customer/orders/rate)&lt;/font&gt;&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="10" y="20" width="780" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- BROWSER FRAME -->
+        <mxCell id="frame" value="&lt;b&gt;https://dewilestari.com/customer/orders/ORD-20260809-0148/rate&lt;/b&gt;" style="swimlane;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=12;fontColor=#000000;startSize=30;" vertex="1" parent="1">
+          <mxGeometry x="150" y="60" width="500" height="440" as="geometry" />
+        </mxCell>
+
+        <!-- HEADER -->
+        <mxCell id="hdr_title" value="&lt;b&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;Form Penilaian &amp; Ulasan Produk&lt;/font&gt;&lt;/b&gt;" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;fontColor=#000000;" vertex="1" parent="frame">
+          <mxGeometry x="40" y="40" width="420" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- FIELD 1: READONLY ORDER ID -->
+        <mxCell id="lbl1" value="&lt;b&gt;PESANAN PENJUALAN / INVOICE&lt;/b&gt;" style="text;html=1;fontSize=11;fontColor=#000000;align=left;" vertex="1" parent="frame">
+          <mxGeometry x="40" y="80" width="250" height="18" as="geometry" />
+        </mxCell>
+        <mxCell id="inp1" value="  ORD/20260809/0148 - Minyak Goreng Sawit 2L" style="rounded=0;whiteSpace=wrap;html=1;align=left;fontSize=11;strokeColor=#000000;fillColor=#ffffff;fontStyle=1;" vertex="1" parent="frame">
+          <mxGeometry x="40" y="100" width="420" height="32" as="geometry" />
+        </mxCell>
+
+        <!-- FIELD 2: BINTANG RATING (1-5) -->
+        <mxCell id="lbl2" value="&lt;b&gt;BERIKAN PENILAIAN BINTANG (1 HINGGA 5 BINTANG)&lt;/b&gt;" style="text;html=1;fontSize=11;fontColor=#000000;align=left;" vertex="1" parent="frame">
+          <mxGeometry x="40" y="145" width="350" height="18" as="geometry" />
+        </mxCell>
+        <mxCell id="inp2" value="  ★ ★ ★ ★ ★   (5 / 5 Sangat Memuaskan)" style="rounded=0;whiteSpace=wrap;html=1;align=center;fontSize=13;fontStyle=1;strokeColor=#000000;fillColor=#ffffff;fontColor=#000000;" vertex="1" parent="frame">
+          <mxGeometry x="40" y="165" width="420" height="35" as="geometry" />
+        </mxCell>
+
+        <!-- FIELD 3: KOMENTAR & ULASAN -->
+        <mxCell id="lbl3" value="&lt;b&gt;ULASAN / KOMENTAR PELANGGAN&lt;/b&gt;" style="text;html=1;fontSize=11;fontColor=#000000;align=left;" vertex="1" parent="frame">
+          <mxGeometry x="40" y="215" width="300" height="18" as="geometry" />
+        </mxCell>
+        <mxCell id="inp3" value="  Pengiriman sangat cepat, barang dikemas sangat rapi dan minyak tidak ada yang bocor. Expired date masih sangat lama. Terima kasih Toko Dewi Lestari 2!" style="rounded=0;whiteSpace=wrap;html=1;align=left;fontSize=11;strokeColor=#000000;fillColor=#ffffff;fontColor=#000000;" vertex="1" parent="frame">
+          <mxGeometry x="40" y="235" width="420" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- BUTTON KIRIM RATING -->
+        <mxCell id="btn_submit" value="&lt;b&gt;KIRIM PENILAIAN PRODUK&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontStyle=1;fontSize=13;" vertex="1" parent="frame">
+          <mxGeometry x="40" y="325" width="420" height="45" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

@@ -25,7 +25,7 @@ class AdminAuthController extends Controller
                 'admin_logged_in' => true
             ]);
 
-            return redirect('/admin/products');
+            return redirect('/admin/supplier-stocks');
         }
 
         return back()->with(

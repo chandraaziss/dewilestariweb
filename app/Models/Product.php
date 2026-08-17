@@ -16,7 +16,14 @@ class Product extends Model
         'image_path',
         'category',
         'stock',
+        'stock_entry_date',
+        'expiry_date',
         'is_active'
+    ];
+
+    protected $casts = [
+        'stock_entry_date' => 'date',
+        'expiry_date' => 'date',
     ];
 
     public function orderItems()

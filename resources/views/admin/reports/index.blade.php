@@ -2,98 +2,339 @@
 
 @section('content')
 
+<style>
+    .report-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 24px;
+    }
+
+    .report-subtitle {
+        color: #666;
+        margin-bottom: 24px;
+        line-height: 1.6;
+    }
+
+    .report-cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 16px;
+        margin-bottom: 24px;
+    }
+
+    .report-card {
+        background: white;
+        padding: 20px 22px;
+        border-radius: 14px;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    }
+
+    .report-card.filter-card {
+        margin-top: 28px;
+        margin-bottom: 24px;
+        padding-top: 24px;
+    }
+
+    .report-card h3 {
+        color: #4b5563;
+        font-size: 0.95rem;
+        margin-bottom: 8px;
+        font-weight: 700;
+        letter-spacing: 0.02em;
+    }
+
+    .report-card h2 {
+        color: #2e7d32;
+        font-size: 1.35rem;
+        margin: 0;
+        font-weight: 800;
+    }
+
+    .best-seller-box {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 12px;
+        align-items: center;
+        padding: 12px 0;
+    }
+
+    .table-wrapper {
+        overflow-x: auto;
+    }
+
+    .filter-form {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        align-items: end;
+        margin-bottom: 0;
+        padding: 16px;
+        background: white;
+        border-radius: 14px;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    }
+
+    .filter-group {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        min-width: 160px;
+    }
+
+    .filter-group label {
+        font-size: 0.95rem;
+        color: #1f2937;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+    }
+
+    .filter-group select,
+    .filter-group input {
+        border: 1px solid #cbd5e1;
+        border-radius: 8px;
+        padding: 10px 12px;
+        font-size: 0.95rem;
+        background: #fff;
+        box-shadow: inset 0 1px 2px rgba(0,0,0,0.04);
+    }
+
+    .admin-table {
+        width: 100%;
+        border-collapse: collapse;
+        table-layout: fixed;
+        background: white;
+        border: 1px solid #d9e7d7;
+    }
+
+    .admin-table thead th,
+    .admin-table tbody td {
+        padding: 13px 15px;
+        border: 1px solid #d9e7d7;
+        vertical-align: middle;
+        text-align: left;
+        white-space: nowrap;
+        line-height: 1.4;
+        height: 48px;
+    }
+
+    .admin-table thead th {
+        background: #2e7d32;
+        color: white;
+        font-weight: 800;
+        text-align: center;
+        font-size: 0.95rem;
+    }
+
+    .admin-table tbody tr:nth-child(even) {
+        background: #f9fdf7;
+    }
+
+    .admin-table tbody td:first-child {
+        width: 60px;
+        text-align: center;
+        font-weight: 600;
+        color: #444;
+    }
+
+    .admin-table tbody td:nth-child(2) {
+        text-align: left;
+    }
+
+    .admin-table tbody td:nth-child(3) {
+        text-align: center;
+        font-weight: 600;
+    }
+
+    .admin-table tbody td:last-child {
+        text-align: right;
+        font-weight: 700;
+        color: #2e7d32;
+    }
+
+    @media print {
+        .no-print {
+            display: none !important;
+        }
+
+        .admin-container {
+            margin: 20px auto;
+            padding: 0;
+        }
+
+        body {
+            background: white;
+        }
+
+        .report-card {
+            box-shadow: none;
+            border: 1px solid #ddd;
+        }
+
+        .admin-table th {
+            background: #000 !important;
+            color: white !important;
+        }
+    }
+</style>
+
 <div class="admin-container">
-
-    <h1 class="admin-title">
-        📊 Laporan Penjualan
-    </h1>
-
-    <div class="report-cards">
-
-        <div class="report-card">
-
-            <h3>Total Pesanan</h3>
-
-            <h2>
-                {{ $totalOrders }}
-            </h2>
-
-        </div>
-
-        <div class="report-card">
-
-            <h3>Total Penjualan</h3>
-
-            <h2>
-                Rp {{ number_format($totalSales,0,',','.') }}
-            </h2>
-
-        </div>
-
+    <div class="report-actions no-print">
+        <a href="/admin/orders" class="btn btn-success">🧾 Lihat Pesanan</a>
+        <a href="/admin/supplier-stocks" class="btn btn-warning">📦 Kelola Stok</a>
+        <button type="button" class="btn btn-danger" onclick="window.print()">🖨️ Cetak Laporan</button>
+        <a href="/admin/reports/export?report_type={{ $reportType }}&month={{ $month ?? now()->format('Y-m') }}&supplier_filter={{ $supplierFilter }}" class="btn btn-success">⬇️ Unduh CSV</a>
     </div>
 
-    <table class="admin-table">
+    <h1 class="admin-title">📊 Laporan Penjualan</h1>
+    <p class="report-subtitle">
+        Ringkasan penjualan, per supplier, dan bagi hasil 70% toko - 30% supplier dari pesanan yang sudah dibayar.
+    </p>
 
-        <thead>
+    <div class="report-cards">
+        <div class="report-card">
+            <h3>Total Pesanan</h3>
+            <h2>{{ $totalOrders }}</h2>
+        </div>
 
-            <tr>
-                <th>No Order</th>
-                <th>Pembeli</th>
-                <th>Total</th>
-                <th>Status</th>
-                <th>Tanggal</th>
-            </tr>
+        <div class="report-card">
+            <h3>Total Produk Terjual</h3>
+            <h2>{{ $totalItemsSold }}</h2>
+        </div>
 
-        </thead>
+        <div class="report-card">
+            <h3>Total Penjualan</h3>
+            <h2>Rp {{ number_format($totalSales,0,',','.') }}</h2>
+        </div>
 
-        <tbody>
+        <div class="report-card">
+            <h3>Bagian Toko (70%)</h3>
+            <h2>Rp {{ number_format($shopShare,0,',','.') }}</h2>
+        </div>
 
-        @forelse($orders as $order)
+        <div class="report-card">
+            <h3>Bagian Supplier (30%)</h3>
+            <h2>Rp {{ number_format($supplierShare,0,',','.') }}</h2>
+        </div>
+    </div>
 
-            <tr>
+    <div class="report-card" style="margin-bottom: 20px;">
+        <h3>🏆 Best Seller</h3>
+        <div class="best-seller-box">
+            <strong style="color: #2e7d32;">{{ $salesReport['best_seller']['product_name'] }}</strong>
+            <span>{{ $salesReport['best_seller']['quantity_sold'] }} unit terjual</span>
+            <span>Omzet: Rp {{ number_format($salesReport['best_seller']['revenue'],0,',','.') }}</span>
+        </div>
+    </div>
 
-                <td>
-                    {{ $order->order_number }}
-                </td>
+    <div class="report-card filter-card no-print">
+        <h3 style="margin-bottom: 14px; font-size: 1rem; color: #1f2937;">🔎 Filter Laporan</h3>
+        <form method="GET" action="/admin/reports" class="filter-form" style="margin-bottom: 0; padding: 0; box-shadow: none; background: transparent;">
+            <div class="filter-group">
+                <label>Jenis Laporan</label>
+                <select name="report_type">
+                    <option value="sales" {{ $reportType === 'sales' ? 'selected' : '' }}>Laporan Penjualan Toko</option>
+                    <option value="supplier" {{ $reportType === 'supplier' ? 'selected' : '' }}>Laporan Supplier</option>
+                    <option value="supplier_products" {{ $reportType === 'supplier_products' ? 'selected' : '' }}>Laporan Produk Supplier</option>
+                </select>
+            </div>
 
-                <td>
-                    {{ $order->customer_name }}
-                </td>
+            <div class="filter-group">
+                <label>Supplier</label>
+                <select name="supplier_filter">
+                    <option value="all" {{ $supplierFilter === 'all' ? 'selected' : '' }}>Semua Supplier</option>
+                    <option value="Supplier Dodol" {{ $supplierFilter === 'Supplier Dodol' ? 'selected' : '' }}>Supplier Dodol</option>
+                    <option value="Supplier Kripik" {{ $supplierFilter === 'Supplier Kripik' ? 'selected' : '' }}>Supplier Kripik</option>
+                    <option value="Supplier Bolu" {{ $supplierFilter === 'Supplier Bolu' ? 'selected' : '' }}>Supplier Bolu</option>
+                </select>
+            </div>
 
-                <td>
-                    Rp {{ number_format($order->total_amount,0,',','.') }}
-                </td>
+            <div class="filter-group">
+                <label>Pilih Bulan</label>
+                <input type="month" name="month" value="{{ $month ?? now()->format('Y-m') }}">
+            </div>
 
-                <td>
+            <div class="filter-group">
+                <button type="submit" class="btn btn-success">🔎 Tampilkan</button>
+            </div>
+        </form>
+    </div>
 
-                    <span class="badge-success">
-                        Paid
-                    </span>
+    @if($reportType === 'supplier' || $reportType === 'supplier_products')
+        <div class="table-wrapper">
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Nama Supplier</th>
+                        <th>Jumlah Terjual</th>
+                        <th>Total Pendapatan</th>
+                        <th>Bagian Toko 70%</th>
+                        <th>Bagian Supplier 30%</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse($salesReport['supplier_breakdown'] as $index => $supplier)
+                        <tr>
+                            <td>{{ $index + 1 }}</td>
+                            <td>{{ $supplier['supplier_name'] }}</td>
+                            <td>{{ $supplier['quantity_sold'] }}</td>
+                            <td>Rp {{ number_format($supplier['total_revenue'],0,',','.') }}</td>
+                            <td>Rp {{ number_format($supplier['shop_share'],0,',','.') }}</td>
+                            <td>Rp {{ number_format($supplier['supplier_share'],0,',','.') }}</td>
+                        </tr>
 
-                </td>
-
-                <td>
-                    {{ $order->created_at }}
-                </td>
-
-            </tr>
-
-        @empty
-
-            <tr>
-
-                <td colspan="5">
-                    Belum ada penjualan
-                </td>
-
-            </tr>
-
-        @endforelse
-
-        </tbody>
-
-    </table>
-
+                        @if($reportType === 'supplier_products')
+                            @foreach($supplier['products'] as $product)
+                                <tr style="background: #fffdf5;">
+                                    <td></td>
+                                    <td style="padding-left: 24px;">↳ {{ $product['product_name'] }}</td>
+                                    <td>{{ $product['quantity_sold'] }}</td>
+                                    <td>Rp {{ number_format($product['revenue'],0,',','.') }}</td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            @endforeach
+                        @endif
+                    @empty
+                        <tr>
+                            <td colspan="6">Belum ada data supplier</td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
+    @else
+        <div class="table-wrapper">
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Nama Produk</th>
+                        <th>Jumlah Terjual</th>
+                        <th>Total Pendapatan</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse($salesReport['products'] as $index => $product)
+                        <tr>
+                            <td>{{ $index + 1 }}</td>
+                            <td>{{ $product['product_name'] }}</td>
+                            <td>{{ $product['quantity_sold'] }}</td>
+                            <td>Rp {{ number_format($product['revenue'],0,',','.') }}</td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="4">Belum ada data penjualan</td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
+    @endif
+</div>
 </div>
 
 @endsection

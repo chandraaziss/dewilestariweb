@@ -1,61 +1,115 @@
-<h1>Edit Produk</h1>
+@extends('admin.layout')
 
-<form
-    action="/admin/products/{{ $product->id }}"
-    method="POST"
-    enctype="multipart/form-data"
->
-    @csrf
-    @method('PUT')
+@section('content')
 
-    Nama Produk
-    <input
-        type="text"
-        name="name"
-        value="{{ $product->name }}"
+<div class="admin-card">
+
+    <h1 class="admin-title">
+        ✏️ Edit Produk
+    </h1>
+
+    <form
+        action="/admin/products/{{ $product->id }}"
+        method="POST"
+        enctype="multipart/form-data"
     >
-    <br><br>
+        @csrf
+        @method('PUT')
 
-    Deskripsi
-    <textarea name="description">{{ $product->description }}</textarea>
-    <br><br>
+        <div class="form-group">
+            <label>Nama Produk</label>
+            <input type="text"
+                   name="name"
+                   class="form-control"
+                   value="{{ $product->name }}"
+                   required>
+        </div>
 
-    Harga
-    <input
-        type="number"
-        name="price"
-        value="{{ $product->price }}"
-    >
-    <br><br>
+        <div class="form-group">
+            <label>Berat Produk</label>
+            <input type="text"
+                   name="category"
+                   class="form-control"
+                   value="{{ $product->category }}"
+                   placeholder="Contoh: 250 gram"
+                   required>
+        </div>
 
-    Stok
-    <input
-        type="number"
-        name="stock"
-        value="{{ $product->stock }}"
-    >
-    <br><br>
-    Berat Produk
-    <input
-    type="text"
-    name="category"
-    value="{{ $product->category }}"
-    >
-    <br><br>
+        <div class="form-group">
+            <label>Deskripsi</label>
+            <textarea name="description"
+                      class="form-control"
+                      required>{{ $product->description }}</textarea>
+        </div>
 
-    @if($product->image_path)
-        <img
-            src="/{{ $product->image_path }}"
-            width="120"
-        >
-        <br><br>
-    @endif
+        <div class="form-group">
+            <label>Harga</label>
+            <input type="number"
+                   name="price"
+                   class="form-control"
+                   value="{{ $product->price }}"
+                   required>
+        </div>
 
-    Ganti Gambar
-    <input type="file" name="image">
-    <br><br>
+        <div class="form-group">
+            <label>Manajemen Stok</label>
+            <input type="number"
+                   name="stock"
+                   class="form-control"
+                   value="{{ $product->stock }}"
+                   required>
+        </div>
 
-    <button type="submit">
-        Update
-    </button>
-</form>
+        <div class="form-group">
+            <label>Ambil dari Stok Masuk Supplier (Opsional)</label>
+            <select name="supplier_stock_id" class="form-control">
+                <option value="">-- Tidak memotong stok supplier --</option>
+                @foreach($supplierStocks as $s_stock)
+                    <option value="{{ $s_stock->id }}">
+                        {{ $s_stock->supplier->name ?? 'Unknown' }} | {{ $s_stock->item_name }} ({{ $s_stock->weight }}) - Sisa: {{ $s_stock->available_quantity }}
+                    </option>
+                @endforeach
+            </select>
+            <small style="color: #666; font-size: 0.85em; display: block; margin-top: 5px;">Jika dipilih dan ada <b>penambahan</b> stok di atas, maka penambahan tersebut akan memotong sisa ketersediaan dari supplier ini.</small>
+        </div>
+
+        <div class="form-group">
+            <label>Tanggal Masuk Barang</label>
+            <input type="date"
+                   name="stock_entry_date"
+                   class="form-control"
+                   value="{{ $product->stock_entry_date ? $product->stock_entry_date->format('Y-m-d') : '' }}">
+        </div>
+
+        <div class="form-group">
+            <label>Tanggal Expire</label>
+            <input type="date"
+                   name="expiry_date"
+                   class="form-control"
+                   value="{{ $product->expiry_date ? $product->expiry_date->format('Y-m-d') : '' }}">
+        </div>
+
+        <div class="form-group">
+            <label>Gambar</label>
+            <input type="file"
+                   name="image"
+                   class="form-control">
+        </div>
+
+        @if($product->image_path)
+            <div class="form-group">
+                <label>Gambar Saat Ini</label>
+                <div>
+                    <img src="/{{ $product->image_path }}" width="120" alt="{{ $product->name }}">
+                </div>
+            </div>
+        @endif
+
+        <button type="submit" class="btn btn-success">
+            Update Produk
+        </button>
+    </form>
+
+</div>
+
+@endsection
