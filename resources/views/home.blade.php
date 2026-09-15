@@ -64,7 +64,8 @@
                         </select>
                         <small id="deliveryHint" style="display:none; color:#15803d; margin-top:6px;">ℹ️ Ongkir Kurir Toko
                             Lokal: Rp 10.000 per 5 km dari lokasi toko.</small>
-                        <small id="localDeliveryWarning" style="display:none; color:#dc2626; background:#fef2f2; border:1px solid #fca5a5; padding:8px 10px; border-radius:6px; margin-top:8px; font-size:12px; line-height:1.4;"></small>
+                        <small id="localDeliveryWarning"
+                            style="display:none; color:#dc2626; background:#fef2f2; border:1px solid #fca5a5; padding:8px 10px; border-radius:6px; margin-top:8px; font-size:12px; line-height:1.4;"></small>
                     </div>
 
                     <!-- Section for Expedition Third Party Courier options -->
@@ -158,38 +159,69 @@
                         </div>
                     </div>
 
+                    <!-- Card Perkiraan Waktu Tiba Barang -->
+                    <div id="estimatedDeliveryCard"
+                        style="display: none; background: #f0f9ff; border: 1.5px solid #0284c7; padding: 14px 16px; border-radius: 10px; margin-bottom: 16px;">
+                        <div
+                            style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; flex-wrap: wrap; gap: 6px;">
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <span style="font-size: 18px;">⏱️</span>
+                                <h5 id="estCardTitle" style="margin: 0; color: #0369a1; font-size: 14px; font-weight: 800;">
+                                    Perkiraan Waktu Tiba Barang</h5>
+                            </div>
+                            <span id="estCardBadge"
+                                style="font-size: 11px; font-weight: 800; padding: 3px 10px; border-radius: 12px; background: #dcfce7; color: #166534; border: 1px solid #86efac;">Tiba
+                                Hari Ini</span>
+                        </div>
+                        <div id="estCardEtaText" style="font-size: 13px; color: #0f172a; margin-bottom: 4px;">
+                            <!-- Perkiraan Sampai: Senin, 24 Agustus 2026 -->
+                        </div>
+                        <div id="estCardTimeText" style="font-size: 12.5px; color: #334155;">
+                            <!-- Pukul 10:00 - 17:00 WIB [1-2 Hari Kerja] -->
+                        </div>
+                    </div>
+
                     <div class="form-group">
                         <label for="orderNotes">Catatan Pesanan</label>
                         <textarea id="orderNotes" rows="2" placeholder="Catatan khusus (opsional)"></textarea>
                     </div>
 
                     <!-- Pilihan Metode Pembayaran -->
-                    <div class="form-group" style="background: #f8fafc; padding: 14px; border-radius: 10px; border: 1px solid #cbd5e1; margin-bottom: 16px;">
-                        <label style="font-weight: bold; color: #1e293b; font-size: 13.5px; display: block; margin-bottom: 10px;">
+                    <div class="form-group"
+                        style="background: #f8fafc; padding: 14px; border-radius: 10px; border: 1px solid #cbd5e1; margin-bottom: 16px;">
+                        <label
+                            style="font-weight: bold; color: #1e293b; font-size: 13.5px; display: block; margin-bottom: 10px;">
                             💳 Pilih Metode Pembayaran *
                         </label>
                         <div style="display: flex; flex-direction: column; gap: 8px;">
-                            <label style="display: flex; align-items: center; gap: 10px; padding: 10px 12px; border: 2px solid #2e7d32; border-radius: 8px; background: #f0fdf4; cursor: pointer; font-weight: 600; font-size: 13px;">
-                                <input type="radio" name="payment_method" value="midtrans" checked onchange="togglePaymentMethodInfo('midtrans')">
+                            <label
+                                style="display: flex; align-items: center; gap: 10px; padding: 10px 12px; border: 2px solid #2e7d32; border-radius: 8px; background: #f0fdf4; cursor: pointer; font-weight: 600; font-size: 13px;">
+                                <input type="radio" name="payment_method" value="midtrans" checked
+                                    onchange="togglePaymentMethodInfo('midtrans')">
                                 <span>💳 Pembayaran Online / QRIS / E-Wallet (Midtrans)</span>
                             </label>
-                            <label style="display: flex; align-items: center; gap: 10px; padding: 10px 12px; border: 2px solid #0284c7; border-radius: 8px; background: #f0f9ff; cursor: pointer; font-weight: 600; font-size: 13px;">
-                                <input type="radio" name="payment_method" value="transfer_bank" onchange="togglePaymentMethodInfo('transfer_bank')">
+                            <label
+                                style="display: flex; align-items: center; gap: 10px; padding: 10px 12px; border: 2px solid #0284c7; border-radius: 8px; background: #f0f9ff; cursor: pointer; font-weight: 600; font-size: 13px;">
+                                <input type="radio" name="payment_method" value="transfer_bank"
+                                    onchange="togglePaymentMethodInfo('transfer_bank')">
                                 <span>🏦 Transfer Bank Manual (No. Rekening BCA - Verifikasi Kasir)</span>
                             </label>
                         </div>
-                        <div id="transferBankInfo" style="display: none; margin-top: 10px; background: #ffffff; padding: 10px 12px; border-radius: 6px; border: 1px dashed #0284c7; color: #0369a1; font-size: 12px;">
-                            ℹ️ Transfer ke <strong>BCA 123-456-7890 a.n Toko Dewi Lestari 2</strong>. Setelah checkout, Anda dapat mengunggah struk atau menekan <strong>Simulasi Bayar Instan</strong> untuk verifikasi kasir.
+                        <div id="transferBankInfo"
+                            style="display: none; margin-top: 10px; background: #ffffff; padding: 10px 12px; border-radius: 6px; border: 1px dashed #0284c7; color: #0369a1; font-size: 12px;">
+                            ℹ️ Transfer ke <strong>BCA 123-456-7890 a.n Toko Dewi Lestari 2</strong>. Setelah checkout, Anda
+                            dapat mengunggah struk atau menekan <strong>Simulasi Bayar Instan</strong> untuk verifikasi
+                            kasir.
                         </div>
                     </div>
 
                     <script>
-                    function togglePaymentMethodInfo(method) {
-                        const info = document.getElementById('transferBankInfo');
-                        if (info) {
-                            info.style.display = method === 'transfer_bank' ? 'block' : 'none';
+                        function togglePaymentMethodInfo(method) {
+                            const info = document.getElementById('transferBankInfo');
+                            if (info) {
+                                info.style.display = method === 'transfer_bank' ? 'block' : 'none';
+                            }
                         }
-                    }
                     </script>
 
                     <div class="order-summary">
@@ -198,6 +230,11 @@
                         <div class="order-item">
                             <span>Biaya Pengiriman:</span>
                             <span id="deliveryCost">Rp 0</span>
+                        </div>
+                        <div class="order-item" id="summaryEstRow"
+                            style="display: none; border-top: 1px dashed #cbd5e1; padding-top: 6px; margin-top: 4px;">
+                            <span style="font-size: 12.5px; color: #475569;">⏱️ Perkiraan Tiba:</span>
+                            <span id="summaryEstText" style="font-weight: bold; color: #0284c7; font-size: 12.5px;">-</span>
                         </div>
                         <div class="order-item">
                             <span>Total Pembayaran:</span>
@@ -296,9 +333,9 @@
             </div>
 
             <div
-                style="text-align: center; margin-top: 3rem; padding: 2rem; background: rgba(46, 125, 50, 0.1); border-radius: 15px;">
-                <h3 style="color: #2e7d32; margin-bottom: 1rem;">💡 Informasi Penting</h3>
-                <p style="color: #666; font-size: 1.1rem; line-height: 1.6;">
+                style="text-align: center; margin-top: 3rem; padding: 2rem; background: #e8f5e9; border: 1px solid #c8e6c9; border-radius: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.03);">
+                <h3 style="color: #2e7d32; margin-bottom: 1rem; font-weight: 700;">💡 Informasi Penting</h3>
+                <p style="color: #2e7d32; font-size: 1.1rem; line-height: 1.8; font-weight: 500;">
                     ✅ Minimal pembelian 1 pack<br>
                     ✅ Harga belum termasuk ongkos kirim<br>
                     ✅ Produk fresh dan higienis<br>
@@ -495,7 +532,7 @@
             const productGrid = document.getElementById('product-grid');
             productGrid.innerHTML = '';
 
-            products.forEach((product) => {
+            products.forEach((product, index) => {
                 const selectedVariant = product.variants.find(v => v.stock > 0) || product.variants[0];
                 const productCard = document.createElement('div');
                 productCard.className = 'product-card';
@@ -507,45 +544,56 @@
                     return `<option value="${v.id}" data-price="${v.price}" data-stock="${v.stock}" data-weight="${v.weight}" ${isSelected} ${isDisabled}>${v.weight} ${priceText}</option>`;
                 }).join('');
 
+                let badgeTag = '<div class="product-badge-tag">🍃 ALAMI</div>';
+                const pNameLower = product.name.toLowerCase();
+                if (index === 0 || pNameLower.includes('original') || pNameLower.includes('sagu')) {
+                    badgeTag = '<div class="product-badge-tag" style="background: linear-gradient(135deg, #16a34a 0%, #15803d 100%); font-weight:800;">🔥 BEST SELLER</div>';
+                } else if (pNameLower.includes('pedas')) {
+                    badgeTag = '<div class="product-badge-tag" style="background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);">🌶️ HOT PEDAS</div>';
+                } else if (pNameLower.includes('wajik') || pNameLower.includes('garut')) {
+                    badgeTag = '<div class="product-badge-tag" style="background: linear-gradient(135deg, #d97706 0%, #b45309 100%);">⭐ FAVORIT</div>';
+                }
+
                 productCard.innerHTML = `
-                                <div class="product-icon">
-                                    ${product.image_path
+                                    ${badgeTag}
+                                    <div class="product-icon">
+                                        ${product.image_path
                         ? `<img src="${product.image_path}" alt="${product.name}">`
                         : '<span style="color: #999; font-size: 2rem;">📦</span>'}
-                                </div>
-                                <h3>${product.name}</h3>
+                                    </div>
+                                    <h3>${product.name}</h3>
 
-                                <div class="product-variant" style="margin-bottom: 1rem; text-align: left;">
-                                    <label style="font-weight: bold; color: #2e7d32; display: block; margin-bottom: 0.5rem; font-size: 0.9rem;">⚖️ Pilih Ukuran:</label>
-                                    <select class="variant-select" onchange="window.updateCardVariant(this)" style="width: 100%; padding: 8px; border-radius: 8px; border: 1px solid #2e7d32; outline: none; background: white; cursor: pointer; font-size: 0.95rem;">
-                                        ${optionsHtml}
-                                    </select>
-                                </div>
+                                    <div class="product-variant" style="margin-bottom: 0.8rem; text-align: left;">
+                                        <label style="font-weight: bold; color: #166534; display: block; margin-bottom: 0.4rem; font-size: 0.85rem;">⚖️ Pilih Ukuran:</label>
+                                        <select class="variant-select" onchange="window.updateCardVariant(this)">
+                                            ${optionsHtml}
+                                        </select>
+                                    </div>
 
-                                <p>${product.description}</p>
-                                <div class="price">Rp ${parseInt(selectedVariant.price).toLocaleString('id-ID')}</div>
-                                <p class="stock-display">Stok tersedia: ${selectedVariant.stock}</p>
+                                    <p>${product.description}</p>
+                                    <div class="price">Rp ${parseInt(selectedVariant.price).toLocaleString('id-ID')}</div>
+                                    <p class="stock-display">Stok tersedia: ${selectedVariant.stock}</p>
 
-                                ${selectedVariant.stock > 0 && selectedVariant.stock <= 10
-                        ? `<p class="stock-warning" style="margin:0.5rem 0 0 0; color:#d32f2f; font-weight:bold;">⚠️ Stok hampir habis (${selectedVariant.stock} pcs tersisa)</p>`
+                                    ${selectedVariant.stock > 0 && selectedVariant.stock <= 10
+                        ? `<p class="stock-warning" style="margin:0.5rem 0 0 0; color:#d32f2f; font-weight:bold;">⚠️ Stok hampir habis (${selectedVariant.stock} bungkus tersisa)</p>`
                         : ''}
 
-                                <div class="product-action-section" style="margin-top: 1rem;">
-                                    ${product.total_stock > 0 ? `
-                                        <div class="product-quantity">
-                                            <label>Jumlah:</label>
-                                            <input type="number" class="qty-input" min="1" max="${Math.min(50, selectedVariant.stock)}" value="1" style="width: 60px; padding: 5px; border-radius: 5px; border: 1px solid #ccc; text-align: center;">
-                                        </div>
-                                        <button type="button" class="order-btn" onclick="window.addToCartFromCard(this, '${product.name.replace(/'/g, "\\'")}')">
-                                            🛒 Tambah ke Keranjang
-                                        </button>
-                                    ` : `
-                                        <div style="background: #ffcdd2; color: #c62828; padding: 10px; border-radius: 8px; font-weight: bold; text-align: center;">
-                                            ❌ Stok Habis
-                                        </div>
-                                    `}
-                                </div>
-                                `;
+                                    <div class="product-action-section" style="margin-top: 1rem;">
+                                        ${product.total_stock > 0 ? `
+                                            <div class="product-quantity">
+                                                <label>Jumlah:</label>
+                                                <input type="number" class="qty-input" min="1" max="${Math.min(50, selectedVariant.stock)}" value="1" style="width: 60px; padding: 5px; border-radius: 5px; border: 1px solid #ccc; text-align: center;">
+                                            </div>
+                                            <button type="button" class="order-btn" onclick="window.addToCartFromCard(this, '${product.name.replace(/'/g, "\\'")}')">
+                                                🛒 Tambah ke Keranjang
+                                            </button>
+                                        ` : `
+                                            <div style="background: #ffcdd2; color: #c62828; padding: 10px; border-radius: 8px; font-weight: bold; text-align: center;">
+                                                ❌ Stok Habis
+                                            </div>
+                                        `}
+                                    </div>
+                                    `;
 
                 productGrid.appendChild(productCard);
             });
@@ -596,7 +644,7 @@
                     warningP.style.cssText = 'margin:0.5rem 0 0 0; color:#d32f2f; font-weight:bold;';
                     card.insertBefore(warningP, card.querySelector('.product-action-section'));
                 }
-                warningP.textContent = `⚠️ Stok hampir habis (${stock} pcs tersisa)`;
+                warningP.textContent = `⚠️ Stok hampir habis (${stock} bungkus tersisa)`;
             } else {
                 if (warningP) {
                     warningP.remove();
@@ -620,7 +668,7 @@
             const quantity = parseInt(qtyInput.value);
 
             if (isNaN(quantity) || quantity < 1 || quantity > 50) {
-                showNotification('Jumlah harus antara 1-50 pcs', 'error');
+                showNotification('Jumlah harus antara 1-50 bungkus', 'error');
                 return;
             }
             if (quantity > stock) {

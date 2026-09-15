@@ -75,10 +75,59 @@
                 </div>
                 <span style="background: #10b981; color: white; padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: bold; box-shadow: 0 2px 6px rgba(16, 185, 129, 0.2);">
                     {{ $order->tracking_status === 'completed' ? 'TERKIRIM' : ($isPickupOrder ? 'SIAP AMBIL' : 'ESTIMASI TIBA') }}
-                </span>
             </div>
         </div>
     </div>
+    @php
+        $isPaymentFailed = in_array($order->payment_status, ['failed', 'rejected', 'payment_rejected', 'cancelled']);
+        $isPendingVerif = $order->payment_status === 'pending_verification';
+    @endphp
+
+    @if($isPaymentFailed || ($order->notes && (str_contains(strtolower($order->notes), 'ditolak') || str_contains(strtolower($order->notes), 'kendala'))))
+        <!-- Payment Issue & Re-upload Card -->
+        <div style="background: #fff5f5; padding: 25px; border-radius: 16px; box-shadow: 0 4px 20px rgba(220, 38, 38, 0.1); border: 2px solid #fca5a5; margin-bottom: 30px;">
+            <div style="display: flex; align-items: flex-start; gap: 14px; margin-bottom: 16px;">
+                <div style="font-size: 32px; line-height: 1;">⚠️</div>
+                <div style="flex-grow: 1;">
+                    <h3 style="margin: 0 0 4px 0; color: #991b1b; font-size: 18px; font-weight: 800;">Perhatian: Kendala / Penolakan Pembayaran</h3>
+                    <p style="margin: 0; color: #7f1d1d; font-size: 13.5px; line-height: 1.5;">
+                        Admin/Kasir menemukan kendala pada bukti pembayaran pesanan Anda. Pesanan Anda <strong>TIDAK DIBATALKAN</strong> — Silakan periksa catatan kasir di bawah ini dan unggah foto bukti transfer yang benar/perbaikan.
+                    </p>
+                </div>
+            </div>
+
+            @if($order->notes)
+                <div style="background: white; padding: 14px 16px; border-radius: 10px; border: 1px solid #fecaca; margin-bottom: 18px;">
+                    <div style="font-size: 12px; font-weight: bold; color: #991b1b; text-transform: uppercase; margin-bottom: 4px;">📌 Catatan dari Admin Kasir:</div>
+                    <div style="font-size: 14px; color: #1f2937; font-weight: 600;">{{ $order->notes }}</div>
+                </div>
+            @endif
+
+            <form action="/track-order/{{ rawurlencode($order->tracking_ticket_id ?: $order->order_number) }}/reupload-proof" method="POST" enctype="multipart/form-data" style="background: white; padding: 18px; border-radius: 12px; border: 1px solid #fed7d7;">
+                @csrf
+                <label style="display: block; font-weight: bold; font-size: 14px; color: #1f2937; margin-bottom: 8px;">
+                    📤 Unggah Foto Bukti Transfer Baru / Perbaikan:
+                </label>
+                <input type="file" name="proof_image" accept="image/*" required style="width: 100%; padding: 10px; border: 1px dashed #dc2626; border-radius: 8px; background: #fff5f5; font-size: 13px; color: #374151; box-sizing: border-box; cursor: pointer;">
+                <small style="display: block; color: #6b7280; font-size: 12px; margin-top: 6px;">Format foto: JPG, PNG, WEBP. Maksimal 5 MB.</small>
+
+                <div style="margin-top: 14px; text-align: right;">
+                    <button type="submit" style="background: linear-gradient(135deg, #dc2626, #b91c1c); color: white; border: none; padding: 10px 24px; border-radius: 8px; font-weight: bold; font-size: 14px; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 4px 10px rgba(220,38,38,0.25);">
+                        <span>📤</span> Kirim Ulang Bukti Transfer
+                    </button>
+                </div>
+            </form>
+        </div>
+    @elseif($isPendingVerif && $order->transfer_proof)
+        <!-- Waiting Verification Banner -->
+        <div style="background: #eff6ff; padding: 20px; border-radius: 16px; border: 1.5px solid #bfdbfe; margin-bottom: 30px; display: flex; align-items: center; gap: 14px;">
+            <div style="font-size: 28px;">⏳</div>
+            <div>
+                <h4 style="margin: 0 0 2px 0; color: #1e40af; font-size: 16px; font-weight: bold;">Bukti Transfer Sedang Diverifikasi</h4>
+                <p style="margin: 0; color: #1e3a8a; font-size: 13px;">Foto bukti transfer Anda telah diterima dan sedang diperiksa oleh kasir. Pesanan Anda akan segera diproses begitu pembayaran terverifikasi.</p>
+            </div>
+        </div>
+    @endif
 
     <!-- Leaflet OpenStreetMap CDN -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />

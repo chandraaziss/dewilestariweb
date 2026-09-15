@@ -188,10 +188,41 @@
         <a href="/admin/reports/export?report_type={{ $reportType }}&month={{ $month ?? now()->format('Y-m') }}&supplier_filter={{ $supplierFilter }}" class="btn btn-success">⬇️ Unduh CSV</a>
     </div>
 
-    <h1 class="admin-title">📊 Laporan Penjualan</h1>
-    <p class="report-subtitle">
-        Ringkasan penjualan, per supplier, dan bagi hasil 70% toko - 30% supplier dari pesanan yang sudah dibayar.
-    </p>
+    {{-- Kop Surat Formal Premium Gold-Emerald Stripe --}}
+    <div style="display: flex; align-items: center; gap: 24px; padding-bottom: 12px;">
+        <div style="flex-shrink: 0;">
+            <div style="width: 88px; height: 88px; border-radius: 50%; background: radial-gradient(circle, #ffeb3b 0%, #facc15 70%, #eab308 100%); border: 4px solid #15803d; box-shadow: 0 6px 14px rgba(21, 128, 61, 0.25), inset 0 0 10px rgba(255, 255, 255, 0.8); display: flex; flex-direction: column; align-items: center; justify-content: center; color: #15803d; text-align: center; font-weight: 900; line-height: 1;">
+                <div style="font-size: 28px; font-weight: 900; color: #15803d; letter-spacing: -1px; text-shadow: 1px 1px 0px rgba(255, 255, 255, 0.9);">DL</div>
+                <div style="font-size: 8.5px; font-weight: 800; color: #166534; margin-top: 2px; text-transform: uppercase; letter-spacing: 0.5px;">Dewi Lestari 2</div>
+            </div>
+        </div>
+        <div style="flex-grow: 1; text-align: right;">
+            <h2 style="margin: 0; font-size: 26px; font-weight: 900; color: #0f172a; letter-spacing: 1px; text-transform: uppercase; line-height: 1.1;">TOKO DEWI LESTARI 2</h2>
+            <div style="font-size: 12px; font-weight: 700; color: #15803d; margin-top: 3px; letter-spacing: 0.5px; text-transform: uppercase;">Pusat Oleh-Oleh & Kuliner Khas Bandung / Jawa Barat</div>
+            <p style="margin: 4px 0 0; font-size: 12px; color: #334155; line-height: 1.4;">Jl. Raya Cimindi No.59, Pasirkaliki, Kec. Cimahi Utara, Kota Cimahi, Jawa Barat 40535</p>
+            <div style="font-size: 11.5px; color: #475569; margin-top: 4px; font-weight: 600; display: flex; justify-content: flex-end; align-items: center; gap: 8px; flex-wrap: wrap;">
+                <span>📞 0812-2195-6759</span>
+                <span style="color: #15803d; font-weight: bold;">•</span>
+                <span>✉️ info@dewilestari2.com</span>
+                <span style="color: #15803d; font-weight: bold;">•</span>
+                <span>🌐 www.dewilestari2.com</span>
+            </div>
+        </div>
+    </div>
+
+    {{-- Garis Kop Ganda Emas - Hijau --}}
+    <div style="margin-top: 8px; margin-bottom: 24px;">
+        <div style="height: 5px; background: linear-gradient(90deg, #15803d 0%, #166534 60%, #eab308 100%); border-radius: 2px;"></div>
+        <div style="height: 2px; background: #eab308; margin-top: 3px; border-radius: 1px;"></div>
+    </div>
+
+    {{-- Banner Judul Laporan --}}
+    <div style="text-align: center; margin-bottom: 24px; background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%); padding: 14px 20px; border-radius: 10px; border: 1px solid #86efac; border-left: 6px solid #15803d; box-shadow: 0 2px 8px rgba(21, 128, 61, 0.06);">
+        <h1 style="font-size: 20px; font-weight: 900; letter-spacing: 8px; text-transform: uppercase; margin: 0; color: #0f172a;">
+            L A P O R A N   P E N J U A L A N
+        </h1>
+        <div style="font-size: 12px; color: #166534; font-weight: 600; margin-top: 4px; letter-spacing: 0.5px;">Dokumen Resmi Rekapitulasi Transaksi Penjualan Toko</div>
+    </div>
 
     <div class="report-cards">
         <div class="report-card">

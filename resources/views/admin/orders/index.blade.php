@@ -147,8 +147,14 @@
                                         ✅ Setujui Pembayaran
                                     </button>
                                 </form>
+                                <button type="button" class="btn" onclick="openDiscrepancyModal('{{ $order->id }}', '{{ $order->order_number }}', '{{ addslashes($order->customer_name) }}', '{{ $order->customer_phone }}', '{{ $order->total_amount }}')" style="padding: 4px 10px; font-size: 11px; font-weight: bold; background: #f59e0b; color: white; border: none; border-radius: 6px; cursor: pointer;">
+                                    ⚠️ Laporkan Kendala / Chat
+                                </button>
                             @else
                                 <span style="font-size: 11.5px; color: #166534; font-weight: bold;">✅ Terverifikasi</span>
+                                <button type="button" class="btn" onclick="openDiscrepancyModal('{{ $order->id }}', '{{ $order->order_number }}', '{{ addslashes($order->customer_name) }}', '{{ $order->customer_phone }}', '{{ $order->total_amount }}')" style="padding: 3px 8px; font-size: 10.5px; font-weight: bold; background: #e2e8f0; color: #475569; border: 1px solid #cbd5e1; border-radius: 6px; cursor: pointer; margin-top: 2px;">
+                                    💬 Chat Pelanggan
+                                </button>
                             @endif
                         </div>
                     @else
@@ -192,6 +198,123 @@ function showProofModal(imgSrc, orderNum) {
 }
 function closeProofModal() {
     document.getElementById('proofModal').style.display = 'none';
+}
+</script>
+
+<!-- Modal Laporkan Kendala Pembayaran / Chat Pelanggan -->
+<div id="discrepancyModal" style="display: none; position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:99999; justify-content:center; align-items:center; padding:16px;">
+    <div style="background:white; border-radius:16px; max-width:520px; width:100%; padding:24px; text-align:left; box-shadow:0 20px 40px rgba(0,0,0,0.3); font-family:sans-serif;">
+        <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #e2e8f0; padding-bottom:12px; margin-bottom:16px;">
+            <h3 style="margin:0; color:#b45309; font-size:17px; font-weight:800; display:flex; align-items:center; gap:8px;">
+                ⚠️ Laporkan Kendala Bayar / Chat Pelanggan
+            </h3>
+            <button type="button" onclick="closeDiscrepancyModal()" style="background:none; border:none; font-size:18px; cursor:pointer; color:#64748b;">✖</button>
+        </div>
+
+        <form id="discrepancyForm" method="POST" action="">
+            @csrf
+            <div style="margin-bottom:14px; background:#fef3c7; padding:12px; border-radius:8px; border:1px solid #fde047; font-size:13px; color:#78350f; line-height:1.5;">
+                <strong>Pesanan:</strong> <span id="discOrderNum">#ORD-xxx</span><br>
+                <strong>Pelanggan:</strong> <span id="discCustName">Nama Pelanggan</span> (<span id="discCustPhone">08123456789</span>)<br>
+                <strong>Total Tagihan:</strong> <span id="discTotalAmount" style="font-weight:bold; color:#b45309;">Rp 0</span>
+            </div>
+
+            <div style="margin-bottom:14px;">
+                <label style="font-weight:bold; font-size:13px; color:#1e293b; display:block; margin-bottom:6px;">Pilih Jenis Kendala Pembayaran:</label>
+                <div style="display:flex; flex-direction:column; gap:8px;">
+                    <label style="display:flex; align-items:flex-start; gap:8px; font-size:13px; background:#fff1f2; padding:10px; border-radius:8px; border:1px solid #fecdd3; cursor:pointer;">
+                        <input type="radio" name="discrepancy_type" value="not_received" checked onchange="updateDiscrepancyTemplate()" style="margin-top:2px;">
+                        <div>
+                            <strong style="color:#e11d48;">🔴 Belum Ada Transfer / Transfer Belum Masuk</strong>
+                            <div style="font-size:11.5px; color:#9f1239;">Pelanggan belum melakukan transfer / dana belum diterima di rekening.</div>
+                        </div>
+                    </label>
+
+                    <label style="display:flex; align-items:flex-start; gap:8px; font-size:13px; background:#fffbeb; padding:10px; border-radius:8px; border:1px solid #fef08a; cursor:pointer;">
+                        <input type="radio" name="discrepancy_type" value="insufficient" onchange="updateDiscrepancyTemplate()" style="margin-top:2px;">
+                        <div>
+                            <strong style="color:#b45309;">⚠️ Jumlah Transfer Kurang (Kurang Bayar)</strong>
+                            <div style="font-size:11.5px; color:#78350f;">Nominal yang ditransfer pelanggan kurang dari total tagihan pesanan.</div>
+                        </div>
+                    </label>
+
+                    <label style="display:flex; align-items:flex-start; gap:8px; font-size:13px; background:#f8fafc; padding:10px; border-radius:8px; border:1px solid #e2e8f0; cursor:pointer;">
+                        <input type="radio" name="discrepancy_type" value="custom" onchange="updateDiscrepancyTemplate()" style="margin-top:2px;">
+                        <div>
+                            <strong style="color:#334155;">✏️ Pesan Kustom / Lainnya</strong>
+                            <div style="font-size:11.5px; color:#64748b;">Tuliskan pesan pemberitahuan kustom secara bebas.</div>
+                        </div>
+                    </label>
+                </div>
+            </div>
+
+            <div style="margin-bottom:16px;">
+                <label style="font-weight:bold; font-size:13px; color:#1e293b; display:block; margin-bottom:6px;">Pratinjau & Isi Pesan Pemberitahuan:</label>
+                <textarea name="message" id="discrepancyMessage" rows="5" required style="width:100%; border:1px solid #cbd5e1; border-radius:8px; padding:10px; font-size:13px; font-family:sans-serif; box-sizing:border-box; outline:none; resize:vertical;"></textarea>
+            </div>
+
+            <div style="display:flex; gap:10px; justify-content:flex-end; flex-wrap:wrap;">
+                <button type="button" onclick="sendViaWhatsApp()" style="background:#25d366; color:white; border:none; padding:9px 15px; border-radius:8px; font-weight:bold; font-size:12.5px; cursor:pointer; display:flex; align-items:center; gap:6px;">
+                    📲 Kirim via WhatsApp Direct
+                </button>
+                <button type="submit" style="background:#d97706; color:white; border:none; padding:9px 18px; border-radius:8px; font-weight:bold; font-size:12.5px; cursor:pointer; display:flex; align-items:center; gap:6px;">
+                    💬 Kirim ke Live Chat Website
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+let currentDiscOrder = null;
+
+function openDiscrepancyModal(orderId, orderNum, custName, custPhone, totalAmount) {
+    currentDiscOrder = { id: orderId, orderNum: orderNum, name: custName, phone: custPhone, total: totalAmount };
+    document.getElementById('discrepancyForm').action = '/admin/orders/' + orderId + '/notify-discrepancy';
+    document.getElementById('discOrderNum').innerText = '#' + orderNum;
+    document.getElementById('discCustName').innerText = custName;
+    document.getElementById('discCustPhone').innerText = custPhone;
+    document.getElementById('discTotalAmount').innerText = 'Rp ' + Number(totalAmount).toLocaleString('id-ID');
+
+    const radios = document.querySelectorAll('input[name="discrepancy_type"]');
+    if (radios.length > 0) radios[0].checked = true;
+    updateDiscrepancyTemplate();
+    document.getElementById('discrepancyModal').style.display = 'flex';
+}
+
+function closeDiscrepancyModal() {
+    document.getElementById('discrepancyModal').style.display = 'none';
+}
+
+function updateDiscrepancyTemplate() {
+    if (!currentDiscOrder) return;
+    const selectedRadio = document.querySelector('input[name="discrepancy_type"]:checked');
+    if (!selectedRadio) return;
+    const selectedType = selectedRadio.value;
+    const msgBox = document.getElementById('discrepancyMessage');
+    const formattedTotal = 'Rp ' + Number(currentDiscOrder.total).toLocaleString('id-ID');
+
+    if (selectedType === 'not_received') {
+        msgBox.value = `[Toko Dewi Lestari 2]\nHalo Kak ${currentDiscOrder.name},\n\nTerima kasih telah berbelanja. Mengenai pesanan #${currentDiscOrder.orderNum} sebesar ${formattedTotal}, setelah kami periksa mutasi rekening, dana transfer ternyata BELUM MASUK / belum kami terima.\n\nMohon periksa kembali transaksi bank Anda atau silakan kirimkan ulang bukti transfer yang valid agar pesanan dapat diproses. Terima kasih! 🙏`;
+    } else if (selectedType === 'insufficient') {
+        msgBox.value = `[Toko Dewi Lestari 2]\nHalo Kak ${currentDiscOrder.name},\n\nTerima kasih telah berbelanja. Mengenai pesanan #${currentDiscOrder.orderNum}, total tagihan adalah ${formattedTotal}. Namun nominal transfer yang masuk ke rekening kami MASIH KURANG.\n\nMohon melakukan transfer kekurangannya dan mengonfirmasikan kepada kami agar pesanan dapat segera diproses & dikirim. Terima kasih! 🙏`;
+    } else if (selectedType === 'custom') {
+        msgBox.value = `[Toko Dewi Lestari 2]\nHalo Kak ${currentDiscOrder.name},\n\nTerkait pesanan #${currentDiscOrder.orderNum} (${formattedTotal}): `;
+    }
+}
+
+function sendViaWhatsApp() {
+    if (!currentDiscOrder || !currentDiscOrder.phone) {
+        alert('Nomor WhatsApp pelanggan tidak tersedia');
+        return;
+    }
+    const msg = document.getElementById('discrepancyMessage').value;
+    let cleanPhone = currentDiscOrder.phone.replace(/[^0-9]/g, '');
+    if (cleanPhone.startsWith('0')) {
+        cleanPhone = '62' + cleanPhone.substring(1);
+    }
+    const waUrl = 'https://wa.me/' + cleanPhone + '?text=' + encodeURIComponent(msg);
+    window.open(waUrl, '_blank');
 }
 </script>
 

@@ -11,10 +11,16 @@
 }
 
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: 'Segoe UI', system-ui, -apple-system, Roboto, sans-serif;
     line-height: 1.6;
-    color: #333;
+    color: #2d3748;
     overflow-x: hidden;
+    background-color: #f7fbf8;
+    background-image: url('../images/random_snack_bg.jpg');
+    background-repeat: repeat;
+    background-size: 850px 850px;
+    background-attachment: fixed;
+    min-height: 100vh;
 }
 
 .container {
@@ -135,7 +141,7 @@ nav {
    =================================== */
 .products {
     padding: 100px 0;
-    background: linear-gradient(45deg, #f1f8e9, #e8f5e8);
+    background: transparent;
 }
 .product-icon {
     margin-bottom: 0.75rem;
@@ -302,41 +308,87 @@ nav {
 .product-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1rem;
+    gap: 1.25rem;
     margin-top: 1.5rem;
 }
 
 .product-card {
-    background: white;
-    border-radius: 14px;
-    padding: 0.85rem;
+    background: linear-gradient(165deg, rgba(255, 255, 255, 0.98) 0%, rgba(240, 253, 244, 0.95) 100%);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 20px;
+    padding: 1.1rem;
     text-align: center;
-    border: 1px solid rgba(46, 125, 50, 0.08);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
-    transition: all 0.25s ease-in-out;
+    border: 1.5px solid rgba(134, 239, 172, 0.8);
+    box-shadow: 0 10px 25px -5px rgba(22, 101, 52, 0.1), 0 2px 6px rgba(0, 0, 0, 0.03);
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
     position: relative;
     overflow: hidden;
-    max-width: 220px;
+    max-width: 235px;
     margin: 0 auto;
     width: 100%;
 }
 
 .product-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 10px 24px rgba(46, 125, 50, 0.1);
-    border-color: rgba(46, 125, 50, 0.2);
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px -8px rgba(22, 101, 52, 0.22), 0 0 20px rgba(52, 211, 153, 0.4);
+    border-color: rgba(34, 197, 94, 0.9);
+}
+
+.product-badge-tag {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: linear-gradient(135deg, #15803d 0%, #166534 100%);
+    color: #ffffff;
+    font-size: 0.72rem;
+    font-weight: 800;
+    padding: 4px 10px;
+    border-radius: 20px;
+    box-shadow: 0 4px 12px rgba(22, 101, 52, 0.35);
+    z-index: 5;
+    letter-spacing: 0.4px;
+}
+
+.product-card .product-icon {
+    width: 100%;
+    margin-bottom: 0.85rem;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.product-card .product-icon img {
+    width: 100%;
+    max-width: 175px;
+    height: 175px;
+    object-fit: cover;
+    border-radius: 16px;
+    background: #ffffff;
+    padding: 5px;
+    border: 2px solid #ffffff;
+    box-shadow: 0 8px 20px rgba(22, 101, 52, 0.14);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+}
+
+.product-card:hover .product-icon img {
+    transform: translateY(-4px) scale(1.06);
+    box-shadow: 0 14px 28px rgba(22, 101, 52, 0.22);
 }
 
 .product-card h3 {
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: #1b5e20;
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: #064e3b;
     margin-top: 0.5rem;
     margin-bottom: 0.5rem;
+    letter-spacing: -0.01em;
+    line-height: 1.3;
 }
 
 .product-card p {
-    color: #666;
+    color: #374151;
     margin-bottom: 0.75rem;
     line-height: 1.45;
     font-size: 0.85rem;
@@ -348,11 +400,52 @@ nav {
     -webkit-box-orient: vertical;
 }
 
+.product-card .stock-display {
+    color: #166534;
+    font-weight: 600;
+    font-size: 0.82rem;
+    height: auto;
+    margin-bottom: 0.4rem;
+}
+
 .price {
     font-size: 1.25rem;
-    font-weight: 700;
-    color: #2e7d32;
+    font-weight: 800;
+    color: #15803d;
+    background: #ffffff;
+    border: 1.5px solid #86efac;
+    padding: 4px 14px;
+    border-radius: 20px;
+    display: inline-block;
     margin-bottom: 0.5rem;
+    box-shadow: 0 3px 10px rgba(22, 101, 52, 0.08);
+    transition: all 0.3s ease;
+}
+
+.product-card:hover .price {
+    background: #f0fdf4;
+    border-color: #4ade80;
+    transform: scale(1.03);
+}
+
+.variant-select {
+    width: 100%;
+    padding: 8px 10px;
+    border-radius: 10px;
+    border: 1.5px solid #86efac;
+    outline: none;
+    background: #ffffff;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #14532d;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 4px rgba(22, 101, 52, 0.04);
+}
+
+.variant-select:focus {
+    border-color: #16a34a;
+    box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.2);
 }
 
 .product-quantity {
@@ -364,47 +457,48 @@ nav {
 }
 
 .product-quantity label {
-    color: #2e7d32;
+    color: #166534;
     font-weight: 600;
     font-size: 0.85rem;
 }
 
 .product-quantity input {
-    width: 50px;
-    padding: 4px;
-    border: 1px solid rgba(46, 125, 50, 0.2);
-    border-radius: 6px;
+    width: 55px;
+    padding: 5px;
+    border: 1.5px solid #86efac;
+    border-radius: 8px;
     text-align: center;
     font-size: 0.9rem;
+    font-weight: 600;
+    color: #14532d;
+    background: #ffffff;
     outline: none;
-    transition: border-color 0.2s;
+    transition: all 0.2s;
 }
 
 .product-quantity input:focus {
-    border-color: #2e7d32;
+    border-color: #16a34a;
+    box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.2);
 }
 
 .order-btn {
-    background: #2e7d32;
+    background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
     color: white;
     padding: 10px 16px;
     border: none;
     border-radius: 25px;
-    font-weight: bold;
+    font-weight: 700;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all 0.25s ease;
     font-size: 0.9rem;
     width: 100%;
-    box-shadow: 0 2px 6px rgba(46, 125, 50, 0.15);
+    box-shadow: 0 4px 12px rgba(22, 163, 74, 0.25);
 }
 
 .order-btn:hover {
-    background: #1b5e20;
-    box-shadow: 0 4px 12px rgba(46, 125, 50, 0.3);
-    transform: translateY(-1px);
-}
-    background: #4caf50;
-    transform: scale(1.05);
+    background: linear-gradient(135deg, #15803d 0%, #166534 100%);
+    box-shadow: 0 6px 18px rgba(22, 163, 74, 0.4);
+    transform: translateY(-2px);
 }
 
 /* ===================================
@@ -466,7 +560,7 @@ nav {
    =================================== */
 .cart-icon {
     position: fixed;
-    top: 100px;
+    bottom: 90px;
     right: 20px;
     background: #2e7d32;
     color: #ffeb3b;

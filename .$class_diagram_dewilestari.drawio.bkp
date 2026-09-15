@@ -1,0 +1,134 @@
+<mxfile host="app.diagrams.net" modified="2026-08-25T12:50:00.000Z" agent="Antigravity AI" version="21.0.0" type="device">
+  <diagram id="DewiLestariClassDiagramBW" name="Class Diagram Dewi Lestari (B&amp;W)">
+    <mxGraphModel dx="1400" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2000" pageHeight="1200" background="#FFFFFF">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- Title -->
+        <mxCell id="title" value="CLASS DIAGRAM SISTEM E-COMMERCE TOKO DEWI LESTARI 2" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=20;fontStyle=1;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="450" y="20" width="900" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="subtitle" value="Diagram Kelas Hitam-Putih (Monokrom) Formal &amp; Komprehensif" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=13;fontColor=#333333;fontStyle=2;" vertex="1" parent="1">
+          <mxGeometry x="450" y="55" width="900" height="25" as="geometry" />
+        </mxCell>
+
+        <!-- Subsystem Containers (Black & White Border Boxes) -->
+        <mxCell id="sub1" value="1. USER &amp; ACCESS SUBSYSTEM" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontStyle=1;fontSize=13;align=left;verticalAlign=top;spacingLeft=15;spacingTop=10;arcSize=3;" vertex="1" parent="1">
+          <mxGeometry x="40" y="100" width="540" height="360" as="geometry" />
+        </mxCell>
+
+        <mxCell id="sub2" value="2. CATALOG &amp; INVENTORY FIFO SUBSYSTEM" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontStyle=1;fontSize=13;align=left;verticalAlign=top;spacingLeft=15;spacingTop=10;arcSize=3;" vertex="1" parent="1">
+          <mxGeometry x="610" y="100" width="560" height="360" as="geometry" />
+        </mxCell>
+
+        <mxCell id="sub3" value="3. SUPPLIER &amp; PROCUREMENT SUBSYSTEM" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontStyle=1;fontSize=13;align=left;verticalAlign=top;spacingLeft=15;spacingTop=10;arcSize=3;" vertex="1" parent="1">
+          <mxGeometry x="1200" y="100" width="560" height="360" as="geometry" />
+        </mxCell>
+
+        <mxCell id="sub4" value="4. ORDER, PAYMENT &amp; DISCREPANCY SUBSYSTEM" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontStyle=1;fontSize=13;align=left;verticalAlign=top;spacingLeft=15;spacingTop=10;arcSize=3;" vertex="1" parent="1">
+          <mxGeometry x="40" y="490" width="1130" height="440" as="geometry" />
+        </mxCell>
+
+        <mxCell id="sub5" value="5. LIVE CHAT &amp; LOGISTICS SUBSYSTEM" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontStyle=1;fontSize=13;align=left;verticalAlign=top;spacingLeft=15;spacingTop=10;arcSize=3;" vertex="1" parent="1">
+          <mxGeometry x="1200" y="490" width="560" height="440" as="geometry" />
+        </mxCell>
+
+        <!-- ENTITIES (Pure Black & White: White Fill, Black Border & Text) -->
+
+        <!-- Entity: User -->
+        <mxCell id="user_class" value="&lt;b&gt;User&lt;/b&gt;&lt;hr/&gt;+ id: BIGINT UNSIGNED [PK]&lt;br/&gt;+ name: VARCHAR(255)&lt;br/&gt;+ email: VARCHAR(255)&lt;br/&gt;+ phone: VARCHAR(255)&lt;br/&gt;+ address: TEXT&lt;br/&gt;+ password: VARCHAR(255)&lt;br/&gt;+ plain_password: VARCHAR(255)&lt;br/&gt;+ google_id: VARCHAR(255)&lt;br/&gt;+ avatar: VARCHAR(255)&lt;br/&gt;+ role: ENUM('admin','cust')&lt;br/&gt;+ created_at: TIMESTAMP&lt;hr/&gt;+ orders(): HasMany&lt;br/&gt;+ addresses(): HasMany&lt;br/&gt;+ ratings(): HasMany" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=11;align=left;verticalAlign=top;spacingLeft=8;spacingTop=6;arcSize=3;" vertex="1" parent="1">
+          <mxGeometry x="65" y="145" width="230" height="280" as="geometry" />
+        </mxCell>
+
+        <!-- Entity: UserAddress -->
+        <mxCell id="address_class" value="&lt;b&gt;UserAddress&lt;/b&gt;&lt;hr/&gt;+ id: BIGINT UNSIGNED [PK]&lt;br/&gt;+ user_id: BIGINT UNSIGNED [FK]&lt;br/&gt;+ label: VARCHAR(50)&lt;br/&gt;+ receiver_name: VARCHAR(255)&lt;br/&gt;+ receiver_phone: VARCHAR(20)&lt;br/&gt;+ address: TEXT&lt;br/&gt;+ city: VARCHAR(100)&lt;br/&gt;+ is_primary: TINYINT(1)&lt;br/&gt;+ created_at: TIMESTAMP&lt;hr/&gt;+ user(): BelongsTo" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=11;align=left;verticalAlign=top;spacingLeft=8;spacingTop=6;arcSize=3;" vertex="1" parent="1">
+          <mxGeometry x="325" y="145" width="230" height="240" as="geometry" />
+        </mxCell>
+
+        <!-- Entity: SupplierStock -->
+        <mxCell id="stock_class" value="&lt;b&gt;SupplierStock&lt;/b&gt;&lt;hr/&gt;+ id: BIGINT UNSIGNED [PK]&lt;br/&gt;+ supplier_id: BIGINT UNSIGNED [FK]&lt;br/&gt;+ item_name: VARCHAR(255)&lt;br/&gt;+ description: TEXT&lt;br/&gt;+ image_path: VARCHAR(255)&lt;br/&gt;+ is_active: TINYINT(1)&lt;br/&gt;+ entry_date: DATE&lt;br/&gt;+ variants: JSON&lt;br/&gt;+ created_at: TIMESTAMP&lt;hr/&gt;+ decrementStock(weight, qty)&lt;br/&gt;+ supplier(): BelongsTo&lt;br/&gt;+ stockLogs(): HasMany" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=11;align=left;verticalAlign=top;spacingLeft=8;spacingTop=6;arcSize=3;" vertex="1" parent="1">
+          <mxGeometry x="635" y="145" width="245" height="270" as="geometry" />
+        </mxCell>
+
+        <!-- Entity: StockLog -->
+        <mxCell id="log_class" value="&lt;b&gt;StockLog&lt;/b&gt;&lt;hr/&gt;+ id: BIGINT UNSIGNED [PK]&lt;br/&gt;+ supplier_stock_id: BIGINT UNSIGNED [FK]&lt;br/&gt;+ weight: VARCHAR(50)&lt;br/&gt;+ type: ENUM('in','out','adjust','return')&lt;br/&gt;+ quantity: INT&lt;br/&gt;+ description: VARCHAR(255)&lt;br/&gt;+ created_at: TIMESTAMP&lt;hr/&gt;+ supplierStock(): BelongsTo" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=11;align=left;verticalAlign=top;spacingLeft=8;spacingTop=6;arcSize=3;" vertex="1" parent="1">
+          <mxGeometry x="910" y="145" width="240" height="225" as="geometry" />
+        </mxCell>
+
+        <!-- Entity: Supplier -->
+        <mxCell id="supplier_class" value="&lt;b&gt;Supplier&lt;/b&gt;&lt;hr/&gt;+ id: BIGINT UNSIGNED [PK]&lt;br/&gt;+ name: VARCHAR(255)&lt;br/&gt;+ slug: VARCHAR(255)&lt;br/&gt;+ phone: VARCHAR(20)&lt;br/&gt;+ email: VARCHAR(255)&lt;br/&gt;+ address: TEXT&lt;br/&gt;+ items: JSON&lt;br/&gt;+ created_at: TIMESTAMP&lt;hr/&gt;+ stocks(): HasMany&lt;br/&gt;+ orders(): HasMany&lt;br/&gt;+ returns(): HasMany" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=11;align=left;verticalAlign=top;spacingLeft=8;spacingTop=6;arcSize=3;" vertex="1" parent="1">
+          <mxGeometry x="1225" y="145" width="235" height="260" as="geometry" />
+        </mxCell>
+
+        <!-- Entity: SupplierReturn -->
+        <mxCell id="return_class" value="&lt;b&gt;SupplierReturn&lt;/b&gt;&lt;hr/&gt;+ id: BIGINT UNSIGNED [PK]&lt;br/&gt;+ return_number: VARCHAR(50)&lt;br/&gt;+ supplier_id: BIGINT UNSIGNED [FK]&lt;br/&gt;+ supplier_order_id: BIGINT UNSIGNED [FK]&lt;br/&gt;+ item_name: VARCHAR(255)&lt;br/&gt;+ quantity: INT&lt;br/&gt;+ reason: TEXT&lt;br/&gt;+ status: VARCHAR(50)&lt;hr/&gt;+ supplier(): BelongsTo" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=11;align=left;verticalAlign=top;spacingLeft=8;spacingTop=6;arcSize=3;" vertex="1" parent="1">
+          <mxGeometry x="1490" y="145" width="250" height="240" as="geometry" />
+        </mxCell>
+
+        <!-- Entity: Order -->
+        <mxCell id="order_class" value="&lt;b&gt;Order&lt;/b&gt;&lt;hr/&gt;+ id: BIGINT UNSIGNED [PK]&lt;br/&gt;+ user_id: BIGINT UNSIGNED [FK]&lt;br/&gt;+ courier_id: BIGINT UNSIGNED [FK]&lt;br/&gt;+ order_number: VARCHAR(50)&lt;br/&gt;+ customer_name: VARCHAR(255)&lt;br/&gt;+ customer_phone: VARCHAR(20)&lt;br/&gt;+ delivery_option: VARCHAR(100)&lt;br/&gt;+ delivery_address: TEXT&lt;br/&gt;+ total_amount: DECIMAL(12,2)&lt;br/&gt;+ status: VARCHAR(100)&lt;br/&gt;+ payment_method: VARCHAR(50)&lt;br/&gt;+ payment_status: VARCHAR(50)&lt;br/&gt;+ transfer_proof: VARCHAR(255)&lt;br/&gt;+ tracking_ticket_id: VARCHAR(255)&lt;br/&gt;+ estimated_delivery_date: TIMESTAMP&lt;hr/&gt;+ items(): HasMany&lt;br/&gt;+ user(): BelongsTo&lt;br/&gt;+ courier(): BelongsTo" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=11;align=left;verticalAlign=top;spacingLeft=8;spacingTop=6;arcSize=3;" vertex="1" parent="1">
+          <mxGeometry x="65" y="535" width="275" height="375" as="geometry" />
+        </mxCell>
+
+        <!-- Entity: OrderItem -->
+        <mxCell id="item_class" value="&lt;b&gt;OrderItem&lt;/b&gt;&lt;hr/&gt;+ id: BIGINT UNSIGNED [PK]&lt;br/&gt;+ order_id: BIGINT UNSIGNED [FK]&lt;br/&gt;+ product_id: BIGINT UNSIGNED [FK]&lt;br/&gt;+ qty: INT&lt;br/&gt;+ price: DECIMAL(12,2)&lt;br/&gt;+ buy_price: DECIMAL(15,2)&lt;br/&gt;+ weight: VARCHAR(255)&lt;br/&gt;+ subtotal: DECIMAL(12,2)&lt;hr/&gt;+ order(): BelongsTo&lt;br/&gt;+ product(): BelongsTo" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=11;align=left;verticalAlign=top;spacingLeft=8;spacingTop=6;arcSize=3;" vertex="1" parent="1">
+          <mxGeometry x="375" y="535" width="245" height="240" as="geometry" />
+        </mxCell>
+
+        <!-- Entity: Rating -->
+        <mxCell id="rating_class" value="&lt;b&gt;Rating&lt;/b&gt;&lt;hr/&gt;+ id: BIGINT UNSIGNED [PK]&lt;br/&gt;+ order_id: BIGINT UNSIGNED [FK]&lt;br/&gt;+ order_item_id: BIGINT UNSIGNED [FK]&lt;br/&gt;+ product_id: BIGINT UNSIGNED [FK]&lt;br/&gt;+ user_id: BIGINT UNSIGNED [FK]&lt;br/&gt;+ rating: TINYINT UNSIGNED&lt;br/&gt;+ review: TEXT&lt;hr/&gt;+ order(): BelongsTo&lt;br/&gt;+ user(): BelongsTo" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=11;align=left;verticalAlign=top;spacingLeft=8;spacingTop=6;arcSize=3;" vertex="1" parent="1">
+          <mxGeometry x="650" y="535" width="240" height="230" as="geometry" />
+        </mxCell>
+
+        <!-- Entity: Courier -->
+        <mxCell id="courier_class" value="&lt;b&gt;Courier&lt;/b&gt;&lt;hr/&gt;+ id: BIGINT UNSIGNED [PK]&lt;br/&gt;+ name: VARCHAR(255)&lt;br/&gt;+ username: VARCHAR(255)&lt;br/&gt;+ password: VARCHAR(255)&lt;br/&gt;+ phone: VARCHAR(20)&lt;hr/&gt;+ orders(): HasMany" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=11;align=left;verticalAlign=top;spacingLeft=8;spacingTop=6;arcSize=3;" vertex="1" parent="1">
+          <mxGeometry x="920" y="535" width="220" height="180" as="geometry" />
+        </mxCell>
+
+        <!-- Entity: Message -->
+        <mxCell id="message_class" value="&lt;b&gt;Message&lt;/b&gt;&lt;hr/&gt;+ id: BIGINT UNSIGNED [PK]&lt;br/&gt;+ session_id: VARCHAR(100)&lt;br/&gt;+ sender: ENUM('customer','admin')&lt;br/&gt;+ message: TEXT&lt;br/&gt;+ is_read: TINYINT(1)&lt;br/&gt;+ created_at: TIMESTAMP&lt;hr/&gt;+ resolveCustomerInfo(sessionId)$" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=11;align=left;verticalAlign=top;spacingLeft=8;spacingTop=6;arcSize=3;" vertex="1" parent="1">
+          <mxGeometry x="1225" y="535" width="260" height="190" as="geometry" />
+        </mxCell>
+
+        <!-- RELATIONSHIP EDGES (Solid Black Orthogonal Lines) -->
+        <mxCell id="edge1" value="1..*" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=11;fontStyle=1;" edge="1" parent="1" source="user_class" target="address_class">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="edge2" value="1..*" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=11;fontStyle=1;" edge="1" parent="1" source="user_class" target="order_class">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="edge3" value="1..*" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=11;fontStyle=1;" edge="1" parent="1" source="supplier_class" target="stock_class">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="edge4" value="1..*" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=11;fontStyle=1;" edge="1" parent="1" source="stock_class" target="log_class">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="edge5" value="1..*" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=11;fontStyle=1;" edge="1" parent="1" source="order_class" target="item_class">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="edge6" value="1..*" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=11;fontStyle=1;" edge="1" parent="1" source="stock_class" target="item_class">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="edge7" value="1..*" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=11;fontStyle=1;" edge="1" parent="1" source="courier_class" target="order_class">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="edge8" value="1..*" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=11;fontStyle=1;" edge="1" parent="1" source="order_class" target="rating_class">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="edge9" value="1..*" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=11;fontStyle=1;" edge="1" parent="1" source="user_class" target="rating_class">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

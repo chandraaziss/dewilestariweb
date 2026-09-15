@@ -1,4 +1,5 @@
-<header class="{{ ((request()->is('admin/*') || request()->is('courier/*')) && !request()->is('admin/login')) ? 'admin-sidebar' : '' }}">
+<header
+    class="{{ ((request()->is('admin/*') || request()->is('courier/*')) && !request()->is('admin/login')) ? 'admin-sidebar' : '' }}">
     <nav class="container">
         <div class="logo">
             <div class="logo-icon">DL</div>
@@ -31,7 +32,7 @@
 
                 <li>
                     <a href="/admin/chat">
-                        💬 Chat <span id="adminChatBadge"
+                        💬 Pesan Obrolan <span id="adminChatBadge"
                             style="background:#dc3545; color:white; border-radius:50%; padding:2px 6px; font-size:12px; display:none;">0</span>
                     </a>
                 </li>
@@ -44,13 +45,13 @@
 
                 <li>
                     <a href="/admin/suppliers">
-                        🏭 Supplier Market
+                        🏭 Suplier
                     </a>
                 </li>
 
                 <li>
                     <a href="/admin/suppliers/manage">
-                        🏷️ Tambah Supplier
+                        🏷️ Tambah Suplier
                     </a>
                 </li>
 

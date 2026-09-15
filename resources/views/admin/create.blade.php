@@ -48,7 +48,7 @@
         <input type="number"
                name="stock"
                class="form-control"
-               placeholder="Jumlah stok (pcs)"
+               placeholder="Jumlah stok (bungkus)"
                required>
     </div>
 

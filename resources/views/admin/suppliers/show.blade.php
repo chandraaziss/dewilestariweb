@@ -107,7 +107,7 @@
                         </div>
                         <div>
                             <label style="display:block; font-size:13px; font-weight:600; margin-bottom:6px; color:#475569;">Jumlah Dipesan</label>
-                            <input type="text" name="items[{{ $index }}][quantity]" class="form-control" style="width:100%; padding:9px 12px; border:1px solid #cbd5e1; border-radius:8px; font-size:14px;" {{ $isAutoSelected ? 'autofocus' : '' }}>
+                            <input type="text" name="items[{{ $index }}][quantity]" class="form-control" placeholder="Contoh: 20 bungkus" style="width:100%; padding:9px 12px; border:1px solid #cbd5e1; border-radius:8px; font-size:14px;" {{ $isAutoSelected ? 'autofocus' : '' }}>
                         </div>
                     </div>
                 </div>
@@ -206,7 +206,7 @@ function addCustomOrderItem() {
             </div>
             <div>
                 <label style="display:block; font-size:13px; font-weight:600; margin-bottom:6px; color:#475569;">Jumlah Dipesan</label>
-                <input type="text" name="items[${itemIndex}][quantity]" class="form-control" style="width:100%; padding:9px 12px; border:1px solid #cbd5e1; border-radius:8px; font-size:14px;">
+                <input type="text" name="items[${itemIndex}][quantity]" class="form-control" placeholder="Contoh: 20 bungkus" style="width:100%; padding:9px 12px; border:1px solid #cbd5e1; border-radius:8px; font-size:14px;">
             </div>
         </div>
     `;

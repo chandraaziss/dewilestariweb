@@ -157,7 +157,7 @@
             newRow.style.cssText = 'display: flex; gap: 10px; margin-bottom: 10px; align-items: flex-end; background: #f0f9ff; padding: 10px; border-radius: 8px; border: 1px solid #bae6fd;';
             newRow.innerHTML = `
                 <div style="flex: 2;">
-                    <label style="font-size: 11px; font-weight: bold; color: #0369a1; display: block; margin-bottom: 2px;">📦 Ukuran Batch Baru *</label>
+                    <label style="font-size: 11px; font-weight: bold; color: #0369a1; display: block; margin-bottom: 2px;">📦 Ukuran Kloter Baru *</label>
                     <input type="text" name="variants[${variantIndex}][weight]" class="form-control" placeholder="Contoh: 250 gram" value="${defaultWeight}" required>
                 </div>
                 <div style="flex: 1.5;">
@@ -173,7 +173,7 @@
                     <input type="number" name="variants[${variantIndex}][price]" class="form-control sell-price-input" placeholder="Harga Jual" required min="0">
                 </div>
                 <div style="flex: 2;">
-                    <label style="font-size: 11px; font-weight: bold; color: #0369a1; display: block; margin-bottom: 2px;">Tgl Masuk Batch *</label>
+                    <label style="font-size: 11px; font-weight: bold; color: #0369a1; display: block; margin-bottom: 2px;">Tgl Masuk Stok *</label>
                     <input type="date" name="variants[${variantIndex}][entry_date]" class="form-control" value="${todayStr}" required>
                 </div>
                 <div style="flex: 2;">

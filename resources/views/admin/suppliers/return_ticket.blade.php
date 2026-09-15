@@ -99,7 +99,7 @@
             <div style="padding: 14px; background: #ffffff; border-radius: 10px; border: 1px solid #fca5a5; margin-bottom: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
                 <div style="font-weight: bold; color: #991b1b; margin-bottom: 8px; font-size: 15px; display: flex; justify-content: space-between;">
                     <span>Item #{{ $index + 1 }}: {{ $item->item_name }}</span>
-                    <span style="color: #dc2626;">{{ $item->quantity }} pcs</span>
+                    <span style="color: #dc2626;">{{ $item->quantity }} bungkus</span>
                 </div>
                 <table style="width: 100%; border-collapse: collapse; font-size: 13.5px;">
                     <tr>
@@ -108,7 +108,7 @@
                     </tr>
                     <tr>
                         <td style="padding: 4px 0; color: #475569;">Jumlah Retur:</td>
-                        <td style="padding: 4px 0; font-weight: bold; color: #b91c1c; font-size: 15px;">{{ $item->quantity }} pcs</td>
+                        <td style="padding: 4px 0; font-weight: bold; color: #b91c1c; font-size: 15px;">{{ $item->quantity }} bungkus</td>
                     </tr>
                     <tr>
                         <td style="padding: 4px 0; color: #475569; vertical-align: top;">Alasan Kendala:</td>

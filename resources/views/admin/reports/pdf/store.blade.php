@@ -47,8 +47,35 @@
 </head>
 <body>
     <div class="document">
-        <p class="title">LAPORAN PENJUALAN</p>
-        <p class="subtitle">Toko Dewi Lestari 2</p>
+        <!-- Kop Surat Formal Premium (PDF Compatible Table) -->
+        <table style="width: 100%; border: none; margin-bottom: 6px; border-collapse: collapse;">
+            <tr style="border: none;">
+                <td style="width: 95px; border: none; vertical-align: middle; padding: 0;">
+                    <div style="width: 82px; height: 82px; border-radius: 50%; background: #facc15; border: 4px solid #15803d; text-align: center; color: #15803d; padding-top: 13px; box-sizing: border-box;">
+                        <div style="font-size: 24px; font-weight: 900; line-height: 1;">DL</div>
+                        <div style="font-size: 7.5px; font-weight: 800; text-transform: uppercase; margin-top: 2px;">Dewi Lestari 2</div>
+                    </div>
+                </td>
+                <td style="border: none; text-align: right; vertical-align: middle; padding: 0;">
+                    <h2 style="margin: 0; font-size: 24px; font-weight: 900; color: #0f172a; text-transform: uppercase; letter-spacing: 1px;">TOKO DEWI LESTARI 2</h2>
+                    <div style="font-size: 11px; font-weight: bold; color: #15803d; margin-top: 2px; text-transform: uppercase;">Pusat Oleh-Oleh & Kuliner Khas Bandung / Jawa Barat</div>
+                    <p style="margin: 4px 0 0; font-size: 11px; color: #334155;">Jl. Raya Cimindi No.59, Pasirkaliki, Kec. Cimahi Utara, Kota Cimahi, Jawa Barat 40535</p>
+                    <p style="margin: 2px 0 0; font-size: 11px; color: #475569; font-weight: 600;">Telp: 0812-2195-6759 | Email: info@dewilestari2.com | Web: www.dewilestari2.com</p>
+                </td>
+            </tr>
+        </table>
+
+        <!-- Garis Kop Ganda Emas - Hijau -->
+        <div style="height: 4px; background: #15803d; margin-top: 6px; border-radius: 2px;"></div>
+        <div style="height: 2px; background: #eab308; margin-top: 2px; margin-bottom: 20px; border-radius: 1px;"></div>
+
+        <!-- Banner Judul Sesuai Kop -->
+        <div style="text-align: center; margin-bottom: 22px; background: #f0fdf4; padding: 12px 18px; border-radius: 8px; border: 1px solid #86efac; border-left: 5px solid #15803d;">
+            <h1 style="font-size: 19px; font-weight: 900; letter-spacing: 6px; text-transform: uppercase; margin: 0; color: #0f172a;">
+                L A P O R A N   P E N J U A L A N
+            </h1>
+            <div style="font-size: 11px; color: #166534; font-weight: 600; margin-top: 3px;">Dokumen Resmi Rekapitulasi Transaksi Penjualan Toko</div>
+        </div>
         <div class="meta">
             <span><strong>Periode:</strong> {{ $periodLabel ?? ($month ? \Carbon\Carbon::createFromFormat('Y-m', $month)->translatedFormat('F Y') : 'Semua Periode') }}</span>
             <span><strong>Tanggal Cetak:</strong> {{ now()->translatedFormat('d F Y') }}</span>
@@ -77,7 +104,7 @@
                     <th>Jumlah Item</th>
                     <th>Total Pembayaran</th>
                     <th>Metode Pembayaran</th>
-                    <th>Status Pembayaran</th>
+                    <th>Detail Produk Yang Dibeli</th>
                 </tr>
             </thead>
             <tbody>
@@ -87,10 +114,18 @@
                         <td>{{ $order->paid_at ? \Carbon\Carbon::parse($order->paid_at)->translatedFormat('d F Y') : '-' }}</td>
                         <td>{{ $order->order_number }}</td>
                         <td>{{ $order->customer_name }}</td>
-                        <td class="text-right">{{ $order->items->sum('qty') }}</td>
+                        <td class="text-right">{{ $order->items->sum('qty') }} bungkus</td>
                         <td class="text-right">Rp {{ number_format($order->total_amount,0,',','.') }}</td>
                         <td>{{ $order->payment_method ?? '-' }}</td>
-                        <td>{{ ucwords($order->payment_status) }}</td>
+                        <td>
+                            @foreach($order->items as $item)
+                                @php
+                                    $pName = $item->product->name ?? $item->product->item_name ?? 'Produk';
+                                    $w = !empty($item->weight) ? " ({$item->weight})" : (!empty($item->product->weight) ? " ({$item->product->weight})" : '');
+                                @endphp
+                                <div>• {{ $pName }}{{ $w }} (x{{ $item->qty }} bungkus)</div>
+                            @endforeach
+                        </td>
                     </tr>
                 @empty
                     <tr>

@@ -9,7 +9,7 @@ function showNotification(message, type = 'info') {
     if (!container) {
         container = document.createElement('div');
         container.id = 'toastContainer';
-        container.style.cssText = 'position:fixed; top:20px; right:20px; z-index:999999; display:flex; flex-direction:column; gap:10px; font-family:sans-serif;';
+        container.style.cssText = 'position:fixed; top:70px; right:20px; z-index:999999; display:flex; flex-direction:column; gap:10px; font-family:sans-serif;';
         document.body.appendChild(container);
     }
 
@@ -259,7 +259,7 @@ function addToCart(
 
     // Validation
     if (isNaN(quantity) || quantity < 1 || quantity > 50) {
-        showNotification('Jumlah harus antara 1-50 pcs', 'error');
+        showNotification('Jumlah harus antara 1-50 bungkus', 'error');
         return;
     }
 
@@ -272,7 +272,7 @@ function addToCart(
     if (existingItemIndex > -1) {
         const newQuantity = cart[existingItemIndex].quantity + quantity;
         if (newQuantity > 50) {
-            showNotification('Total maksimal 50 pcs per produk', 'error');
+            showNotification('Total maksimal 50 bungkus per produk', 'error');
             return;
         }
         cart[existingItemIndex].quantity = newQuantity;
@@ -375,7 +375,7 @@ function updateCartDisplay() {
 // Increase quantity
 function increaseQuantity(index) {
     if (cart[index].quantity >= 50) {
-        showNotification('Maksimal 50 pcs per produk', 'error');
+        showNotification('Maksimal 50 bungkus per produk', 'error');
         return;
     }
     cart[index].quantity++;
@@ -461,6 +461,7 @@ function showCheckoutForm() {
     if (checkoutForm) {
         checkoutForm.style.display = 'block';
         checkoutForm.scrollIntoView({ behavior: 'smooth' });
+        updateDeliveryInfo();
     }
 }
 
@@ -576,6 +577,156 @@ function updateDeliveryInfo() {
     }
     
     updateOrderSummary();
+    updateEstimatedDeliveryDisplay();
+}
+
+function formatIndonesianDate(dateObj) {
+    const days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+    const months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+    
+    const dayName = days[dateObj.getDay()];
+    const dayNum = dateObj.getDate();
+    const monthName = months[dateObj.getMonth()];
+    const year = dateObj.getFullYear();
+    
+    return `${dayName}, ${dayNum} ${monthName} ${year}`;
+}
+
+function updateEstimatedDeliveryDisplay() {
+    const deliveryOption = document.getElementById('deliveryOption');
+    const estimatedCard = document.getElementById('estimatedDeliveryCard');
+    const cardTitle = document.getElementById('estCardTitle');
+    const cardBadge = document.getElementById('estCardBadge');
+    const cardEtaText = document.getElementById('estCardEtaText');
+    const cardTimeText = document.getElementById('estCardTimeText');
+    const summaryEstRow = document.getElementById('summaryEstRow');
+    const summaryEstText = document.getElementById('summaryEstText');
+
+    if (!deliveryOption || !estimatedCard) return;
+
+    const val = deliveryOption.value;
+    if (!val) {
+        estimatedCard.style.display = 'none';
+        if (summaryEstRow) summaryEstRow.style.display = 'none';
+        return;
+    }
+
+    const now = new Date();
+    const currentHour = now.getHours();
+
+    let title = '';
+    let badgeText = '';
+    let badgeBg = '#dcfce7';
+    let badgeColor = '#166534';
+    let etaText = '';
+    let timeText = '';
+    let summaryText = '';
+
+    if (val === 'pickup') {
+        const readyDate = new Date(now.getTime() + 30 * 60000);
+        const startHourStr = String(readyDate.getHours()).padStart(2, '0');
+        const startMinStr = String(readyDate.getMinutes()).padStart(2, '0');
+
+        title = '🏬 Ambil Langsung di Toko';
+        badgeText = '⚡ Siap Instan (30-60 Menit)';
+        badgeBg = '#dcfce7';
+        badgeColor = '#15803d';
+        etaText = `📍 Siap Diambil: <strong>Hari Ini (${formatIndonesianDate(now)})</strong>`;
+        timeText = `🕒 Estimasi Jam: <strong>Pukul ${startHourStr}:${startMinStr} - 20:00 WIB</strong> (Langsung dari Toko)`;
+        summaryText = `Hari Ini (${startHourStr}:${startMinStr} WIB)`;
+    } else if (val === 'delivery') {
+        const dist = (typeof deliveryRouteDistanceKm !== 'undefined' && deliveryRouteDistanceKm > 0) ? deliveryRouteDistanceKm : 1.0;
+        let targetDate = new Date(now);
+        let timeRangeStr = '';
+        let durationLabel = '1 - 2 Jam (Kurir Toko Instan)';
+
+        if (currentHour >= 8 && currentHour < 18) {
+            // Diproses langsung saat jam operasional toko (08:00 - 18:00 WIB)
+            const estStart = new Date(now.getTime() + 60 * 60000); // 1 jam dari sekarang
+            const estEnd = new Date(now.getTime() + 120 * 60000);  // 2 jam dari sekarang
+            const startH = String(estStart.getHours()).padStart(2, '0');
+            const startM = String(estStart.getMinutes()).padStart(2, '0');
+            const endH = String(estEnd.getHours()).padStart(2, '0');
+            const endM = String(estEnd.getMinutes()).padStart(2, '0');
+            timeRangeStr = `Pukul <strong>${startH}:${startM} - ${endH}:${endM} WIB</strong>`;
+        } else {
+            // Diproses luar jam operasional (malam hari)
+            if (currentHour >= 18) {
+                targetDate.setDate(targetDate.getDate() + 1);
+            }
+            timeRangeStr = `Pukul <strong>09:00 - 10:00 WIB</strong> (1-2 jam setelah toko buka)`;
+        }
+
+        const isToday = targetDate.toDateString() === now.toDateString();
+        const dateStr = isToday ? `Hari Ini (${formatIndonesianDate(targetDate)})` : formatIndonesianDate(targetDate);
+
+        title = `🛵 Kurir Toko (Jarak: ${dist.toFixed(1)} km)`;
+        badgeText = isToday ? '🚀 Tiba Hari Ini (1-2 Jam)' : '📅 Tiba Besok Pagi';
+        badgeBg = isToday ? '#dcfce7' : '#fef3c7';
+        badgeColor = isToday ? '#15803d' : '#92400e';
+        etaText = `📅 Perkiraan Sampai: <strong>${dateStr}</strong>`;
+        timeText = `🕒 Jam Tiba: ${timeRangeStr} <span style="color:#64748b; font-size:11.5px;">[${durationLabel}]</span>`;
+        summaryText = isToday ? `Hari Ini (${timeRangeStr.replace(/<[^>]*>/g, '')})` : `Besok (${timeRangeStr.replace(/<[^>]*>/g, '')})`;
+    } else if (val === 'expedition') {
+        const courierSelect = document.getElementById('expeditionCourier');
+        const zoneSelect = document.getElementById('expeditionZone');
+        const c = courierSelect ? courierSelect.value : 'jnt';
+        const z = zoneSelect ? zoneSelect.value : 'luar_kota_jawa';
+
+        let courierName = '🚚 J&T Express';
+        let minDays = 1;
+        let maxDays = 2;
+        let jamKurir = 'Pukul 10:00 - 17:00 WIB';
+
+        if (c === 'jnt') {
+            courierName = '🚚 J&T Express';
+            jamKurir = 'Pukul 10:00 - 17:00 WIB';
+            minDays = z === 'luar_kota_jawa' ? 1 : 2;
+            maxDays = z === 'luar_kota_jawa' ? 2 : 4;
+        } else if (c === 'jne') {
+            courierName = '📦 JNE Express (REG)';
+            jamKurir = 'Pukul 11:00 - 18:00 WIB';
+            minDays = z === 'luar_kota_jawa' ? 2 : 3;
+            maxDays = z === 'luar_kota_jawa' ? 3 : 5;
+        } else if (c === 'pos') {
+            courierName = '📮 POS Indonesia (Kilat)';
+            jamKurir = 'Pukul 09:00 - 16:00 WIB';
+            minDays = z === 'luar_kota_jawa' ? 2 : 3;
+            maxDays = z === 'luar_kota_jawa' ? 3 : 6;
+        }
+
+        const dateMin = new Date(now);
+        dateMin.setDate(dateMin.getDate() + minDays);
+        const dateMax = new Date(now);
+        dateMax.setDate(dateMax.getDate() + maxDays);
+
+        const dateRangeText = (minDays === maxDays)
+            ? formatIndonesianDate(dateMin)
+            : `${formatIndonesianDate(dateMin)} s/d ${formatIndonesianDate(dateMax)}`;
+
+        title = `${courierName}`;
+        badgeText = `📦 Est. ${minDays}-${maxDays} Hari`;
+        badgeBg = '#e0f2fe';
+        badgeColor = '#0369a1';
+        etaText = `📅 Perkiraan Sampai: <strong>${dateRangeText}</strong>`;
+        timeText = `🕒 Estimasi Jam Tiba Kurir: <strong>${jamKurir}</strong> <span style="color:#64748b; font-size:11.5px;">[${minDays}-${maxDays} Hari Kerja]</span>`;
+        summaryText = `${formatIndonesianDate(dateMin)} (${jamKurir})`;
+    }
+
+    if (cardTitle) cardTitle.textContent = title;
+    if (cardBadge) {
+        cardBadge.textContent = badgeText;
+        cardBadge.style.background = badgeBg;
+        cardBadge.style.color = badgeColor;
+    }
+    if (cardEtaText) cardEtaText.innerHTML = etaText;
+    if (cardTimeText) cardTimeText.innerHTML = timeText;
+    estimatedCard.style.display = 'block';
+
+    if (summaryEstRow && summaryEstText) {
+        summaryEstRow.style.display = 'flex';
+        summaryEstText.innerHTML = summaryText;
+    }
 }
 
 // Update order summary
@@ -1453,14 +1604,21 @@ document.head.appendChild(style);
 // === CHAT WIDGET LOGIC ===
 let chatSessionId = localStorage.getItem('chat_session_id');
 
-// Jika belum ada session, atau session BUKAN berawalan TRK- (berarti bukan dari pesanan yg lunas)
-// maka selalu buat baru setiap kali halaman di-refresh sesuai permintaan (chat lama hapus)
-if (!chatSessionId || !chatSessionId.startsWith('TRK-')) {
+// Simpan session ID secara permanen di localStorage agar histori tidak hilang saat refresh
+if (!chatSessionId) {
     chatSessionId = 'sess_' + Math.random().toString(36).substr(2, 9);
     localStorage.setItem('chat_session_id', chatSessionId);
 }
 
 let isChatOpen = false;
+
+function formatChatTime(dateStr) {
+    let d = dateStr ? new Date(dateStr) : new Date();
+    if (isNaN(d.getTime())) d = new Date();
+    const hours = String(d.getHours()).padStart(2, '0');
+    const mins = String(d.getMinutes()).padStart(2, '0');
+    return `${hours}:${mins}`;
+}
 
 function toggleChat() {
     isChatOpen = !isChatOpen;
@@ -1479,12 +1637,14 @@ function sendChatMessage(e) {
     if(!message) return;
 
     input.value = '';
+    const nowTime = formatChatTime();
     
-    // Optimistic UI update
+    // Optimistic UI update dengan timestamp jam
     const chatMessages = document.getElementById('chatMessages');
     chatMessages.innerHTML += `
         <div style="align-self: flex-end; max-width: 80%; background: #dcf8c6; padding: 8px 12px; border-radius: 10px; border-top-right-radius: 0; box-shadow: 0 1px 2px rgba(0,0,0,0.1);">
-            <div style="font-size:13px; color:#333;">${message}</div>
+            <div style="font-size:13px; color:#333; line-height:1.4;">${escapeHtml(message)}</div>
+            <div style="font-size:10px; color:#666; text-align:right; margin-top:4px;">${nowTime} WIB</div>
         </div>
     `;
     chatMessages.scrollTop = chatMessages.scrollHeight;
@@ -1512,17 +1672,23 @@ function fetchCustomerMessages() {
             let unreadCount = 0;
             let html = '';
             data.forEach(msg => {
+                const msgTime = formatChatTime(msg.created_at);
+                const escapedText = escapeHtml(msg.message).replace(/\n/g, '<br>');
                 if (msg.sender === 'admin' && !msg.is_read) unreadCount++;
                 if (msg.sender === 'customer') {
                     html += `
                         <div style="align-self: flex-end; max-width: 80%; background: #dcf8c6; padding: 8px 12px; border-radius: 10px; border-top-right-radius: 0; box-shadow: 0 1px 2px rgba(0,0,0,0.1);">
-                            <div style="font-size:13px; color:#333;">${msg.message}</div>
+                            <div style="font-weight:bold; font-size:11px; color:#15803d; margin-bottom:3px;">Anda</div>
+                            <div style="font-size:13px; color:#333; line-height:1.4;">${escapedText}</div>
+                            <div style="font-size:10px; color:#666; text-align:right; margin-top:4px;">${msgTime} WIB</div>
                         </div>
                     `;
                 } else {
                     html += `
                         <div style="align-self: flex-start; max-width: 80%; background: white; padding: 8px 12px; border-radius: 10px; border-top-left-radius: 0; box-shadow: 0 1px 2px rgba(0,0,0,0.1);">
-                            <div style="font-size:13px; color:#333;">${msg.message}</div>
+                            <div style="font-weight:bold; font-size:11px; color:#1e3a8a; margin-bottom:3px;">👨‍💼 Admin Toko</div>
+                            <div style="font-size:13px; color:#333; line-height:1.4;">${escapedText}</div>
+                            <div style="font-size:10px; color:#888; text-align:right; margin-top:4px;">${msgTime} WIB</div>
                         </div>
                     `;
                 }

@@ -76,9 +76,14 @@ class SupplierStockController extends Controller
         }
     }
 
-    public function index()
+    public function index(Request $request)
     {
         self::consolidateDuplicateStocks();
+
+        $expiryStatus = $request->input('expiry_status', 'all');
+        $expiryMonth = $request->input('expiry_month', 'all');
+
+        $hasActiveFilter = ($expiryStatus !== 'all' || $expiryMonth !== 'all');
 
         $stocks = SupplierStock::with('supplier')->latest()->get();
         $activeStocks = SupplierStock::with('supplier')->where('is_active', 1)->latest()->get();
@@ -86,10 +91,78 @@ class SupplierStockController extends Controller
             ->where('is_active', 0)
             ->orderBy('created_at', 'asc')
             ->get();
+
+        $filteredVariantItems = collect();
+        $today = now()->startOfDay();
+
+        if ($hasActiveFilter) {
+            foreach ($activeStocks as $stock) {
+                $variants = is_array($stock->variants) ? $stock->variants : [];
+                foreach ($variants as $v) {
+                    $vExpStr = $v['expiry_date'] ?? null;
+                    if (empty($vExpStr)) {
+                        continue;
+                    }
+
+                    $vExp = \Carbon\Carbon::parse($vExpStr)->startOfDay();
+                    $days = $today->diffInDays($vExp, false);
+
+                    $matchesStatus = true;
+                    if ($expiryStatus === 'expired') {
+                        $matchesStatus = ($days < 0);
+                    } elseif ($expiryStatus === 'hampir_7') {
+                        $matchesStatus = ($days >= 0 && $days <= 7);
+                    } elseif ($expiryStatus === 'hampir_30') {
+                        if ($expiryMonth !== 'all') {
+                            $matchesStatus = ($days >= 0);
+                        } else {
+                            $matchesStatus = ($days >= 0 && ($days <= 30 || ($vExp->year === $today->year && $vExp->month === $today->month)));
+                        }
+                    } elseif ($expiryStatus === 'aman') {
+                        if ($expiryMonth !== 'all') {
+                            $matchesStatus = ($days >= 0);
+                        } else {
+                            $matchesStatus = ($days > 30);
+                        }
+                    }
+
+                    $matchesMonth = true;
+                    if ($expiryMonth !== 'all') {
+                        $matchesMonth = ($vExp->month == (int) $expiryMonth);
+                    }
+
+                    if ($matchesStatus && $matchesMonth) {
+                        $filteredVariantItems->push([
+                            'stock_id' => $stock->id,
+                            'item_name' => $stock->item_name,
+                            'supplier_name' => $stock->supplier->name ?? 'Unknown',
+                            'weight' => $v['weight'] ?? '-',
+                            'price' => (float) ($v['price'] ?? 0),
+                            'stock' => (int) ($v['stock'] ?? 0),
+                            'entry_date' => !empty($v['entry_date'])
+                                ? \Carbon\Carbon::parse($v['entry_date'])->format('d M Y')
+                                : ($stock->entry_date ? $stock->entry_date->format('d M Y') : $stock->created_at->format('d M Y')),
+                            'expiry_date' => $vExp->format('d M Y'),
+                            'days_left' => $days,
+                        ]);
+                    }
+                }
+            }
+        }
+
         $stockLogs = \App\Models\StockLog::with(['supplierStock.supplier'])->latest()->limit(50)->get();
         $completedOrders = \App\Models\SupplierOrder::with('supplier')->where('status', 'completed')->latest()->get();
 
-        return view('admin.supplier_stocks.index', compact('stocks', 'activeStocks', 'queuedStocks', 'stockLogs', 'completedOrders'));
+        return view('admin.supplier_stocks.index', compact(
+            'stocks',
+            'activeStocks',
+            'queuedStocks',
+            'filteredVariantItems',
+            'stockLogs',
+            'completedOrders',
+            'expiryStatus',
+            'expiryMonth'
+        ));
     }
 
     public function create()
@@ -417,7 +490,7 @@ class SupplierStockController extends Controller
 
         $queuedStock->is_active = 1;
         $queuedStock->save();
-        return redirect('/admin/supplier-stocks')->with('success', 'Batch ' . $itemName . ' berhasil diluncurkan ke toko.');
+        return redirect('/admin/supplier-stocks')->with('success', 'Batch ' . $itemName . ' berhasil dirilis ke toko.');
     }
 
     public static function autoProcessBatchQueue($itemName, $weight = null)
@@ -649,10 +722,12 @@ class SupplierStockController extends Controller
         return redirect('/admin/supplier-stocks')->with('success', 'Data barang masuk berhasil dihapus.');
     }
 
-    public function expiredForm()
+    public function expiredForm(Request $request)
     {
+        $selectedStockId = $request->input('stock_id') ?? $request->input('id');
+        $selectedWeight = $request->input('weight');
         $stocks = SupplierStock::with('supplier')->where('is_active', 1)->get();
-        return view('admin.supplier_stocks.expired', compact('stocks'));
+        return view('admin.supplier_stocks.expired', compact('stocks', 'selectedStockId', 'selectedWeight'));
     }
 
     public function storeExpired(Request $request)
@@ -681,7 +756,7 @@ class SupplierStockController extends Controller
             if (($v['weight'] ?? '') === $weight) {
                 $available = (int)($v['available_quantity'] ?? 0);
                 if ($available < $quantity) {
-                    return back()->with('error', 'Stok tidak mencukupi. Stok tersedia: ' . $available . ' pcs.');
+                    return back()->with('error', 'Stok tidak mencukupi. Stok tersedia: ' . $available . ' bungkus.');
                 }
                 $v['available_quantity'] = $available - $quantity;
                 $updated = true;
@@ -705,7 +780,7 @@ class SupplierStockController extends Controller
             'weight' => $weight,
             'type' => 'expired',
             'quantity' => $quantity,
-            'description' => $request->description ?? 'Manually logged expired',
+            'description' => !empty(trim($request->description)) ? $request->description : 'kadaluwarsa',
             'created_at' => $loggedDate,
             'updated_at' => now(),
         ]);
@@ -713,11 +788,38 @@ class SupplierStockController extends Controller
         return redirect('/admin/supplier-stocks/expired-list')->with('success', 'Barang kadaluwarsa berhasil dicatat.');
     }
 
-    public function expiredList()
+    public function expiredList(Request $request)
     {
-        $logs = \App\Models\StockLog::with('supplierStock.supplier')
-            ->where('type', 'expired')
-            ->orderBy('created_at', 'desc')
+        // Auto update any old description records to "kadaluwarsa"
+        \App\Models\StockLog::whereIn('description', ['Manually logged expired', 'Kadaluarsa / Rusak', 'Telah masuk tanggal kadaluwarsa'])
+            ->update(['description' => 'kadaluwarsa']);
+
+        $query = \App\Models\StockLog::with('supplierStock.supplier')
+            ->where('type', 'expired');
+
+        if ($request->filled('supplier_id')) {
+            $query->whereHas('supplierStock', function($q) use ($request) {
+                $q->where('supplier_id', $request->supplier_id);
+            });
+        }
+
+        $filter = strtolower($request->input('filter', ''));
+
+        if ($filter === 'kadaluwarsa') {
+            $query->where(function($q) {
+                $q->where('description', 'LIKE', '%kadaluw%')
+                  ->orWhere('description', 'LIKE', '%expired%')
+                  ->orWhereNull('description');
+            });
+        } elseif ($filter === 'rusak') {
+            $query->where(function($q) {
+                $q->where('description', 'NOT LIKE', '%kadaluw%')
+                  ->where('description', 'NOT LIKE', '%expired%')
+                  ->whereNotNull('description');
+            });
+        }
+
+        $logs = $query->orderBy('created_at', 'desc')
             ->orderBy('id', 'desc')
             ->get();
 
@@ -739,7 +841,9 @@ class SupplierStockController extends Controller
             $log->loss_value = $log->quantity * $buyPrice;
         }
 
-        return view('admin.supplier_stocks.expired_list', compact('logs'));
+        $suppliers = \App\Models\Supplier::orderBy('name', 'asc')->get();
+
+        return view('admin.supplier_stocks.expired_list', compact('logs', 'suppliers'));
     }
 
     public function editExpired($id)
@@ -792,7 +896,7 @@ class SupplierStockController extends Controller
                 if (($v['weight'] ?? '') === $log->weight || count($variants) === 1) {
                     $currentAvailable = (int)($v['available_quantity'] ?? 0);
                     if ($diff > 0 && $currentAvailable < $diff) {
-                        return back()->with('error', 'Stok tidak cukup untuk menaikkan jumlah kadaluarsa. Stok tersedia saat ini: ' . $currentAvailable . ' pcs.');
+                        return back()->with('error', 'Stok tidak cukup untuk menaikkan jumlah kadaluarsa. Stok tersedia saat ini: ' . $currentAvailable . ' bungkus.');
                     }
                     $v['available_quantity'] = max(0, $currentAvailable - $diff);
                     $updated = true;

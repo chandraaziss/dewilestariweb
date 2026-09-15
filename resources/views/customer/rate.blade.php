@@ -28,7 +28,7 @@
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; flex-wrap: wrap; gap: 8px;">
                         <div>
                             <h4 style="margin: 0; color: #1f2937; font-size: 15px; font-weight: 600;">{{ $productName }}</h4>
-                            <span style="font-size: 13px; color: #6b7280;">{{ $item->qty }} pcs × Rp {{ number_format($item->price, 0, ',', '.') }}</span>
+                            <span style="font-size: 13px; color: #6b7280;">{{ $item->qty }} bungkus × Rp {{ number_format($item->price, 0, ',', '.') }}</span>
                         </div>
                     </div>
 

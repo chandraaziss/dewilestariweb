@@ -1,0 +1,562 @@
+<mxfile host="Electron" agent="Antigravity AI" pages="4">
+  <diagram id="SequencePenjualan" name="1. Sequence Diagram Alur Penjualan">
+    <mxGraphModel dx="1400" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1100" background="#FFFFFF">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <!-- Title -->
+        <mxCell id="t1" value="SEQUENCE DIAGRAM 1: ALUR PENJUALAN, CHECKOUT &amp; VERIFIKASI PEMBAYARAN" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;fontStyle=1;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="300" y="15" width="1000" height="30" as="geometry" />
+        </mxCell>
+        <!-- ACTORS & FUNCTIONAL PARTICIPANTS -->
+        <mxCell id="cust" value="Pelanggan" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;strokeColor=#000000;fillColor=#FFFFFF;fontColor=#000000;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="60" y="60" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="line_cust" value="" style="endArrow=none;dashed=1;html=1;strokeColor=#000000;" edge="1" parent="1" source="cust">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="75" y="140" as="sourcePoint" />
+            <mxPoint x="75" y="1000" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="v_catalog" value="Halaman Katalog &amp; Checkout" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="200" y="70" width="180" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="line_vcatalog" value="" style="endArrow=none;dashed=1;html=1;strokeColor=#000000;" edge="1" parent="1" source="v_catalog">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="290" y="110" as="sourcePoint" />
+            <mxPoint x="290" y="1000" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="sys_sale" value="Sistem Penjualan" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="450" y="70" width="170" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="line_syssale" value="" style="endArrow=none;dashed=1;html=1;strokeColor=#000000;" edge="1" parent="1" source="sys_sale">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="535" y="110" as="sourcePoint" />
+            <mxPoint x="535" y="1000" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m_address" value="Buku Alamat Pengiriman" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="680" y="70" width="160" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="line_maddress" value="" style="endArrow=none;dashed=1;html=1;strokeColor=#000000;" edge="1" parent="1" source="m_address">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="760" y="110" as="sourcePoint" />
+            <mxPoint x="760" y="1000" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m_order" value="Data Transaksi Pesanan" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="900" y="70" width="170" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="line_morder" value="" style="endArrow=none;dashed=1;html=1;strokeColor=#000000;" edge="1" parent="1" source="m_order">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="985" y="110" as="sourcePoint" />
+            <mxPoint x="985" y="1000" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="admin_kasir" value="Kasir Toko" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;strokeColor=#000000;fillColor=#FFFFFF;fontColor=#000000;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1170" y="60" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="line_admin" value="" style="endArrow=none;dashed=1;html=1;strokeColor=#000000;" edge="1" parent="1" source="admin_kasir">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1185" y="140" as="sourcePoint" />
+            <mxPoint x="1185" y="1000" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m_stock" value="Katalog &amp; Inventaris Stok" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1300" y="70" width="200" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="line_mstock" value="" style="endArrow=none;dashed=1;html=1;strokeColor=#000000;" edge="1" parent="1" source="m_stock">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1400" y="110" as="sourcePoint" />
+            <mxPoint x="1400" y="1000" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <!-- MESSAGES -->
+        <mxCell id="msg1" value="1: Pilih Varian Ukuran &amp; Tambahkan ke Keranjang" style="html=1;verticalAlign=bottom;endArrow=block;strokeColor=#000000;fontColor=#000000;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="75" y="150" as="sourcePoint" />
+            <mxPoint x="290" y="150" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg2" value="2: Buka Halaman Pembayaran (Checkout)" style="html=1;verticalAlign=bottom;endArrow=block;strokeColor=#000000;fontColor=#000000;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="75" y="190" as="sourcePoint" />
+            <mxPoint x="535" y="190" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg3" value="3: Ambil Daftar Alamat &amp; Nama Penerima Pelanggan" style="html=1;verticalAlign=bottom;endArrow=block;strokeColor=#000000;fontColor=#000000;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="535" y="220" as="sourcePoint" />
+            <mxPoint x="760" y="220" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg4" value="4: Kirimkan Pilihan Alamat &amp; Nama Penerima" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;strokeColor=#000000;fontColor=#000000;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="760" y="250" as="sourcePoint" />
+            <mxPoint x="535" y="250" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg5" value="5: Tampilkan Form Pembayaran &amp; Pilihan Alamat" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;strokeColor=#000000;fontColor=#000000;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="535" y="280" as="sourcePoint" />
+            <mxPoint x="290" y="280" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg6" value="6: Pilih Alamat Tujuan, Metode Bayar &amp; Konfirmasi Pesanan" style="html=1;verticalAlign=bottom;endArrow=block;strokeColor=#000000;fontColor=#000000;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="75" y="320" as="sourcePoint" />
+            <mxPoint x="535" y="320" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg7" value="7: Salin Data Alamat Penerima &amp; Simpan Pesanan (Status: Menunggu Pembayaran)" style="html=1;verticalAlign=bottom;endArrow=block;strokeColor=#000000;fontColor=#000000;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="535" y="360" as="sourcePoint" />
+            <mxPoint x="985" y="360" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg8" value="8: Kirimkan Nomor Pesanan &amp; Kode Tiket Lacak" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;strokeColor=#000000;fontColor=#000000;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="985" y="390" as="sourcePoint" />
+            <mxPoint x="535" y="390" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg9" value="9: Unggah Foto Struk Bukti Transfer Bank" style="html=1;verticalAlign=bottom;endArrow=block;strokeColor=#000000;fontColor=#000000;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="75" y="440" as="sourcePoint" />
+            <mxPoint x="535" y="440" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg10" value="10: Perbarui Status Pembayaran (Menunggu Verifikasi Kasir)" style="html=1;verticalAlign=bottom;endArrow=block;strokeColor=#000000;fontColor=#000000;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="535" y="470" as="sourcePoint" />
+            <mxPoint x="985" y="470" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <!-- ALT BOX FOR PAYMENT VERIFICATION -->
+        <mxCell id="alt_box1" value="KONDISI [Verifikasi Pembayaran Kasir Toko]" style="shape=umlFrame;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontStyle=1;width=250;height=30;" vertex="1" parent="1">
+          <mxGeometry x="40" y="520" width="1430" height="420" as="geometry" />
+        </mxCell>
+        <mxCell id="cond1" value="[Kasus 1: Pembayaran Disetujui / Valid]" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontStyle=1;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="50" y="555" width="280" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="msg11" value="11: Periksa Foto Struk &amp; Klik &#39;Setujui Pembayaran&#39;" style="html=1;verticalAlign=bottom;endArrow=block;strokeColor=#000000;fontColor=#000000;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1185" y="585" as="sourcePoint" />
+            <mxPoint x="535" y="585" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg12" value="12: Ubah Status Pembayaran (Lunas)" style="html=1;verticalAlign=bottom;endArrow=block;strokeColor=#000000;fontColor=#000000;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="535" y="615" as="sourcePoint" />
+            <mxPoint x="985" y="615" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg13" value="13: Potong Stok Produk Otomatis Berdasarkan Batch Tertua (FIFO)" style="html=1;verticalAlign=bottom;endArrow=block;strokeColor=#000000;fontColor=#000000;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="535" y="645" as="sourcePoint" />
+            <mxPoint x="1400" y="645" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg14" value="14: Kurangi Stok Varian &amp; Catat Riwayat Stok Keluar Penjualan" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;strokeColor=#000000;fontColor=#000000;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1400" y="675" as="sourcePoint" />
+            <mxPoint x="535" y="675" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="div1" value="" style="endArrow=none;dashed=1;html=1;strokeColor=#000000;strokeWidth=1.5;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="40" y="710" as="sourcePoint" />
+            <mxPoint x="1470" y="710" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cond2" value="[Kasus 2: Pembayaran Ditolak / Perlu Perbaikan (PESANAN TETAP DISIMPAN)]" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontStyle=1;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="50" y="720" width="460" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="msg15" value="15: Catat Kendala Pembayaran &amp; Minta Perbaikan" style="html=1;verticalAlign=bottom;endArrow=block;strokeColor=#000000;fontColor=#000000;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1185" y="750" as="sourcePoint" />
+            <mxPoint x="535" y="750" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg16" value="16: Simpan Catatan Kendala &amp; Ubah Status Pembayaran (Ditolak/Kendala)" style="html=1;verticalAlign=bottom;endArrow=block;strokeColor=#000000;fontColor=#000000;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="535" y="780" as="sourcePoint" />
+            <mxPoint x="985" y="780" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg17" value="17: Tampilkan Peringatan Kendala &amp; Form Unggah Ulang Bukti Pembayaran" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;strokeColor=#000000;fontColor=#000000;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="535" y="810" as="sourcePoint" />
+            <mxPoint x="75" y="810" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg18" value="18: Unggah Ulang Foto Bukti Transfer Perbaikan" style="html=1;verticalAlign=bottom;endArrow=block;strokeColor=#000000;fontColor=#000000;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="75" y="850" as="sourcePoint" />
+            <mxPoint x="535" y="850" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg19" value="19: Reset Status (Menunggu Verifikasi Kasir) &amp; Kirim Notifikasi ke Live Chat Kasir" style="html=1;verticalAlign=bottom;endArrow=block;strokeColor=#000000;fontColor=#000000;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="535" y="890" as="sourcePoint" />
+            <mxPoint x="985" y="890" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="SequencePengiriman" name="2. Sequence Diagram Alur Pengiriman">
+    <mxGraphModel dx="1130" dy="767" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="900" background="#FFFFFF" math="0" shadow="0">
+      <root>
+        <mxCell id="0_2" />
+        <mxCell id="1_2" parent="0_2" />
+        <mxCell id="t2" parent="1_2" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;fontStyle=1;fontColor=#000000;" value="SEQUENCE DIAGRAM 2: ALUR PENGIRIMAN LOGISTIK KURIR TOKO &amp; FOTO BUKTI TERIMA" vertex="1">
+          <mxGeometry height="30" width="1000" x="300" y="15" as="geometry" />
+        </mxCell>
+        <mxCell id="admin2" parent="1_2" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;strokeColor=#000000;fillColor=#FFFFFF;fontColor=#000000;fontStyle=1;" value="Admin Toko" vertex="1">
+          <mxGeometry height="60" width="30" x="80" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="la_admin2" edge="1" parent="1_2" source="admin2" style="endArrow=none;dashed=1;html=1;strokeColor=#000000;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="95" y="140" as="sourcePoint" />
+            <mxPoint x="95" y="800" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="sys_ship" parent="1_2" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontStyle=1;" value="Sistem Pengiriman" vertex="1">
+          <mxGeometry height="40" width="180" x="300" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="la_sysship" edge="1" parent="1_2" source="sys_ship" style="endArrow=none;dashed=1;html=1;strokeColor=#000000;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="390" y="110" as="sourcePoint" />
+            <mxPoint x="390" y="800" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="courier_actor" parent="1_2" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;strokeColor=#000000;fillColor=#FFFFFF;fontColor=#000000;fontStyle=1;" value="Karyawan" vertex="1">
+          <mxGeometry height="60" width="30" x="620" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="la_courier" edge="1" parent="1_2" source="courier_actor" style="endArrow=none;dashed=1;html=1;strokeColor=#000000;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="635" y="140" as="sourcePoint" />
+            <mxPoint x="635" y="800" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m_order2" parent="1_2" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontStyle=1;" value="Data Transaksi Pesanan" vertex="1">
+          <mxGeometry height="40" width="170" x="830" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="la_morder2" edge="1" parent="1_2" source="m_order2" style="endArrow=none;dashed=1;html=1;strokeColor=#000000;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="915" y="110" as="sourcePoint" />
+            <mxPoint x="915" y="800" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cust2" parent="1_2" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;strokeColor=#000000;fillColor=#FFFFFF;fontColor=#000000;fontStyle=1;" value="Pelanggan" vertex="1">
+          <mxGeometry height="60" width="30" x="1140" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="la_cust2" edge="1" parent="1_2" source="cust2" style="endArrow=none;dashed=1;html=1;strokeColor=#000000;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="1155" y="140" as="sourcePoint" />
+            <mxPoint x="1155" y="800" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m2_1" edge="1" parent="1_2" style="html=1;verticalAlign=bottom;endArrow=block;strokeColor=#000000;fontColor=#000000;fontSize=11;" value="1: Pilih Pesanan Lunas &amp; Penunjukan Kurir Toko">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="95" y="150" as="sourcePoint" />
+            <mxPoint x="390" y="150" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m2_2" edge="1" parent="1_2" style="html=1;verticalAlign=bottom;endArrow=block;strokeColor=#000000;fontColor=#000000;fontSize=11;" value="2: Simpan Penugasan Kurir &amp; Ubah Status (Sedang Dikemas)">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="390" y="190" as="sourcePoint" />
+            <mxPoint x="915" y="190" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m2_3" edge="1" parent="1_2" style="html=1;verticalAlign=bottom;endArrow=block;strokeColor=#000000;fontColor=#000000;fontSize=11;" value="3: Kurir Membuka Aplikasi &amp; Melihat Daftar Tugas Pengiriman">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="635" y="240" as="sourcePoint" />
+            <mxPoint x="390" y="240" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m2_4" edge="1" parent="1_2" style="html=1;verticalAlign=bottom;endArrow=block;strokeColor=#000000;fontColor=#000000;fontSize=11;" value="4: Kurir Mengeklik &#39;Mulai Pengiriman&#39;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="635" y="290" as="sourcePoint" />
+            <mxPoint x="390" y="290" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m2_5" edge="1" parent="1_2" style="html=1;verticalAlign=bottom;endArrow=block;strokeColor=#000000;fontColor=#000000;fontSize=11;" value="5: Ubah Status Pengiriman (Sedang Dikirim)">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="390" y="330" as="sourcePoint" />
+            <mxPoint x="915" y="330" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m2_6" edge="1" parent="1_2" style="html=1;verticalAlign=bottom;endArrow=block;strokeColor=#000000;fontColor=#000000;fontSize=11;" value="6: Pelanggan Memantau Pergerakan Kurir di Peta">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1155" y="380" as="sourcePoint" />
+            <mxPoint x="390" y="380" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m2_7" edge="1" parent="1_2" style="html=1;verticalAlign=bottom;endArrow=block;strokeColor=#000000;fontColor=#000000;fontSize=11;" value="7: Kurir Memperbarui Status (Hampir Sampai)">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="635" y="430" as="sourcePoint" />
+            <mxPoint x="390" y="430" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m2_8" edge="1" parent="1_2" style="html=1;verticalAlign=bottom;endArrow=block;strokeColor=#000000;fontColor=#000000;fontSize=11;" value="8: Serahkan Barang &amp; Unggah Foto Bukti Penerimaan">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="635" y="480" as="sourcePoint" />
+            <mxPoint x="390" y="480" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m2_9" edge="1" parent="1_2" style="html=1;verticalAlign=bottom;endArrow=block;strokeColor=#000000;fontColor=#000000;fontSize=11;" value="9: Ubah Status Pesanan (Selesai) &amp; Simpan Foto Bukti Terima">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="390" y="520" as="sourcePoint" />
+            <mxPoint x="915" y="520" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m2_10" edge="1" parent="1_2" style="html=1;verticalAlign=bottom;endArrow=block;strokeColor=#000000;fontColor=#000000;fontSize=11;" value="10: Pelanggan Memberikan Penilaian &amp; Ulasan Produk">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1155" y="570" as="sourcePoint" />
+            <mxPoint x="390" y="570" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="SequencePembelian" name="3. Sequence Diagram Alur Pembelian Suplier">
+    <mxGraphModel dx="1400" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="900" background="#FFFFFF">
+      <root>
+        <mxCell id="0_3" />
+        <mxCell id="1_3" parent="0_3" />
+        <mxCell id="t3" value="SEQUENCE DIAGRAM 3: ALUR PEMBELIAN SUPLIER (PROCUREMENT) &amp; TIKET RETUR SUPLIER" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;fontStyle=1;fontColor=#000000;" vertex="1" parent="1_3">
+          <mxGeometry x="250" y="15" width="1100" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="admin3" value="Admin Toko" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;strokeColor=#000000;fillColor=#FFFFFF;fontColor=#000000;fontStyle=1;" vertex="1" parent="1_3">
+          <mxGeometry x="80" y="60" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="la_admin3" value="" style="endArrow=none;dashed=1;html=1;strokeColor=#000000;" edge="1" parent="1_3" source="admin3">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="95" y="140" as="sourcePoint" />
+            <mxPoint x="95" y="800" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="sys_proc" value="Sistem Pembelian" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontStyle=1;" vertex="1" parent="1_3">
+          <mxGeometry x="320" y="70" width="180" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="la_sysproc" value="" style="endArrow=none;dashed=1;html=1;strokeColor=#000000;" edge="1" parent="1_3" source="sys_proc">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="410" y="110" as="sourcePoint" />
+            <mxPoint x="410" y="800" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="supplier_actor" value="Mitra Suplier" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;strokeColor=#000000;fillColor=#FFFFFF;fontColor=#000000;fontStyle=1;" vertex="1" parent="1_3">
+          <mxGeometry x="680" y="60" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="la_sup" value="" style="endArrow=none;dashed=1;html=1;strokeColor=#000000;" edge="1" parent="1_3" source="supplier_actor">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="695" y="140" as="sourcePoint" />
+            <mxPoint x="695" y="800" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m_supstock" value="Katalog &amp; Inventaris Stok" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontStyle=1;" vertex="1" parent="1_3">
+          <mxGeometry x="900" y="70" width="200" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="la_mstock3" value="" style="endArrow=none;dashed=1;html=1;strokeColor=#000000;" edge="1" parent="1_3" source="m_supstock">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1000" y="110" as="sourcePoint" />
+            <mxPoint x="1000" y="800" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m_supreturn" value="Dokumen Retur Suplier" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontStyle=1;" vertex="1" parent="1_3">
+          <mxGeometry x="1220" y="70" width="180" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="la_mreturn" value="" style="endArrow=none;dashed=1;html=1;strokeColor=#000000;" edge="1" parent="1_3" source="m_supreturn">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1310" y="110" as="sourcePoint" />
+            <mxPoint x="1310" y="800" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <!-- MESSAGES -->
+        <mxCell id="m3_1" value="1: Buat Surat Pemesanan Barang (Purchase Order)" style="html=1;verticalAlign=bottom;endArrow=block;strokeColor=#000000;fontColor=#000000;fontSize=11;" edge="1" parent="1_3">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="95" y="150" as="sourcePoint" />
+            <mxPoint x="410" y="150" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m3_2" value="2: Kirimkan Nota Pemesanan ke Mitra Suplier" style="html=1;verticalAlign=bottom;endArrow=block;strokeColor=#000000;fontColor=#000000;fontSize=11;" edge="1" parent="1_3">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="410" y="190" as="sourcePoint" />
+            <mxPoint x="695" y="190" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m3_3" value="3: Mitra Suplier Mengirimkan Pasokan Barang Fisik ke Toko" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;strokeColor=#000000;fontColor=#000000;fontSize=11;" edge="1" parent="1_3">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="695" y="240" as="sourcePoint" />
+            <mxPoint x="95" y="240" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <!-- ALT BOX FOR ITEM CHECK -->
+        <mxCell id="alt_box3" value="KONDISI [Pemeriksaan Fisik Barang Suplier]" style="shape=umlFrame;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontStyle=1;width=250;height=30;" vertex="1" parent="1_3">
+          <mxGeometry x="60" y="280" width="1310" height="420" as="geometry" />
+        </mxCell>
+        <mxCell id="cond3_1" value="[Kasus 1: Barang Sesuai &amp; Bagus (Restok Barang ke Katalog Toko)]" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontStyle=1;fontColor=#000000;" vertex="1" parent="1_3">
+          <mxGeometry x="70" y="315" width="420" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="m3_4" value="4: Input Restok Barang Baru ke Katalog Toko" style="html=1;verticalAlign=bottom;endArrow=block;strokeColor=#000000;fontColor=#000000;fontSize=11;" edge="1" parent="1_3">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="95" y="350" as="sourcePoint" />
+            <mxPoint x="410" y="350" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m3_5" value="5: Simpan Varian, Tanggal Masuk Batch &amp; Log Stok Masuk" style="html=1;verticalAlign=bottom;endArrow=block;strokeColor=#000000;fontColor=#000000;fontSize=11;" edge="1" parent="1_3">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="410" y="390" as="sourcePoint" />
+            <mxPoint x="1000" y="390" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="div3" value="" style="endArrow=none;dashed=1;html=1;strokeColor=#000000;strokeWidth=1.5;" edge="1" parent="1_3">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="60" y="440" as="sourcePoint" />
+            <mxPoint x="1370" y="440" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cond3_2" value="[Kasus 2: Barang Cacat / Rusak (Pengajuan Tiket Retur Suplier)]" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontStyle=1;fontColor=#000000;" vertex="1" parent="1_3">
+          <mxGeometry x="70" y="450" width="420" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="m3_6" value="6: Buat Tiket Retur Barang Cacat &amp; Unggah Foto Bukti Kerusakan" style="html=1;verticalAlign=bottom;endArrow=block;strokeColor=#000000;fontColor=#000000;fontSize=11;" edge="1" parent="1_3">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="95" y="480" as="sourcePoint" />
+            <mxPoint x="410" y="480" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m3_7" value="7: Simpan Tiket Retur Suplier (Status: Menunggu Konfirmasi)" style="html=1;verticalAlign=bottom;endArrow=block;strokeColor=#000000;fontColor=#000000;fontSize=11;" edge="1" parent="1_3">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="410" y="520" as="sourcePoint" />
+            <mxPoint x="1310" y="520" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m3_8" value="8: Kirimkan Notifikasi Retur Barang Cacat ke Suplier" style="html=1;verticalAlign=bottom;endArrow=block;strokeColor=#000000;fontColor=#000000;fontSize=11;" edge="1" parent="1_3">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="410" y="560" as="sourcePoint" />
+            <mxPoint x="695" y="560" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m3_9" value="9: Suplier Menyetujui Penggantian Barang / Potongan Tagihan" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;strokeColor=#000000;fontColor=#000000;fontSize=11;" edge="1" parent="1_3">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="695" y="600" as="sourcePoint" />
+            <mxPoint x="410" y="600" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m3_10" value="10: Perbarui Status Tiket Retur (Selesai)" style="html=1;verticalAlign=bottom;endArrow=block;strokeColor=#000000;fontColor=#000000;fontSize=11;" edge="1" parent="1_3">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="410" y="640" as="sourcePoint" />
+            <mxPoint x="1310" y="640" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="SequenceStok" name="4. Sequence Diagram Alur Pengelolaan Stok FIFO">
+    <mxGraphModel dx="1400" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="900" background="#FFFFFF">
+      <root>
+        <mxCell id="0_4" />
+        <mxCell id="1_4" parent="0_4" />
+        <mxCell id="t4" value="SEQUENCE DIAGRAM 4: ALUR PENGELOLAAN STOK INVENTARIS &amp; PENGURANGAN FIFO OTOMATIS" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;fontStyle=1;fontColor=#000000;" vertex="1" parent="1_4">
+          <mxGeometry x="250" y="15" width="1100" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="admin4" value="Admin Gudang" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;strokeColor=#000000;fillColor=#FFFFFF;fontColor=#000000;fontStyle=1;" vertex="1" parent="1_4">
+          <mxGeometry x="80" y="60" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="la_admin4" value="" style="endArrow=none;dashed=1;html=1;strokeColor=#000000;" edge="1" parent="1_4" source="admin4">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="95" y="140" as="sourcePoint" />
+            <mxPoint x="95" y="800" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="sys_inv" value="Sistem Inventaris Stok" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontStyle=1;" vertex="1" parent="1_4">
+          <mxGeometry x="320" y="70" width="190" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="la_sysinv" value="" style="endArrow=none;dashed=1;html=1;strokeColor=#000000;" edge="1" parent="1_4" source="sys_inv">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="415" y="110" as="sourcePoint" />
+            <mxPoint x="415" y="800" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m_stock4" value="Katalog &amp; Inventaris Stok" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontStyle=1;" vertex="1" parent="1_4">
+          <mxGeometry x="670" y="70" width="190" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="la_mstock4" value="" style="endArrow=none;dashed=1;html=1;strokeColor=#000000;" edge="1" parent="1_4" source="m_stock4">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="765" y="110" as="sourcePoint" />
+            <mxPoint x="765" y="800" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m_log4" value="Riwayat Audit Pergerakan Stok" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontStyle=1;" vertex="1" parent="1_4">
+          <mxGeometry x="990" y="70" width="200" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="la_mlog4" value="" style="endArrow=none;dashed=1;html=1;strokeColor=#000000;" edge="1" parent="1_4" source="m_log4">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1090" y="110" as="sourcePoint" />
+            <mxPoint x="1090" y="800" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <!-- MESSAGES -->
+        <mxCell id="m4_1" value="1: Admin Gudang Input Restok / Penyesuaian Stok Manual" style="html=1;verticalAlign=bottom;endArrow=block;strokeColor=#000000;fontColor=#000000;fontSize=11;" edge="1" parent="1_4">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="95" y="150" as="sourcePoint" />
+            <mxPoint x="415" y="150" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m4_2" value="2: Perbarui Kuantitas Varian &amp; Tanggal Masuk Batch" style="html=1;verticalAlign=bottom;endArrow=block;strokeColor=#000000;fontColor=#000000;fontSize=11;" edge="1" parent="1_4">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="415" y="190" as="sourcePoint" />
+            <mxPoint x="765" y="190" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m4_3" value="3: Catat Riwayat Audit Pergerakan Stok (Stok Masuk / Penyesuaian)" style="html=1;verticalAlign=bottom;endArrow=block;strokeColor=#000000;fontColor=#000000;fontSize=11;" edge="1" parent="1_4">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="415" y="230" as="sourcePoint" />
+            <mxPoint x="1090" y="230" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <!-- AUTOMATIC DEDUCTION SECTION -->
+        <mxCell id="box_fifo" value="PENGURANGA STOK FIFO OTOMATIS (Saat Pembayaran Lunas Terkonfirmasi)" style="shape=umlFrame;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontStyle=1;width=420;height=30;" vertex="1" parent="1_4">
+          <mxGeometry x="300" y="280" width="850" height="340" as="geometry" />
+        </mxCell>
+        <mxCell id="m4_4" value="4: Triger Pembayaran Lunas Terkonfirmasi (Status: Lunas)" style="html=1;verticalAlign=bottom;endArrow=block;strokeColor=#000000;fontColor=#000000;fontSize=11;" edge="1" parent="1_4">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="95" y="340" as="sourcePoint" />
+            <mxPoint x="415" y="340" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m4_5" value="5: Panggil Fungsi Pemotongan Stok FIFO" style="html=1;verticalAlign=bottom;endArrow=block;strokeColor=#000000;fontColor=#000000;fontSize=11;" edge="1" parent="1_4">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="415" y="380" as="sourcePoint" />
+            <mxPoint x="765" y="380" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m4_6" value="6: Urutkan Batch Stok dari Tanggal Masuk Tertua (FIFO) &amp; Potong Kuantitas" style="html=1;verticalAlign=bottom;endArrow=block;strokeColor=#000000;fontColor=#000000;fontSize=11;" edge="1" parent="1_4">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="765" y="420" as="sourcePoint" />
+            <mxPoint x="765" y="460" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="825" y="420" />
+              <mxPoint x="825" y="460" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m4_7" value="7: Catat Riwayat Stok Keluar Penjualan" style="html=1;verticalAlign=bottom;endArrow=block;strokeColor=#000000;fontColor=#000000;fontSize=11;" edge="1" parent="1_4">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="765" y="500" as="sourcePoint" />
+            <mxPoint x="1090" y="500" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m4_8" value="8: Kirim Konfirmasi Keberhasilan Pemotongan Stok" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;strokeColor=#000000;fontColor=#000000;fontSize=11;" edge="1" parent="1_4">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="765" y="550" as="sourcePoint" />
+            <mxPoint x="415" y="550" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

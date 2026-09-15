@@ -1,0 +1,115 @@
+<mxfile host="Electron" agent="Antigravity AI">
+  <diagram id="DewiLestariStrukturMenuLengkap" name="Diagram Struktur Menu Sistem Toko Dewi Lestari 2">
+    <mxGraphModel dx="1582" dy="1074" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2800" pageHeight="1800" background="#FFFFFF" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;fontStyle=1;fontColor=#000000;" value="DIAGRAM STRUKTUR MENU SISTEM TOKO DEWI LESTARI 2" vertex="1">
+          <mxGeometry height="35" width="1200" x="420" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="root_system" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=2;fontColor=#000000;fontStyle=1;fontSize=14;" value="SISTEM WEB E-COMMERCE DEWI LESTARI 2" vertex="1">
+          <mxGeometry height="50" width="440" x="780" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="tier_customer" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=2;fontColor=#000000;fontStyle=1;fontSize=14;" value="AREA PELANGGAN (FRONT-END ONLINE STORE)" vertex="1">
+          <mxGeometry height="40" width="940" x="50" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="tier_admin" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=2;fontColor=#000000;fontStyle=1;fontSize=14;" value="AREA ADMIN &amp;amp; PENGELOLA TOKO (BACK-END CONTROL PANEL)" vertex="1">
+          <mxGeometry height="40" width="580" x="1030" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="link_r_c" edge="1" parent="1" source="root_system" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#000000;strokeWidth=1.5;fontSize=14;" target="tier_customer">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="link_r_a" edge="1" parent="1" source="root_system" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#000000;strokeWidth=1.5;fontSize=14;" target="tier_admin">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="m_c1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontStyle=1;fontSize=14;" value="Autentikasi Pelanggan" vertex="1">
+          <mxGeometry height="35" width="210" x="50" y="235" as="geometry" />
+        </mxCell>
+        <mxCell id="b_c1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;align=left;verticalAlign=top;spacingLeft=10;spacingTop=8;fontColor=#000000;fontSize=14;" value="• Registrasi Akun Pelanggan&#xa;&#xa;• Login Email &amp;amp; Google OAuth&#xa;&#xa;• Logout Session Pelanggan" vertex="1">
+          <mxGeometry height="110" width="210" x="50" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="l_tc1" edge="1" parent="1" source="tier_customer" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#000000;fontSize=14;" target="m_c1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="m_c2" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontStyle=1;fontSize=14;" value="Katalog &amp;amp; Belanja" vertex="1">
+          <mxGeometry height="35" width="220" x="280" y="235" as="geometry" />
+        </mxCell>
+        <mxCell id="b_c2" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;align=left;verticalAlign=top;spacingLeft=10;spacingTop=8;fontColor=#000000;fontSize=14;" value="• Catalog &amp;amp; Live Search Filter&#xa;&#xa;• Varian Berat &amp;amp; Expired Date&#xa;&#xa;• Keranjang Belanja &amp;amp; Subtotal&#xa;&#xa;• Live Chat Widget CS" vertex="1">
+          <mxGeometry height="140" width="220" x="280" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="l_tc2" edge="1" parent="1" source="tier_customer" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#000000;fontSize=14;" target="m_c2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="m_c3" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontStyle=1;fontSize=14;" value="Transaksi &amp;amp; Checkout" vertex="1">
+          <mxGeometry height="35" width="220" x="520" y="235" as="geometry" />
+        </mxCell>
+        <mxCell id="b_c3" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;align=left;verticalAlign=top;spacingLeft=10;spacingTop=8;fontColor=#000000;fontSize=14;" value="• Form Checkout &amp;amp; Kurir&#xa;&#xa;• Midtrans Snap (VA/QRIS)&#xa;&#xa;• Upload Bukti Transfer Manual&#xa;&#xa;• Re-upload Bukti Kirim Ditolak" vertex="1">
+          <mxGeometry height="140" width="220" x="520" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="l_tc3" edge="1" parent="1" source="tier_customer" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#000000;fontSize=14;" target="m_c3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="m_c4" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontStyle=1;fontSize=14;" value="Pelacakan &amp;amp; Retur Barang" vertex="1">
+          <mxGeometry height="35" width="230" x="760" y="235" as="geometry" />
+        </mxCell>
+        <mxCell id="b_c4" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;align=left;verticalAlign=top;spacingLeft=10;spacingTop=8;fontColor=#000000;fontSize=14;" value="• Form Lacak Tiket Resi&#xa;&#xa;• Status Tracking Ongkir Logistics&#xa;&#xa;• Pengajuan Retur Barang Cacat" vertex="1">
+          <mxGeometry height="120" width="230" x="760" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="l_tc4" edge="1" parent="1" source="tier_customer" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#000000;fontSize=14;" target="m_c4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="m_c5" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontStyle=1;fontSize=14;" value="Dashboard Akun Saya" vertex="1">
+          <mxGeometry height="35" width="220" x="280" y="450" as="geometry" />
+        </mxCell>
+        <mxCell id="b_c5" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;align=left;verticalAlign=top;spacingLeft=10;spacingTop=8;fontColor=#000000;fontSize=14;" value="• Edit Profil Saya &amp;amp; Avatar&#xa;&#xa;• Buku Alamat (Primary/Hapus)&#xa;&#xa;• Riwayat Pesanan Penjualan&#xa;&#xa;• Form Penilaian &amp;amp; Rating" vertex="1">
+          <mxGeometry height="135" width="220" x="280" y="495" as="geometry" />
+        </mxCell>
+        <mxCell id="m_a1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontStyle=1;fontSize=14;" value="Autentikasi Admin" vertex="1">
+          <mxGeometry height="35" width="200" x="1030" y="235" as="geometry" />
+        </mxCell>
+        <mxCell id="b_a1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;align=left;verticalAlign=top;spacingLeft=10;spacingTop=8;fontColor=#000000;fontSize=14;" value="• Form Login Admin&#xa;&#xa;• Session Logout Admin" vertex="1">
+          <mxGeometry height="65" width="200" x="1030" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="l_ta1" edge="1" parent="1" source="tier_admin" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#000000;fontSize=14;" target="m_a1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="m_a2" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontStyle=1;fontSize=14;" value="Pengelolaan Transaksi" vertex="1">
+          <mxGeometry height="35" width="230" x="1250" y="235" as="geometry" />
+        </mxCell>
+        <mxCell id="b_a2" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;align=left;verticalAlign=top;spacingLeft=10;spacingTop=8;fontColor=#000000;fontSize=14;" value="• Monitoring Status Transaksi&#xa;&#xa;• Detail Pesanan &amp;amp; Alamat&#xa;&#xa;• Verifikasi Transfer Bank Manual&#xa;&#xa;• Notifikasi Selisih Transfer&#xa;&#xa;• Penugasan Kurir &amp;amp; Resi Lacak&#xa;&#xa;• Pembatalan &amp;amp; Hapus Transaksi" vertex="1">
+          <mxGeometry height="210" width="230" x="1250" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="l_ta2" edge="1" parent="1" source="tier_admin" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#000000;fontSize=14;" target="m_a2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="m_a3" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontStyle=1;fontSize=14;" value="Pengelolaan Stok" vertex="1">
+          <mxGeometry height="35" width="240" x="1500" y="235" as="geometry" />
+        </mxCell>
+        <mxCell id="b_a3" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;align=left;verticalAlign=top;spacingLeft=10;spacingTop=8;fontColor=#000000;fontSize=14;" value="• Katalog Stok Varian Produk&#xa;&#xa;• Tambah Batch Stok Supplier&#xa;&#xa;• Queue Batch Input Sekaligus&#xa;&#xa;• Launching Batch Produk Publik&#xa;&#xa;• Kelola Barang Expired &amp;amp; Afkir" vertex="1">
+          <mxGeometry height="190" width="240" x="1500" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="l_ta3" edge="1" parent="1" source="tier_admin" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#000000;fontSize=14;" target="m_a3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="m_a4" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontStyle=1;fontSize=14;" value="Supplier &amp;amp; PO Pengadaan" vertex="1">
+          <mxGeometry height="35" width="240" x="1030" y="540" as="geometry" />
+        </mxCell>
+        <mxCell id="b_a4" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;align=left;verticalAlign=top;spacingLeft=10;spacingTop=8;fontColor=#000000;fontSize=14;" value="• Master Data Supplier Mitra&#xa;&#xa;• Surat Pemesanan Barang (PO)&#xa;&#xa;• Kirim Format PO via WhatsApp&#xa;&#xa;• Cetak Invoice PO Supplier&#xa;&#xa;• Tiket Retur Barang Cacat Supplier" vertex="1">
+          <mxGeometry height="190" width="240" x="1030" y="585" as="geometry" />
+        </mxCell>
+        <mxCell id="m_a5" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontStyle=1;fontSize=14;" value="Laporan, Rating &amp;amp; Chat CS" vertex="1">
+          <mxGeometry height="35" width="250" x="1290" y="540" as="geometry" />
+        </mxCell>
+        <mxCell id="b_a5" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;align=left;verticalAlign=top;spacingLeft=10;spacingTop=8;fontColor=#000000;fontSize=14;" value="• Laporan Penjualan &amp;amp; Laba Toko&#xa;&#xa;• Download Laporan PDF (Hitam/Warna)&#xa;&#xa;• Export Rekap Data Excel/CSV&#xa;&#xa;• Master Pelanggan &amp;amp; Moderasi Rating&#xa;&#xa;• Live Chat Inbox &amp;amp; Unread Badge" vertex="1">
+          <mxGeometry height="210" width="250" x="1290" y="585" as="geometry" />
+        </mxCell>
+        <mxCell id="m_k1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontStyle=1;fontSize=14;" value="Panel Kurir" vertex="1">
+          <mxGeometry height="35" width="240" x="1560" y="540" as="geometry" />
+        </mxCell>
+        <mxCell id="b_k1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;align=left;verticalAlign=top;spacingLeft=10;spacingTop=8;fontColor=#000000;fontSize=14;" value="• Dashboard Kurir Toko&#xa;&#xa;• Daftar Tugas Paket Pengantaran Hari Ini&#xa;&#xa;• Rincian Penerima &amp;amp; Titik Peta Alamat Tujuan&#xa;&#xa;• Update Status Kirim &amp;amp; Upload Proof of Delivery (Foto Terima)&#xa;&#xa;• Log Riwayat Pengiriman Selesai" vertex="1">
+          <mxGeometry height="225" width="240" x="1560" y="585" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

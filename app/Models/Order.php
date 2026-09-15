@@ -58,7 +58,7 @@ class Order extends Model
         }
 
         if ($this->estimated_delivery_date) {
-            return \Carbon\Carbon::parse($this->estimated_delivery_date)->setTimezone('Asia/Jakarta')->translatedFormat('d M Y') . ' (Tiba Hari Ini)';
+            return \Carbon\Carbon::parse($this->estimated_delivery_date)->setTimezone('Asia/Jakarta')->translatedFormat('d M Y, H:i') . ' WIB';
         }
 
         $baseTimestamp = $this->shipped_at ?? $this->paid_at ?? $this->created_at;
@@ -67,11 +67,27 @@ class Order extends Model
         $formattedDate = $baseDate->translatedFormat('d M Y');
 
         if (str_contains($option, 'ambil') || str_contains($option, 'pickup')) {
-            return "Hari Ini, {$formattedDate} (Estimasi 1 - 2 Jam)";
+            $startEst = $baseDate->copy()->addMinutes(30)->format('H:i');
+            $endEst = $baseDate->copy()->addHours(1)->format('H:i');
+            return "Hari Ini, {$formattedDate} (Estimasi Jam {$startEst} - {$endEst} WIB - Siap Ambil)";
         }
 
-        // Pengiriman Lokal Kurir Toko (Kota Cimahi & Kota Bandung) -> Tiba di hari yang sama
-        return "Hari Ini, {$formattedDate} (Estimasi 2 - 4 Jam - Sameday)";
+        if (str_contains($option, 'ekspedisi') || str_contains($option, 'expedition') || str_contains($option, 'jne') || str_contains($option, 'jnt') || str_contains($option, 'pos')) {
+            $dateMin = $baseDate->copy()->addDays(1)->translatedFormat('d M Y');
+            $dateMax = $baseDate->copy()->addDays(2)->translatedFormat('d M Y');
+            return "{$dateMin} s/d {$dateMax} (Estimasi Jam 10:00 - 17:00 WIB)";
+        }
+
+        if (str_contains($option, 'instan') || str_contains($option, 'express') || str_contains($option, '1-2')) {
+            $startEst = $baseDate->copy()->addHours(1)->format('H:i');
+            $endEst = $baseDate->copy()->addHours(2)->format('H:i');
+            return "Hari Ini, {$formattedDate} (Estimasi Jam {$startEst} - {$endEst} WIB - Instan)";
+        }
+
+        // Pengiriman Lokal Kurir Toko (Kota Cimahi & Kota Bandung) -> Sameday 2-4 Jam
+        $startEst = $baseDate->copy()->addHours(2)->format('H:i');
+        $endEst = $baseDate->copy()->addHours(4)->format('H:i');
+        return "Hari Ini, {$formattedDate} (Estimasi Jam {$startEst} - {$endEst} WIB - Sameday)";
     }
 
     public function items()

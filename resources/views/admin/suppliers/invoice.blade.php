@@ -416,8 +416,8 @@
                     <span>🚨</span> CATATAN RETUR / PEMERIKSAAN BARANG RUSAK
                 </div>
                 <div>
-                    Terdapat komplain/retur produk sebanyak <strong>{{ $totalReturCount }} pcs</strong>.
-                    Tagihan invoice ini telah <strong>otomatis disesuaikan secara bersih</strong> hanya untuk <strong>{{ $grandTotalPcs }} pcs barang yang diterima dalam kondisi baik</strong>.
+                    Terdapat komplain/retur produk sebanyak <strong>{{ $totalReturCount }} bungkus</strong>.
+                    Tagihan invoice ini telah <strong>otomatis disesuaikan secara bersih</strong> hanya untuk <strong>{{ $grandTotalPcs }} bungkus barang yang diterima dalam kondisi baik</strong>.
                 </div>
             </div>
         @endif
@@ -443,13 +443,13 @@
                     <tr>
                         <td class="text-center">{{ $row['no'] }}</td>
                         <td class="text-center">{{ $row['date'] }}</td>
-                        <td class="text-center">{{ $row['qty_ordered'] }} pcs</td>
+                        <td class="text-center">{{ $row['qty_ordered'] }} bungkus</td>
                         @if($totalReturCount > 0)
                             <td class="text-center" style="color: #dc2626; font-weight: bold;">
-                                {{ $row['qty_retur'] > 0 ? '-' . $row['qty_retur'] . ' pcs' : '-' }}
+                                {{ $row['qty_retur'] > 0 ? '-' . $row['qty_retur'] . ' bungkus' : '-' }}
                             </td>
                             <td class="text-center text-bold" style="color: #15803d;">
-                                {{ $row['qty_received'] }} pcs
+                                {{ $row['qty_received'] }} bungkus
                             </td>
                         @endif
                         <td><strong>{{ $row['item'] }}</strong></td>
@@ -470,10 +470,10 @@
         <div class="summary-section-box">
             <div class="summary-row" style="border-bottom: 1px dashed #000000; padding-bottom: 6px;">
                 <div>
-                    <strong>Dipesan: {{ $grandTotalOrderedPcs }} Pcs</strong>
+                    <strong>Dipesan: {{ $grandTotalOrderedPcs }} Bungkus</strong>
                     @if($totalReturCount > 0)
-                        <span style="color: #dc2626; font-weight: bold; margin-left: 8px;">(Retur/Rusak: {{ $grandTotalReturPcs }} Pcs)</span>
-                        <span style="color: #15803d; font-weight: bold; margin-left: 8px;">| Diterima Bersih: {{ $grandTotalPcs }} Pcs</span>
+                        <span style="color: #dc2626; font-weight: bold; margin-left: 8px;">(Retur/Rusak: {{ $grandTotalReturPcs }} Bungkus)</span>
+                        <span style="color: #15803d; font-weight: bold; margin-left: 8px;">| Diterima Bersih: {{ $grandTotalPcs }} Bungkus</span>
                     @endif
                 </div>
                 <div><strong>TOTAL NET: Rp. {{ number_format($grandTotalAmount, 0, ',', '.') }}</strong></div>

@@ -425,12 +425,89 @@
     </style>
 
     <div class="admin-container">
-        <div class="report-actions no-print" style="justify-content: flex-end;">
-            <a href="/admin/reports" class="btn-custom btn-outline">⬅ Kembali</a>
-            <a href="/admin/reports/suppliers/pdf?month={{ $month ?? now()->format('Y-m') }}&supplier_filter={{ $supplierFilter }}"
-                class="btn-custom btn-warning">📄 Download PDF</a>
-            <button type="button" class="btn-custom btn-outline" onclick="window.print()">🖨️ Cetak</button>
+        <div class="no-print" style="margin-bottom: 24px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:12px;">
+                <a href="/admin/reports" class="btn-custom btn-outline">⬅ Kembali ke Pesanan</a>
+                <div style="display:flex; gap:8px;">
+                    <a href="/admin/reports/suppliers/pdf?{{ $filterDetails['query_params'] ?? '' }}&supplier_filter={{ $supplierFilter ?? 'all' }}" class="btn-custom btn-warning">📄 Download PDF</a>
+                    <button type="button" class="btn-custom btn-outline" onclick="window.print()">🖨️ Cetak</button>
+                </div>
+            </div>
+
+            <form method="GET" action="/admin/reports/supplier" class="filter-form" style="margin:0; background:#fff; padding:16px 20px; border-radius:12px; box-shadow:0 4px 6px rgba(0,0,0,0.05); display:flex; flex-wrap:wrap; align-items:flex-end; gap:14px; border:1px solid #e5e7eb;">
+                <div>
+                    <label style="font-weight:700; font-size:12.5px; color:#374151; display:block; margin-bottom:6px;">🏪 Filter Supplier:</label>
+                    <select name="supplier_filter" style="padding:8px 12px; border-radius:8px; border:1px solid #d1d5db; font-size:13px; font-weight:600; background:#f9fafb; outline:none; height:38px;">
+                        <option value="all" {{ ($supplierFilter ?? 'all') === 'all' ? 'selected' : '' }}>Semua Supplier</option>
+                        @foreach($suppliers as $sup)
+                            <option value="{{ $sup->name }}" {{ ($supplierFilter ?? '') === $sup->name ? 'selected' : '' }}>{{ $sup->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <!-- 1. Pilih Bulan & Tahun (Selalu Tampil) -->
+                <div>
+                    <label style="font-weight:700; font-size:12.5px; color:#374151; display:block; margin-bottom:6px;">📅 Pilih Bulan & Tahun:</label>
+                    <input type="month" name="month" id="supplier_month_picker" value="{{ $filterDetails['selected_month'] ?? now()->format('Y-m') }}" onchange="toggleSupplierFilterInputs()" style="padding:8px 12px; border-radius:8px; border:1px solid #d1d5db; font-size:13px; font-weight:600; background:#fff; height:38px; box-sizing:border-box;">
+                </div>
+
+                <!-- 2. Tipe Laporan (Bulanan, Harian, Mingguan, Custom) -->
+                <div>
+                    <label style="font-weight:700; font-size:12.5px; color:#374151; display:block; margin-bottom:6px;">📊 Tipe Laporan:</label>
+                    <select name="filter_type" id="supplier_filter_type" onchange="toggleSupplierFilterInputs()" style="padding:8px 12px; border-radius:8px; border:1px solid #d1d5db; font-size:13px; font-weight:600; background:#f9fafb; outline:none; height:38px;">
+                        <option value="monthly" {{ ($filterDetails['filter_type'] ?? 'monthly') === 'monthly' ? 'selected' : '' }}>📊 Bulanan (1 Bulan Penuh)</option>
+                        <option value="daily" {{ ($filterDetails['filter_type'] ?? 'monthly') === 'daily' ? 'selected' : '' }}>📆 Harian (Pilih Tanggal)</option>
+                        <option value="weekly" {{ ($filterDetails['filter_type'] ?? 'monthly') === 'weekly' ? 'selected' : '' }}>🗓️ Mingguan (Pilih Minggu Ke-X)</option>
+                        <option value="custom" {{ ($filterDetails['filter_type'] ?? 'monthly') === 'custom' ? 'selected' : '' }}>🎯 Rentang Tanggal Custom</option>
+                    </select>
+                </div>
+
+                <!-- 3. Input Daily (Date Picker) -->
+                <div id="supplier_input_daily" class="supplier-filter-group" style="display:none;">
+                    <label style="font-weight:700; font-size:12.5px; color:#374151; display:block; margin-bottom:6px;">Pilih Tanggal Spesifik:</label>
+                    <input type="date" name="date" value="{{ $filterDetails['selected_date'] ?? now()->format('Y-m-d') }}" style="padding:8px 12px; border-radius:8px; border:1px solid #d1d5db; font-size:13px; height:38px; box-sizing:border-box;">
+                </div>
+
+                <!-- 4. Input Weekly (Minggu Ke-1 s/d 4) -->
+                <div id="supplier_input_weekly" class="supplier-filter-group" style="display:none;">
+                    <label style="font-weight:700; font-size:12.5px; color:#374151; display:block; margin-bottom:6px;">Pilih Minggu Ke-:</label>
+                    <select name="week_num" style="padding:8px 12px; border-radius:8px; border:1px solid #d1d5db; font-size:13px; font-weight:600; background:#fff; height:38px;">
+                        <option value="1" {{ ($filterDetails['week_num'] ?? 1) == 1 ? 'selected' : '' }}>Minggu Ke-1 (Tgl 1 - 7)</option>
+                        <option value="2" {{ ($filterDetails['week_num'] ?? 1) == 2 ? 'selected' : '' }}>Minggu Ke-2 (Tgl 8 - 14)</option>
+                        <option value="3" {{ ($filterDetails['week_num'] ?? 1) == 3 ? 'selected' : '' }}>Minggu Ke-3 (Tgl 15 - 21)</option>
+                        <option value="4" {{ ($filterDetails['week_num'] ?? 1) == 4 ? 'selected' : '' }}>Minggu Ke-4 (Tgl 22 - Akhir Bulan)</option>
+                    </select>
+                </div>
+
+                <!-- 5. Input Custom Range -->
+                <div id="supplier_input_custom" class="supplier-filter-group" style="display:none; flex-wrap:wrap; gap:10px;">
+                    <div>
+                        <label style="font-weight:700; font-size:12.5px; color:#374151; display:block; margin-bottom:6px;">Dari Tanggal:</label>
+                        <input type="date" name="start_date" value="{{ $filterDetails['start_date'] ?? '' }}" style="padding:8px 12px; border-radius:8px; border:1px solid #d1d5db; font-size:13px; height:38px; box-sizing:border-box;">
+                    </div>
+                    <div>
+                        <label style="font-weight:700; font-size:12.5px; color:#374151; display:block; margin-bottom:6px;">Sampai Tanggal:</label>
+                        <input type="date" name="end_date" value="{{ $filterDetails['end_date'] ?? '' }}" style="padding:8px 12px; border-radius:8px; border:1px solid #d1d5db; font-size:13px; height:38px; box-sizing:border-box;">
+                    </div>
+                </div>
+
+                <div>
+                    <button type="submit" class="btn-custom btn-success" style="height:38px; padding:0 18px;">🔎 Tampilkan Laporan</button>
+                </div>
+            </form>
         </div>
+
+        <script>
+        function toggleSupplierFilterInputs() {
+            const type = document.getElementById('supplier_filter_type').value;
+            document.querySelectorAll('.supplier-filter-group').forEach(el => el.style.display = 'none');
+            const target = document.getElementById('supplier_input_' + type);
+            if (target) {
+                target.style.display = type === 'custom' ? 'flex' : 'block';
+            }
+        }
+        document.addEventListener('DOMContentLoaded', toggleSupplierFilterInputs);
+        </script>
 
         <div class="report-document">
             <div class="report-header">
@@ -576,7 +653,7 @@
                                         <td style="text-align: center; padding: 12px 10px; font-weight: 600; color: #4b5563;">
                                             {{ number_format($product['sisa_stok'] ?? 0, 0, ',', '.') }}</td>
                                         <td style="text-align: center; padding: 12px 10px; font-weight: bold; color: #111827;">
-                                            {{ number_format($product['quantity_sold'], 0, ',', '.') }} pcs</td>
+                                            {{ number_format($product['quantity_sold'], 0, ',', '.') }} bungkus</td>
                                         <td style="text-align: right; padding: 12px 10px;">Rp
                                             {{ number_format($product['harga_titip'] ?? 0, 0, ',', '.') }}</td>
                                         <td style="text-align: right; padding: 12px 10px;">Rp
@@ -602,7 +679,7 @@
                                         <td colspan="5" style="text-align: left; padding: 14px 10px; font-size: 13px;">TOTAL
                                             {{ strtoupper($supplier['supplier_name']) }}</td>
                                         <td style="text-align: center; padding: 14px 10px; font-size: 14px;">
-                                            {{ number_format($supplier['quantity_sold'], 0, ',', '.') }} pcs</td>
+                                            {{ number_format($supplier['quantity_sold'], 0, ',', '.') }} bungkus</td>
                                         <td style="padding: 14px 10px;">-</td>
                                         <td style="padding: 14px 10px;">-</td>
                                         <td style="text-align: right; padding: 14px 10px; font-size: 14px; color: #10b981;">Rp
@@ -661,7 +738,7 @@
                                                 </td>
                                                 <td style="padding: 10px; font-weight: 600; color: #111827;">{{ $retur['item_name'] }}</td>
                                                 <td style="text-align: center; padding: 10px; font-weight: bold; color: #dc2626;">{{ $retur['weight'] ?: '-' }}</td>
-                                                <td style="text-align: center; padding: 10px; font-weight: bold; color: #dc2626;">{{ number_format($retur['quantity'], 0, ',', '.') }} pcs</td>
+                                                <td style="text-align: center; padding: 10px; font-weight: bold; color: #dc2626;">{{ number_format($retur['quantity'], 0, ',', '.') }} bungkus</td>
                                                 <td style="text-align: right; padding: 10px; font-weight: bold; color: #991b1b;">Rp {{ number_format($retur['loss_value'], 0, ',', '.') }}</td>
                                                 <td style="padding: 10px; font-size: 12px; color: #64748b;">{{ $retur['description'] ?: '-' }}</td>
                                             </tr>
@@ -670,7 +747,7 @@
                                     <tfoot>
                                         <tr style="font-weight: bold; background: #fef2f2; border-top: 2px solid #fca5a5;">
                                             <td colspan="4" style="padding: 12px 10px; text-align: left; font-size: 13px; color: #991b1b;">TOTAL RETUR / KADALUARSA</td>
-                                            <td style="text-align: center; padding: 12px 10px; font-size: 13.5px; color: #dc2626;">{{ number_format($supplier['total_expired_qty'] ?? 0, 0, ',', '.') }} pcs</td>
+                                            <td style="text-align: center; padding: 12px 10px; font-size: 13.5px; color: #dc2626;">{{ number_format($supplier['total_expired_qty'] ?? 0, 0, ',', '.') }} bungkus</td>
                                             <td style="text-align: right; padding: 12px 10px; font-size: 14px; color: #991b1b;">Rp {{ number_format($supplier['total_expired_loss'] ?? 0, 0, ',', '.') }}</td>
                                             <td style="padding: 12px 10px;">-</td>
                                         </tr>

@@ -1,9 +1,10 @@
 -- ============================================================
--- DATABASE IMPLEMENTATION SCRIPT
+-- DATABASE IMPLEMENTATION SCRIPT (UP TO DATE)
 -- Application : Sistem Informasi Penjualan Toko Dewi Lestari 2
 -- DBMS        : MySQL / MariaDB (InnoDB Engine)
--- Database    : dewilestari
+-- Database    : dewilestari / dewilestari2
 -- Charset     : utf8mb4_unicode_ci
+-- Last Update : 2026-08-24
 -- ============================================================
 
 CREATE DATABASE IF NOT EXISTS `dewilestari` 
@@ -23,10 +24,12 @@ CREATE TABLE `users` (
   `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(255) NOT NULL,
   `email` VARCHAR(255) NOT NULL,
-  `password` VARCHAR(255) NOT NULL,
-  `plain_password` VARCHAR(255) DEFAULT NULL,
-  `phone` VARCHAR(20) DEFAULT NULL,
+  `phone` VARCHAR(255) DEFAULT NULL,
   `address` TEXT DEFAULT NULL,
+  `password` VARCHAR(255) DEFAULT NULL,
+  `plain_password` VARCHAR(255) DEFAULT NULL,
+  `google_id` VARCHAR(255) DEFAULT NULL,
+  `avatar` VARCHAR(255) DEFAULT NULL,
   `role` ENUM('admin', 'cust') NOT NULL DEFAULT 'cust',
   `email_verified_at` TIMESTAMP NULL DEFAULT NULL,
   `remember_token` VARCHAR(100) DEFAULT NULL,
@@ -57,7 +60,23 @@ CREATE TABLE `user_addresses` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ------------------------------------------------------------
--- 3. Table: suppliers
+-- 3. Table: couriers
+-- ------------------------------------------------------------
+DROP TABLE IF EXISTS `couriers`;
+CREATE TABLE `couriers` (
+  `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(255) NOT NULL,
+  `username` VARCHAR(255) NOT NULL,
+  `password` VARCHAR(255) NOT NULL,
+  `phone` VARCHAR(20) DEFAULT NULL,
+  `created_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `couriers_username_unique` (`username`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ------------------------------------------------------------
+-- 4. Table: suppliers
 -- ------------------------------------------------------------
 DROP TABLE IF EXISTS `suppliers`;
 CREATE TABLE `suppliers` (
@@ -74,7 +93,7 @@ CREATE TABLE `suppliers` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ------------------------------------------------------------
--- 4. Table: supplier_stocks
+-- 5. Table: supplier_stocks
 -- ------------------------------------------------------------
 DROP TABLE IF EXISTS `supplier_stocks`;
 CREATE TABLE `supplier_stocks` (
@@ -94,65 +113,75 @@ CREATE TABLE `supplier_stocks` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ------------------------------------------------------------
--- 5. Table: orders
+-- 6. Table: orders
 -- ------------------------------------------------------------
 DROP TABLE IF EXISTS `orders`;
 CREATE TABLE `orders` (
   `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
   `user_id` BIGINT UNSIGNED DEFAULT NULL,
+  `courier_id` BIGINT UNSIGNED DEFAULT NULL,
   `order_number` VARCHAR(50) NOT NULL,
   `customer_name` VARCHAR(255) NOT NULL,
   `customer_phone` VARCHAR(20) NOT NULL,
-  `delivery_option` VARCHAR(50) NOT NULL DEFAULT 'delivery',
+  `delivery_option` VARCHAR(100) NOT NULL DEFAULT 'delivery',
   `delivery_address` TEXT DEFAULT NULL,
   `delivery_cost` DECIMAL(12,2) NOT NULL DEFAULT 0.00,
   `total_amount` DECIMAL(12,2) NOT NULL DEFAULT 0.00,
   `notes` TEXT DEFAULT NULL,
-  `status` VARCHAR(50) NOT NULL DEFAULT 'pending',
+  `status` VARCHAR(100) NOT NULL DEFAULT 'pending',
   `payment_method` VARCHAR(50) NOT NULL DEFAULT 'midtrans',
   `payment_status` VARCHAR(50) NOT NULL DEFAULT 'unpaid',
+  `transfer_proof` VARCHAR(255) DEFAULT NULL,
+  `payment_verified_at` TIMESTAMP NULL DEFAULT NULL,
+  `payment_verified_by` BIGINT UNSIGNED DEFAULT NULL,
   `midtrans_order_id` VARCHAR(100) DEFAULT NULL,
   `snap_token` VARCHAR(255) DEFAULT NULL,
   `paid_at` TIMESTAMP NULL DEFAULT NULL,
-  `tracking_ticket_id` VARCHAR(50) DEFAULT NULL,
-  `tracking_status` VARCHAR(50) DEFAULT 'diproses',
+  `tracking_ticket_id` VARCHAR(255) DEFAULT NULL,
+  `tracking_status` VARCHAR(255) DEFAULT 'diproses',
   `shipped_at` TIMESTAMP NULL DEFAULT NULL,
   `almost_arrived_at` TIMESTAMP NULL DEFAULT NULL,
   `delivered_at` TIMESTAMP NULL DEFAULT NULL,
+  `estimated_delivery_date` TIMESTAMP NULL DEFAULT NULL,
   `delivery_proof` VARCHAR(255) DEFAULT NULL,
+  `return_reason` TEXT DEFAULT NULL,
+  `return_proof` VARCHAR(255) DEFAULT NULL,
+  `return_requested_at` TIMESTAMP NULL DEFAULT NULL,
+  `return_status` VARCHAR(255) DEFAULT NULL,
   `created_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `orders_order_number_unique` (`order_number`),
   KEY `orders_user_id_foreign` (`user_id`),
-  CONSTRAINT `orders_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
+  KEY `orders_courier_id_foreign` (`courier_id`),
+  CONSTRAINT `orders_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `orders_courier_id_foreign` FOREIGN KEY (`courier_id`) REFERENCES `couriers` (`id`) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ------------------------------------------------------------
--- 6. Table: order_items
+-- 7. Table: order_items
 -- ------------------------------------------------------------
 DROP TABLE IF EXISTS `order_items`;
 CREATE TABLE `order_items` (
   `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
   `order_id` BIGINT UNSIGNED NOT NULL,
   `product_id` BIGINT UNSIGNED DEFAULT NULL,
-  `item_name` VARCHAR(255) NOT NULL,
-  `weight` VARCHAR(50) DEFAULT NULL,
-  `quantity` INT NOT NULL DEFAULT 1,
+  `qty` INT NOT NULL DEFAULT 1,
   `price` DECIMAL(12,2) NOT NULL DEFAULT 0.00,
-  `buy_price` DECIMAL(12,2) DEFAULT 0.00,
+  `buy_price` DECIMAL(15,2) DEFAULT 0.00,
   `subtotal` DECIMAL(12,2) NOT NULL DEFAULT 0.00,
+  `weight` VARCHAR(255) DEFAULT NULL,
   `created_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  KEY `order_items_order_id_foreign` (`order_id`),
-  KEY `order_items_product_id_foreign` (`product_id`),
-  CONSTRAINT `order_items_order_id_foreign` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `order_items_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `supplier_stocks` (`id`) ON DELETE SET NULL
+  KEY `fk_order_items_order_id` (`order_id`),
+  KEY `fk_order_items_product_id` (`product_id`),
+  CONSTRAINT `fk_order_items_order_id` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `fk_order_items_product_id` FOREIGN KEY (`product_id`) REFERENCES `supplier_stocks` (`id`) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ------------------------------------------------------------
--- 7. Table: supplier_orders
+-- 8. Table: supplier_orders
 -- ------------------------------------------------------------
 DROP TABLE IF EXISTS `supplier_orders`;
 CREATE TABLE `supplier_orders` (
@@ -170,7 +199,7 @@ CREATE TABLE `supplier_orders` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ------------------------------------------------------------
--- 8. Table: supplier_returns
+-- 9. Table: supplier_returns
 -- ------------------------------------------------------------
 DROP TABLE IF EXISTS `supplier_returns`;
 CREATE TABLE `supplier_returns` (
@@ -195,7 +224,7 @@ CREATE TABLE `supplier_returns` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ------------------------------------------------------------
--- 9. Table: stock_logs
+-- 10. Table: stock_logs
 -- ------------------------------------------------------------
 DROP TABLE IF EXISTS `stock_logs`;
 CREATE TABLE `stock_logs` (
@@ -213,7 +242,7 @@ CREATE TABLE `stock_logs` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ------------------------------------------------------------
--- 10. Table: ratings
+-- 11. Table: ratings
 -- ------------------------------------------------------------
 DROP TABLE IF EXISTS `ratings`;
 CREATE TABLE `ratings` (
@@ -227,22 +256,22 @@ CREATE TABLE `ratings` (
   `created_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  KEY `ratings_order_id_foreign` (`order_id`),
-  KEY `ratings_product_id_foreign` (`product_id`),
-  KEY `ratings_user_id_foreign` (`user_id`),
-  CONSTRAINT `ratings_order_id_foreign` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `ratings_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `supplier_stocks` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `ratings_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
+  KEY `fk_ratings_order_id` (`order_id`),
+  KEY `fk_ratings_product_id` (`product_id`),
+  KEY `fk_ratings_user_id` (`user_id`),
+  CONSTRAINT `fk_ratings_order_id` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `fk_ratings_product_id` FOREIGN KEY (`product_id`) REFERENCES `supplier_stocks` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `fk_ratings_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ------------------------------------------------------------
--- 11. Table: messages
+-- 12. Table: messages
 -- ------------------------------------------------------------
 DROP TABLE IF EXISTS `messages`;
 CREATE TABLE `messages` (
   `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
   `session_id` VARCHAR(100) NOT NULL,
-  `sender` ENUM('user', 'admin') NOT NULL DEFAULT 'user',
+  `sender` ENUM('customer', 'admin') NOT NULL DEFAULT 'customer',
   `message` TEXT NOT NULL,
   `is_read` TINYINT(1) NOT NULL DEFAULT 0,
   `created_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
@@ -252,51 +281,3 @@ CREATE TABLE `messages` (
 
 -- Re-enable foreign key checks
 SET FOREIGN_KEY_CHECKS = 1;
-
--- ============================================================
--- SEED DATA UNTUK PENGUJIAN DAN DEMO
--- ============================================================
-
--- 1. Seed Users
-INSERT INTO `users` (`id`, `name`, `email`, `password`, `plain_password`, `phone`, `address`, `role`) VALUES
-(1, 'Administrator', 'admin@dewilestari.com', '$2y$12$K8yXpX3xXp.qN/5H.4y8yO7Z4x2z4y5z.z4y5z.z4y5z.z4y5z', 'admin123', '081234567890', 'Jl. Merdeka No. 10, Jakarta', 'admin'),
-(2, 'Siti Aminah', 'siti@gmail.com', '$2y$12$K8yXpX3xXp.qN/5H.4y8yO7Z4x2z4y5z.z4y5z.z4y5z.z4y5z', 'pelanggan123', '081987654321', 'Jl. Kenanga No. 45, Bandung', 'cust');
-
--- 2. Seed User Addresses
-INSERT INTO `user_addresses` (`id`, `user_id`, `label`, `receiver_name`, `receiver_phone`, `address`, `city`, `is_primary`) VALUES
-(1, 2, 'Rumah Utama', 'Siti Aminah', '081987654321', 'Jl. Kenanga No. 45, RT 02/RW 05', 'Bandung', 1);
-
--- 3. Seed Suppliers
-INSERT INTO `suppliers` (`id`, `name`, `slug`, `phone`, `email`, `address`, `items`) VALUES
-(1, 'PT Jaya Rasa Nusantara', 'jaya-rasa', '6281234567893', 'sales@jayarasa.co.id', 'Jl. Raya Industri No. 88, Cikarang', '[{"name":"Kripik Tempe Premium","unit":"pcs"},{"name":"Kripik Pisang Cokelat","unit":"pcs"}]');
-
--- 4. Seed Supplier Stocks (Catalog Products)
-INSERT INTO `supplier_stocks` (`id`, `supplier_id`, `item_name`, `description`, `image_path`, `is_active`, `entry_date`, `variants`) VALUES
-(1, 1, 'Kripik Tempe Premium', 'Kripik tempe renyah gurih asli racikan khas Toko Dewi Lestari 2.', 'storage/products/kripik_tempe.jpg', 1, '2026-08-01', '[{"weight":"250g","initial_quantity":50,"available_quantity":45,"expiry_date":"2026-12-31","price":15000,"hpp":10000},{"weight":"500g","initial_quantity":30,"available_quantity":28,"expiry_date":"2026-12-31","price":28000,"hpp":19000}]'),
-(2, 1, 'Kripik Pisang Cokelat', 'Kripik pisang manis salut cokelat lumer berkualitas tinggi.', 'storage/products/kripik_pisang.jpg', 1, '2026-08-01', '[{"weight":"200g","initial_quantity":40,"available_quantity":35,"expiry_date":"2026-11-15","price":18000,"hpp":12000}]');
-
--- 5. Seed Orders
-INSERT INTO `orders` (`id`, `user_id`, `order_number`, `customer_name`, `customer_phone`, `delivery_option`, `delivery_address`, `delivery_cost`, `total_amount`, `status`, `payment_method`, `payment_status`, `tracking_ticket_id`, `tracking_status`) VALUES
-(1, 2, 'ORD-20260809-0001', 'Siti Aminah', '081987654321', 'delivery', 'Jl. Kenanga No. 45, Bandung', 12000.00, 42000.00, 'paid', 'midtrans', 'paid', 'TKT-2608-00001', 'dikirim');
-
--- 6. Seed Order Items
-INSERT INTO `order_items` (`id`, `order_id`, `product_id`, `item_name`, `weight`, `quantity`, `price`, `buy_price`, `subtotal`) VALUES
-(1, 1, 1, 'Kripik Tempe Premium', '250g', 2, 15000.00, 10000.00, 30000.00);
-
--- 7. Seed Supplier Orders (PO)
-INSERT INTO `supplier_orders` (`id`, `invoice_number`, `supplier_id`, `items`, `notes`, `status`) VALUES
-(1, 'PO/SUP-001/202608/0001', 1, '[{"item_name":"Kripik Tempe Premium","weight":"250g","quantity":100,"buy_price":10000}]', 'Pengadaan stok tambahan menyambut libur nasional.', 'pending');
-
--- 8. Seed Stock Logs
-INSERT INTO `stock_logs` (`id`, `supplier_stock_id`, `weight`, `type`, `quantity`, `description`) VALUES
-(1, 1, '250g', 'in', 50, 'Stok Awal Masuk Supplier'),
-(2, 1, '250g', 'out', 2, 'Penjualan order ORD-20260809-0001');
-
--- 9. Seed Ratings
-INSERT INTO `ratings` (`id`, `order_id`, `order_item_id`, `product_id`, `user_id`, `rating`, `review`) VALUES
-(1, 1, 1, 1, 2, 5, 'Kripik tempenya sangat renyah dan gurih, pengiriman sangat cepat!');
-
--- 10. Seed Messages
-INSERT INTO `messages` (`id`, `session_id`, `sender`, `message`, `is_read`) VALUES
-(1, 'sess_siti_001', 'user', 'Halo admin, apakah Kripik Tempe stoknya ready?', 1),
-(2, 'sess_siti_001', 'admin', 'Halo Kak Siti, ready banyak ya kak. Silahkan diorder!', 1);

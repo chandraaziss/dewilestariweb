@@ -371,6 +371,53 @@ class OrderController extends Controller
         ], 400);
     }
 
+    public function reuploadTransferProof(Request $request, $ticketId)
+    {
+        $order = Order::where('tracking_ticket_id', $ticketId)
+            ->orWhere('order_number', $ticketId)
+            ->orWhere('id', $ticketId)
+            ->firstOrFail();
+
+        $request->validate([
+            'proof_image' => 'required|image|mimes:jpeg,png,jpg,webp|max:5120'
+        ]);
+
+        if ($request->hasFile('proof_image')) {
+            $file = $request->file('proof_image');
+            $filename = time() . '_reupload_' . $file->getClientOriginalName();
+            $file->move(public_path('uploads/transfer_proofs'), $filename);
+            $proofPath = 'uploads/transfer_proofs/' . $filename;
+
+            $order->transfer_proof = $proofPath;
+            $order->payment_status = 'pending_verification';
+            $order->notes = ($order->notes ? $order->notes . ' | ' : '') . 'Bukti transfer diunggah ulang pada ' . now()->format('d M Y H:i');
+            $order->save();
+
+            // Notify Admin via Live Chat
+            $sessionIds = array_filter([
+                $order->tracking_ticket_id,
+                $order->order_number,
+                $order->user_id ? 'user_' . $order->user_id : null,
+                $order->user_id ? 'cust_' . $order->user_id : null,
+            ]);
+
+            foreach (array_unique($sessionIds) as $sessId) {
+                if ($sessId) {
+                    \App\Models\Message::create([
+                        'session_id' => $sessId,
+                        'sender' => 'customer',
+                        'message' => '🔄 Pelanggan telah mengunggah ulang bukti transfer baru untuk Pesanan #' . $order->order_number . '. Mohon diproses dan diverifikasi kembali, terima kasih!',
+                        'is_read' => false,
+                    ]);
+                }
+            }
+
+            return redirect()->back()->with('success', 'Bukti transfer perbaikan berhasil diunggah! Status pembayaran kini menunggu verifikasi ulang kasir.');
+        }
+
+        return redirect()->back()->with('error', 'Silakan pilih foto bukti transfer yang baru.');
+    }
+
     public function verifyBankPayment(Request $request, $id)
     {
         $order = Order::findOrFail($id);
@@ -438,6 +485,50 @@ class OrderController extends Controller
 
             return redirect()->back()->with('success', 'Pembayaran Transfer Bank #' . $order->order_number . ' telah ditolak.');
         }
+    }
+
+    public function notifyPaymentDiscrepancy(Request $request, $id)
+    {
+        $request->validate([
+            'discrepancy_type' => 'required|string',
+            'message' => 'required|string',
+        ]);
+
+        $order = Order::findOrFail($id);
+        $type = $request->input('discrepancy_type');
+        $messageText = trim($request->input('message'));
+
+        if ($type === 'not_received') {
+            $order->payment_status = 'failed';
+            $order->notes = ($order->notes ? $order->notes . ' | ' : '') . 'Kendala Bayar: Transfer Belum Masuk / Bukti Tidak Valid';
+        } elseif ($type === 'insufficient') {
+            $order->payment_status = 'pending_verification';
+            $order->notes = ($order->notes ? $order->notes . ' | ' : '') . 'Kendala Bayar: Nominal Transfer Kurang';
+        } else {
+            $order->notes = ($order->notes ? $order->notes . ' | ' : '') . 'Catatan Kasir: ' . substr($messageText, 0, 120);
+        }
+        $order->save();
+
+        // Broadcast/Save message to Chat system
+        $sessionIds = array_filter([
+            $order->tracking_ticket_id,
+            $order->order_number,
+            $order->user_id ? 'user_' . $order->user_id : null,
+            $order->user_id ? 'cust_' . $order->user_id : null,
+        ]);
+
+        foreach (array_unique($sessionIds) as $sessId) {
+            if ($sessId) {
+                \App\Models\Message::create([
+                    'session_id' => $sessId,
+                    'sender' => 'admin',
+                    'message' => $messageText,
+                    'is_read' => false,
+                ]);
+            }
+        }
+
+        return redirect()->back()->with('success', 'Pesan kendala pembayaran untuk pesanan #' . $order->order_number . ' berhasil dikirim ke Live Chat pelanggan!');
     }
 
     public function checkPendingOrder(Request $request)
@@ -508,22 +599,13 @@ class OrderController extends Controller
 
 private function cleanupOldOrders()
 {
-    // Hapus pesanan yang belum dibayar selama > 15 menit
-    $unpaidExpired = Order::where('payment_status', '!=', 'paid')
-        ->where('created_at', '<', now()->subMinutes(15))
+    // Hanya hapus pesanan 'pending' murni (tanpa bukti transfer) yang telah ditinggalkan > 6 jam
+    $unpaidExpired = Order::where('payment_status', 'pending')
+        ->whereNull('transfer_proof')
+        ->where('created_at', '<', now()->subHours(6))
         ->get();
         
     foreach($unpaidExpired as $order) {
-        foreach($order->items as $item) {
-            $item->delete();
-        }
-        $order->delete();
-    }
-
-    // Hapus semua pesanan (lunas maupun tidak) yang sudah > 3 hari
-    $oldOrders = Order::where('created_at', '<', now()->subDays(3))->get();
-    
-    foreach($oldOrders as $order) {
         foreach($order->items as $item) {
             $item->delete();
         }
@@ -632,7 +714,8 @@ public function checkPayment($orderId)
 }
 public function show($id)
 {
-    return redirect()->route('courier.deliveries.show', $id);
+    $order = Order::with('items.product')->findOrFail($id);
+    return view('admin.orders.show', compact('order'));
 }
 
 public function destroy($id)
@@ -869,24 +952,122 @@ private function getSupplierNameForProduct($product): string
     return $this->resolveSupplierForProduct($product);
 }
 
-private function applyReportDateFilter($query, Request $request)
-{
-    $month = $request->input('month');
+    public function getReportFilterDetails(Request $request)
+    {
+        $selectedMonth = $request->input('month', Carbon::now()->format('Y-m'));
+        $filterType = $request->input('filter_type', 'monthly');
 
-    if ($month) {
         try {
-            $date = Carbon::createFromFormat('Y-m', $month);
-            return $query->whereYear('paid_at', $date->year)
-                         ->whereMonth('paid_at', $date->month);
+            $monthCarbon = Carbon::createFromFormat('Y-m', $selectedMonth);
         } catch (\Exception $e) {
-            // Ignore invalid month format and fallback to current month
+            $monthCarbon = Carbon::now();
+            $selectedMonth = $monthCarbon->format('Y-m');
         }
+
+        $selectedDate = $request->input('date');
+        if (!$selectedDate) {
+            $selectedDate = $monthCarbon->isSameMonth(Carbon::now()) 
+                ? Carbon::now()->format('Y-m-d') 
+                : $monthCarbon->copy()->startOfMonth()->format('Y-m-d');
+        } else {
+            try {
+                $d = Carbon::createFromFormat('Y-m-d', $selectedDate);
+                if ($d->format('Y-m') !== $selectedMonth) {
+                    $selectedDate = $monthCarbon->copy()->startOfMonth()->format('Y-m-d');
+                }
+            } catch (\Exception $e) {
+                $selectedDate = $monthCarbon->copy()->startOfMonth()->format('Y-m-d');
+            }
+        }
+
+        $weekNum = (int)$request->input('week_num', 1);
+        if ($weekNum < 1 || $weekNum > 4) $weekNum = 1;
+
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+
+        $periodLabel = '';
+        $startCarbon = null;
+        $endCarbon = null;
+
+        if ($filterType === 'daily') {
+            try {
+                $startCarbon = Carbon::createFromFormat('Y-m-d', $selectedDate)->startOfDay();
+                $endCarbon = (clone $startCarbon)->endOfDay();
+                $periodLabel = 'Laporan Harian: ' . $startCarbon->translatedFormat('l, d F Y');
+            } catch (\Exception $e) {
+                $startCarbon = $monthCarbon->copy()->startOfMonth()->startOfDay();
+                $endCarbon = (clone $startCarbon)->endOfDay();
+                $periodLabel = 'Laporan Harian: ' . $startCarbon->translatedFormat('l, d F Y');
+            }
+        } elseif ($filterType === 'weekly') {
+            $daysInMonth = $monthCarbon->daysInMonth;
+            if ($weekNum == 1) {
+                $sDay = 1; $eDay = 7;
+            } elseif ($weekNum == 2) {
+                $sDay = 8; $eDay = 14;
+            } elseif ($weekNum == 3) {
+                $sDay = 15; $eDay = 21;
+            } else {
+                $sDay = 22; $eDay = $daysInMonth;
+            }
+            $startCarbon = $monthCarbon->copy()->setDay($sDay)->startOfDay();
+            $endCarbon = $monthCarbon->copy()->setDay(min($eDay, $daysInMonth))->endOfDay();
+            $periodLabel = "Laporan Mingguan (Minggu Ke-{$weekNum}): " . $startCarbon->translatedFormat('d M Y') . ' - ' . $endCarbon->translatedFormat('d M Y');
+        } elseif ($filterType === 'custom') {
+            try {
+                $startCarbon = Carbon::createFromFormat('Y-m-d', $startDate)->startOfDay();
+                $endCarbon = Carbon::createFromFormat('Y-m-d', $endDate)->endOfDay();
+                $periodLabel = 'Laporan Periode: ' . $startCarbon->translatedFormat('d M Y') . ' s/d ' . $endCarbon->translatedFormat('d M Y');
+            } catch (\Exception $e) {
+                $startCarbon = $monthCarbon->copy()->startOfMonth()->startOfDay();
+                $endCarbon = $monthCarbon->copy()->endOfMonth()->endOfDay();
+                $periodLabel = 'Laporan Periode Custom';
+            }
+        } else {
+            $filterType = 'monthly';
+            $startCarbon = $monthCarbon->copy()->startOfMonth()->startOfDay();
+            $endCarbon = $monthCarbon->copy()->endOfMonth()->endOfDay();
+            $periodLabel = 'Laporan Bulanan: ' . $monthCarbon->translatedFormat('F Y');
+        }
+
+        return [
+            'filter_type' => $filterType,
+            'selected_month' => $selectedMonth,
+            'selected_date' => $selectedDate,
+            'week_num' => $weekNum,
+            'start_date' => $startDate,
+            'end_date' => $endDate,
+            'period_label' => $periodLabel,
+            'start_carbon' => $startCarbon,
+            'end_carbon' => $endCarbon,
+            'query_params' => http_build_query(array_filter([
+                'month' => $selectedMonth,
+                'filter_type' => $filterType,
+                'date' => $selectedDate,
+                'week_num' => $weekNum,
+                'start_date' => $startDate,
+                'end_date' => $endDate,
+            ])),
+        ];
     }
 
-    $now = Carbon::now();
-    return $query->whereYear('paid_at', $now->year)
-                 ->whereMonth('paid_at', $now->month);
-}
+    private function applyReportDateFilter($query, Request $request)
+    {
+        $filterDetails = $this->getReportFilterDetails($request);
+        $start = $filterDetails['start_carbon'];
+        $end = $filterDetails['end_carbon'];
+
+        return $query->where(function ($q) use ($start, $end) {
+            $q->where(function ($q2) use ($start, $end) {
+                $q2->whereNotNull('paid_at')
+                   ->whereBetween('paid_at', [$start, $end]);
+            })->orWhere(function ($q2) use ($start, $end) {
+                $q2->whereNull('paid_at')
+                   ->whereBetween('created_at', [$start, $end]);
+            });
+        });
+    }
 
 public static function formatWeightLabel($weight)
 {
@@ -1537,8 +1718,16 @@ public function report(Request $request)
     return redirect('/admin/reports/store');
 }
 
+public function reportOrderDetail($id)
+{
+    $order = Order::with(['items.product'])->findOrFail($id);
+    return view('admin.reports.order_detail', compact('order'));
+}
+
 public function storeReport(Request $request)
 {
+    $filterDetails = $this->getReportFilterDetails($request);
+
     $query = Order::with('items.product')
         ->where('payment_status', 'paid');
 
@@ -1546,14 +1735,8 @@ public function storeReport(Request $request)
         ->orderBy('id', 'desc')
         ->get();
 
-    $month = $request->input('month', Carbon::now()->format('Y-m'));
-    $periodLabel = null;
-
-    try {
-        $periodLabel = Carbon::createFromFormat('Y-m', $month)->translatedFormat('F Y');
-    } catch (\Exception $e) {
-        $periodLabel = 'Semua Periode';
-    }
+    $month = $filterDetails['selected_month'];
+    $periodLabel = $filterDetails['period_label'];
 
     $totalSales = $orders->sum('total_amount');
     $totalOrders = $orders->count();
@@ -1583,22 +1766,12 @@ public function storeReport(Request $request)
         ];
     })->sortByDesc('quantity_sold')->values();
 
-    // Fetch expired logs for the selected month
-    $expiredLogsQuery = \App\Models\StockLog::with('supplierStock')
-        ->where('type', 'expired');
-
-    if ($month) {
-        try {
-            $date = Carbon::createFromFormat('Y-m', $month);
-            $expiredLogsQuery->whereYear('created_at', $date->year)
-                             ->whereMonth('created_at', $date->month);
-        } catch (\Exception $e) {}
-    } else {
-        $now = Carbon::now();
-        $expiredLogsQuery->whereYear('created_at', $now->year)
-                         ->whereMonth('created_at', $now->month);
-    }
-    $expiredLogs = $expiredLogsQuery->orderBy('id', 'desc')->get();
+    // Fetch expired logs for the selected date range
+    $expiredLogs = \App\Models\StockLog::with('supplierStock')
+        ->where('type', 'expired')
+        ->whereBetween('created_at', [$filterDetails['start_carbon'], $filterDetails['end_carbon']])
+        ->orderBy('id', 'desc')
+        ->get();
 
     $totalExpiredLoss = 0;
     foreach ($expiredLogs as $log) {
@@ -1635,13 +1808,16 @@ public function storeReport(Request $request)
             'soldProducts',
             'expiredLogs',
             'totalExpiredLoss',
-            'netSales'
+            'netSales',
+            'filterDetails'
         )
     );
 }
 
 public function supplierReport(Request $request)
 {
+    $filterDetails = $this->getReportFilterDetails($request);
+
     $query = Order::with('items.product')
         ->where('payment_status', 'paid');
 
@@ -1649,13 +1825,8 @@ public function supplierReport(Request $request)
         ->orderBy('id', 'desc')
         ->get();
 
-    $month = $request->input('month', Carbon::now()->format('Y-m'));
-    $periodLabel = null;
-    try {
-        $periodLabel = Carbon::createFromFormat('Y-m', $month)->translatedFormat('F Y');
-    } catch (\Exception $e) {
-        $periodLabel = 'Semua Periode';
-    }
+    $month = $filterDetails['selected_month'];
+    $periodLabel = $filterDetails['period_label'];
 
     $supplierFilter = $request->input('supplier_filter', 'all');
     $suppliers = Supplier::orderBy('name')->get();
@@ -1690,13 +1861,16 @@ public function supplierReport(Request $request)
             'totalStockInCost',
             'totalExpiredLoss',
             'supplierChartLabels',
-            'supplierChartValues'
+            'supplierChartValues',
+            'filterDetails'
         )
     );
 }
 
 public function downloadStoreReportPdf(Request $request)
 {
+    $filterDetails = $this->getReportFilterDetails($request);
+
     $query = Order::with('items.product')
         ->where('payment_status', 'paid');
 
@@ -1704,14 +1878,8 @@ public function downloadStoreReportPdf(Request $request)
         ->orderBy('id', 'desc')
         ->get();
 
-    $month = $request->input('month', Carbon::now()->format('Y-m'));
-    $periodLabel = null;
-
-    try {
-        $periodLabel = Carbon::createFromFormat('Y-m', $month)->translatedFormat('F Y');
-    } catch (\Exception $e) {
-        $periodLabel = 'Semua Periode';
-    }
+    $month = $filterDetails['selected_month'];
+    $periodLabel = $filterDetails['period_label'];
 
     $totalItemsSold = $orders->sum(function ($order) {
         return $order->items->sum('qty');
@@ -1747,6 +1915,7 @@ public function downloadStoreReportPdf(Request $request)
         'month' => $month,
         'periodLabel' => $periodLabel,
         'soldProducts' => $soldProducts,
+        'filterDetails' => $filterDetails,
     ]);
 
     return $pdf->download('laporan-penjualan-toko-' . now()->format('YmdHis') . '.pdf');
@@ -1804,7 +1973,7 @@ public function exportReport(Request $request)
     if ($reportType === 'supplier' || $reportType === 'supplier_products') {
         $rows = [[
             'Nama Supplier',
-            'Jumlah Terjual (pcs)',
+            'Jumlah Terjual (bungkus)',
             'Total Penjualan Ritel (Rp)',
             'Total Pembelian Stok (PO) (Rp)',
             'Total Kerugian Expired (Rp)'

@@ -95,7 +95,7 @@
                                 <td style="font-weight: bold;">{{ $product['product_name'] }}</td>
                                 <td class="center">{{ !empty($product['weight']) && $product['weight'] !== '-' ? $product['weight'] : '' }}</td>
                                 <td class="center">{{ number_format($product['sisa_stok'] ?? 0, 0, ',', '.') }}</td>
-                                <td class="center">{{ number_format($product['quantity_sold'], 0, ',', '.') }} pcs</td>
+                                <td class="center">{{ number_format($product['quantity_sold'], 0, ',', '.') }} bungkus</td>
                                 <td class="numeric">Rp {{ number_format($product['harga_titip'] ?? 0, 0, ',', '.') }}</td>
                                 <td class="numeric">Rp {{ number_format($product['harga_jual'] ?? 0, 0, ',', '.') }}</td>
                                 <td class="numeric" style="color: #10b981;">Rp {{ number_format($product['keuntungan'] ?? 0, 0, ',', '.') }}</td>
@@ -109,7 +109,7 @@
                         <tfoot>
                             <tr class="footer-row">
                                 <td colspan="5">TOTAL {{ strtoupper($supplier['supplier_name']) }}</td>
-                                <td class="center">{{ number_format($supplier['quantity_sold'], 0, ',', '.') }} pcs</td>
+                                <td class="center">{{ number_format($supplier['quantity_sold'], 0, ',', '.') }} bungkus</td>
                                 <td class="center">-</td>
                                 <td class="center">-</td>
                                 <td class="numeric" style="color: #10b981;">Rp {{ number_format($supplier['total_keuntungan_toko'] ?? 0, 0, ',', '.') }}</td>
@@ -150,7 +150,7 @@
                                         <td>{{ !empty($retur['date_logged']) ? \Carbon\Carbon::parse($retur['date_logged'])->translatedFormat('d M Y') : '-' }}</td>
                                         <td style="font-weight: bold;">{{ $retur['item_name'] }}</td>
                                         <td class="center">{{ $retur['weight'] ?: '-' }}</td>
-                                        <td class="center" style="color: #dc2626; font-weight: bold;">{{ number_format($retur['quantity'], 0, ',', '.') }} pcs</td>
+                                        <td class="center" style="color: #dc2626; font-weight: bold;">{{ number_format($retur['quantity'], 0, ',', '.') }} bungkus</td>
                                         <td class="numeric" style="color: #991b1b; font-weight: bold;">Rp {{ number_format($retur['loss_value'], 0, ',', '.') }}</td>
                                         <td style="font-size: 8.5px;">{{ $retur['description'] ?: '-' }}</td>
                                     </tr>
@@ -159,7 +159,7 @@
                             <tfoot>
                                 <tr style="font-weight: bold; background: #fef2f2;">
                                     <td colspan="4">TOTAL RETUR / KADALUARSA</td>
-                                    <td class="center" style="color: #dc2626;">{{ number_format($supplier['total_expired_qty'] ?? 0, 0, ',', '.') }} pcs</td>
+                                    <td class="center" style="color: #dc2626;">{{ number_format($supplier['total_expired_qty'] ?? 0, 0, ',', '.') }} bungkus</td>
                                     <td class="numeric" style="color: #991b1b;">Rp {{ number_format($supplier['total_expired_loss'] ?? 0, 0, ',', '.') }}</td>
                                     <td>-</td>
                                 </tr>

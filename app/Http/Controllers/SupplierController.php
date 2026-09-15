@@ -314,7 +314,7 @@ class SupplierController extends Controller
             if ($retItem->weight) {
                 $message .= "   ⚖️ Ukuran/Varian: {$retItem->weight}\n";
             }
-            $message .= "   🔢 Jumlah Retur: {$retItem->quantity} pcs\n";
+            $message .= "   🔢 Jumlah Retur: {$retItem->quantity} bungkus\n";
             $message .= "   ⚠️ Alasan Kendala: {$retItem->reason}\n\n";
         }
 

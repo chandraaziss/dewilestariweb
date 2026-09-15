@@ -149,7 +149,7 @@
         </div>
         <div style="display: flex; gap: 10px; flex-wrap: wrap;">
             <button type="button" onclick="openReturnModal()" class="btn" style="padding: 10px 18px; font-weight: bold; background: #dc2626; color: white; border: none; border-radius: 8px; cursor: pointer; display: flex; align-items: center; gap: 6px;">
-                ⚠️ Input Retur Produk
+                ⚠️ Catat Retur Produk
             </button>
             <a href="/admin/supplier-stocks" class="btn btn-warning" style="padding: 10px 18px; font-weight: bold; text-decoration: none; border-radius: 8px;">← Kelola Stok</a>
             <a href="/admin/suppliers/manage" class="btn btn-success" style="padding: 10px 18px; font-weight: bold; background: #16a34a; color: white; text-decoration: none; border-radius: 8px;">⚙️ Kelola Supplier</a>
@@ -316,12 +316,12 @@
                                             @if($it->weight)
                                                 <span style="font-size: 12px; color: #475569;">({{ $it->weight }})</span>
                                             @endif
-                                            <span style="font-size: 12px; color: #dc2626; font-weight: bold; margin-left: 4px;">: {{ $it->quantity }} pcs</span>
+                                            <span style="font-size: 12px; color: #dc2626; font-weight: bold; margin-left: 4px;">: {{ $it->quantity }} bungkus</span>
                                         </div>
                                     @endforeach
                                 </td>
                                 <td style="text-align: center; font-weight: bold; color: #dc2626; font-size: 14px;">
-                                    {{ $totalQty }} pcs
+                                    {{ $totalQty }} bungkus
                                 </td>
                                 <td style="font-size: 13px; color: #334155; max-width: 280px;">
                                     <div style="margin-bottom: 10px; padding-bottom: 6px; border-bottom: 1px solid #e2e8f0;">
@@ -434,7 +434,7 @@
                                                     ✅ Telah Diterima
                                                 </button>
                                             </form>
-                                            <button type="button" onclick="openReturnModalWithOrder({{ $order->id }}, {{ $order->supplier_id }}, '{{ addslashes($order->invoice_number) }}')" class="btn" style="padding: 6px 12px; font-size: 12px; font-weight: bold; background: #dc2626; color: white; border: none; border-radius: 6px; cursor: pointer;" title="Input barang rusak / dikomplain pada pesanan ini">
+                                            <button type="button" onclick="openReturnModalWithOrder({{ $order->id }}, {{ $order->supplier_id }}, '{{ addslashes($order->invoice_number) }}')" class="btn" style="padding: 6px 12px; font-size: 12px; font-weight: bold; background: #dc2626; color: white; border: none; border-radius: 6px; cursor: pointer;" title="Catat barang rusak / dikomplain pada pesanan ini">
                                                 🚨 Retur / Rusak
                                             </button>
                                         @endif
@@ -459,11 +459,11 @@
 
 </div>
 
-<!-- MODAL INPUT RETUR PRODUK -->
+<!-- MODAL CATAT RETUR PRODUK -->
 <div id="returnModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 9999; justify-content: center; align-items: center; padding: 16px;">
     <div style="background: white; border-radius: 16px; width: 100%; max-width: 550px; padding: 28px; box-shadow: 0 20px 40px rgba(0,0,0,0.2); max-height: 90vh; overflow-y: auto;">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid #e2e8f0; padding-bottom: 12px;">
-            <h3 style="margin: 0; font-size: 18px; color: #b91c1c; font-weight: 800;">⚠️ Form Input Retur Produk ke Supplier</h3>
+            <h3 style="margin: 0; font-size: 18px; color: #b91c1c; font-weight: 800;">⚠️ Form Catat Retur Produk ke Supplier</h3>
             <button type="button" onclick="closeReturnModal()" style="background: none; border: none; font-size: 20px; font-weight: bold; cursor: pointer; color: #64748b;">✕</button>
         </div>
 
@@ -645,7 +645,7 @@ function renderReturItemRow(index, defaultItem = null) {
 
         <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 10px;">
             <div>
-                <label style="display: block; font-weight: bold; margin-bottom: 4px; font-size: 12.5px; color: #334155;">Jumlah Retur (pcs) *</label>
+                <label style="display: block; font-weight: bold; margin-bottom: 4px; font-size: 12.5px; color: #334155;">Jumlah Retur (bungkus) *</label>
                 <input type="number" name="items[${index}][quantity]" id="retur_qty_${index}" min="1" ${qtyMaxAttr} value="1" required style="width: 100%; padding: 8px; border-radius: 6px; border: 1px solid #cbd5e1; font-size: 13px; background: #ffffff;">
             </div>
             <div>

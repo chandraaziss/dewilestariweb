@@ -17,21 +17,26 @@ class CourierController extends Controller
                   ->where('delivery_option', 'NOT LIKE', '%pickup%');
         };
 
-        $pending = Order::whereIn('status', ['Menunggu Kurir', 'completed', 'pending', 'preparing'])
+        $pending = Order::whereIn('status', ['Menunggu Kurir', 'pending', 'preparing'])
             ->where('payment_status', 'paid')
             ->where($courierFilter)
             ->count();
-            
+
         $delivering = Order::whereIn('status', ['Diambil Kurir', 'Dalam Perjalanan', 'shipped', 'almost_arrived'])
             ->where($courierFilter)
             ->count();
-            
-        $delivered = Order::where('status', 'Terkirim')
+
+        $delivered = Order::where(function ($q) {
+                $q->whereIn('status', ['Terkirim', 'completed', 'Selesai'])
+                  ->orWhere('tracking_status', 'completed');
+            })
             ->where($courierFilter)
             ->count();
-            
-        $totalToday = Order::where('status', 'Terkirim')
-            ->whereDate('delivered_at', Carbon::today())
+
+        $totalToday = Order::where(function ($q) {
+                $q->whereIn('status', ['Terkirim', 'completed', 'Selesai'])
+                  ->orWhere('tracking_status', 'completed');
+            })
             ->where($courierFilter)
             ->count();
 
@@ -133,9 +138,9 @@ class CourierController extends Controller
     public function history()
     {
         $orders = Order::where(function($q) {
-                $q->where('status', 'Terkirim')
-                  ->orWhere('status', 'Pengembalian')
-                  ->orWhere('tracking_status', 'returned');
+                $q->whereIn('status', ['Terkirim', 'completed', 'Selesai', 'Pengembalian'])
+                  ->orWhere('tracking_status', 'returned')
+                  ->orWhere('tracking_status', 'completed');
             })
             ->whereNotNull('delivery_address')
             ->where('delivery_address', '!=', '')

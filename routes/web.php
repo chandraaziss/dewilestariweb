@@ -25,6 +25,7 @@ Route::middleware('admin')->group(function() {
 Route::get('/admin/orders',[OrderController::class,'index']);
 Route::get('/admin/reports',[OrderController::class, 'report']);
 Route::get('/admin/reports/store', [OrderController::class, 'storeReport']);
+Route::get('/admin/reports/order-detail/{id}', [OrderController::class, 'reportOrderDetail'])->name('reports.order_detail');
 Route::get('/admin/reports/store/pdf', [OrderController::class, 'downloadStoreReportPdf']);
 Route::get('/admin/reports/suppliers', function() { return redirect('/admin/reports/store'); });
 Route::get('/admin/reports/suppliers/pdf', function() { return redirect('/admin/reports/store'); });
@@ -47,6 +48,7 @@ Route::post('/admin/supplier-returns/{id}/status', [SupplierController::class, '
 Route::delete('/admin/supplier-returns/{id}', [SupplierController::class, 'destroyReturn']);
 
 Route::post('/admin/orders/{id}/tracking', [OrderController::class, 'updateTrackingStatus']);
+Route::post('/admin/orders/{id}/notify-discrepancy', [OrderController::class, 'notifyPaymentDiscrepancy']);
 Route::delete('/admin/orders/{id}', [OrderController::class, 'destroy']);
 Route::get('/admin/pay/{id}', [OrderController::class, 'simulatePayment']);
 Route::get('/admin/chat', [ChatController::class, 'adminIndex']);
@@ -101,6 +103,7 @@ Route::get('/check-pending-order', [OrderController::class, 'checkPendingOrder']
 Route::post('/cancel-pending-order/{orderId}', [OrderController::class, 'cancelPendingOrder']);
 Route::get('/track-order/{ticketId}', [OrderController::class, 'trackOrder']);
 Route::post('/track-order/{ticketId}/return', [OrderController::class, 'requestReturn']);
+Route::post('/track-order/{ticketId}/reupload-proof', [OrderController::class, 'reuploadTransferProof']);
 
 Route::get('/test-midtrans/{id}', function($id) {
     \Midtrans\Config::$serverKey = config('midtrans.server_key');
